@@ -1,2 +1,5 @@
 rootProject.name = 'yata'
 
+include 'yata-server'
+include 'yata-client'
+
