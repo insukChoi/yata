@@ -13,7 +13,7 @@ import project.yata.service.YataService;
 @RestController
 public class YataController {
 
-    private YataService yataService;
+    private final YataService yataService;
 
     @GetMapping("/index")
     public ResponseEntity<?> index() {

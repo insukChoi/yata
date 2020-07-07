@@ -11,6 +11,6 @@ import project.yata.service.YataService;
 @RequiredArgsConstructor
 public class YataServiceImpl implements YataService {
 
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
     
 }
