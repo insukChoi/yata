@@ -46,5 +46,7 @@ gradle clean test bootRun
 - Lower case (name)
 - Snake case (phone_number)
 
+
+
 ## Contributor
 insukChoi, kyuli.yeo, kuu2002
