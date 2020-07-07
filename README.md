@@ -32,6 +32,19 @@ gradle clean test bootRun
 - JPA
 - Lombok
 - Vue JS
+- Mysql5.7
+- Redis
+- Spring Security
+
+## Naming Strategy
+### Sql
+*Table*
+- Upper case (ACCOUNT)
+- Snake case (TRIP_HISTORY)
+
+*Colume*
+- Lower case (name)
+- Snake case (phone_number)
 
 ## Contributor
 insukChoi, kyuli.yeo, kuu2002
