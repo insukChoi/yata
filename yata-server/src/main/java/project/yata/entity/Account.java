@@ -1,7 +1,8 @@
 package project.yata.entity;
 
 import lombok.*;
-import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+import project.yata.util.DateUtil;
 
 import javax.persistence.*;
 
@@ -18,16 +19,31 @@ public class Account {
     private String email;
     @Column(name="name", nullable = false)
     private String name;
+    @Column(name="passowrd", nullable = false)
+    private String password;
     @Column(name="is_deleted", nullable = false)
     private int is_deleted;
     @Column(name="created_at", nullable = false)
-    private String created_at;
+    private String createdAt = DateUtil.getNow();
     @Column(name="updated_at", nullable = false)
-    private String updated_at;
+    private String updatedAt = DateUtil.getNow();
 
     @Builder
-    public Account(String email, String name) {
+    public Account(String email, String name, String password) {
         this.email = email;
         this.name = name;
+        this.password = password;
+    }
+
+    @PrePersist
+    public void prePersis() {
+        if(StringUtils.isEmpty(this.createdAt))
+            this.createdAt = DateUtil.getNow();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        if(StringUtils.isEmpty(this.updatedAt))
+            this.updatedAt = DateUtil.getNow();
     }
 }
