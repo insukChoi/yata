@@ -15,7 +15,7 @@ public class YataController {
 
     private final YataService yataService;
 
-    @GetMapping("/index")
+    @GetMapping("")
     public ResponseEntity<?> index() {
         return new ResponseEntity<>("Hello Yata", HttpStatus.OK);
     }
