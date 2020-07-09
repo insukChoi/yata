@@ -5,7 +5,6 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -23,7 +22,6 @@ public class JsonWebTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    @Description("토큰 발급")
     public String generateToken(String email) {
         Claims claims = Jwts.claims().setSubject(email);
         Date getNow = new Date();
@@ -39,12 +37,10 @@ public class JsonWebTokenProvider {
                 .compact();
     }
 
-    @Description("이메일 추출")
     public String getEmail(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-    @Description("토큰 만료 체크")
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
