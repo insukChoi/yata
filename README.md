@@ -36,7 +36,16 @@ gradle clean test bootRun
 - Redis
 - Spring Security
 
+
+
+## How to set up git review tool (Gerrit)
+
+
+
+
+
 ## Naming Strategy
+
 ### Sql
 *Table*
 - Upper case (ACCOUNT)
