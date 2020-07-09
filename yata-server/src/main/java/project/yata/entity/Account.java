@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Account {
-
+//test
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
