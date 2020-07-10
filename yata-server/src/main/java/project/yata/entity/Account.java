@@ -19,17 +19,15 @@ public class Account {
     private String email;
     @Column(name="name", nullable = false)
     private String name;
-    @Column(name="passowrd", nullable = false)
-    private String password;
     @Column(name="is_deleted", nullable = false)
     private int is_deleted;
     @Column(name="created_at", nullable = false)
-    private String createdAt = DateUtil.getNow();
+    private String created_at;
     @Column(name="updated_at", nullable = false)
-    private String updatedAt = DateUtil.getNow();
+    private String updated_at;
 
     @Builder
-    public Account(String email, String name, String password) {
+    public Account(String email, String name) {
         this.email = email;
         this.name = name;
         this.password = password;
