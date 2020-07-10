@@ -1,7 +1,8 @@
 package project.yata.entity;
 
 import lombok.*;
-import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+import project.yata.util.DateUtil;
 
 import javax.persistence.*;
 
@@ -29,5 +30,18 @@ public class Account {
     public Account(String email, String name) {
         this.email = email;
         this.name = name;
+        this.password = password;
+    }
+
+    @PrePersist
+    public void prePersis() {
+        if(StringUtils.isEmpty(this.createdAt))
+            this.createdAt = DateUtil.getNow();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        if(StringUtils.isEmpty(this.updatedAt))
+            this.updatedAt = DateUtil.getNow();
     }
 }
