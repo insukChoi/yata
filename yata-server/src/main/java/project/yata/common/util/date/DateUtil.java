@@ -1,4 +1,4 @@
-package project.yata.util;
+package project.yata.common.util.date;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

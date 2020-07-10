@@ -14,13 +14,19 @@ import project.yata.service.AuthService;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @RestController
+@RestControllerAdvice
 public class AuthController {
 
     private final AuthService authService;
 
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody JoinRequest joinRequest) {
-        return new ResponseEntity<>(authService.join(joinRequest), HttpStatus.OK);
+        authService.join(joinRequest);
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 
+    @GetMapping("/token")
+    public ResponseEntity<?> getToken(@RequestHeader("X-USER-EMAIL") String email, @RequestHeader("X-USER-PASSWORD") String password) {
+        return new ResponseEntity<>(authService.generateToken(email, password), HttpStatus.OK);
+    }
 }

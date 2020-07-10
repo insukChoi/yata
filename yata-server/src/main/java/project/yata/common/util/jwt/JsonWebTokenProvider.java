@@ -1,4 +1,4 @@
-package project.yata.config.security;
+package project.yata.common.util.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -26,7 +26,7 @@ public class JsonWebTokenProvider {
         Claims claims = Jwts.claims().setSubject(email);
         Date getNow = new Date();
 
-        long tokenValidMilisecond = 1000L * 60 * 60; // 유효시간 1간시
+        long tokenValidMilisecond = 1000L * 60 * 60; // 유효시간 1시간
 
         return Jwts.builder()
                 .setClaims(claims)
