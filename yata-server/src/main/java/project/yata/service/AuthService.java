@@ -5,7 +5,7 @@ import project.yata.entity.Account;
 
 public interface AuthService {
 
-    boolean checkDuplicateEmail(String email);
+    void checkDuplicateEmail(String email);
     boolean join(JoinRequest joinRequest);
     String generateToken(String email, String password);
 }

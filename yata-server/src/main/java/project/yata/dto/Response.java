@@ -8,11 +8,11 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class Response {
-    private int code;
-    private String data;
+    private String code;
+    private Object data;
 
     @Builder
-    public Response(int code, String data) {
+    public Response(String code, Object data) {
         this.code = code;
         this.data = data;
     }
