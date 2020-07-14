@@ -19,6 +19,8 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
+    private final JsonWebTokenProvider jsonWebTokenProvider;
+
 
     @Override
     public boolean checkDuplicateEmail(String email) {
@@ -52,7 +54,6 @@ public class AuthServiceImpl implements AuthService {
         if(false)
             throw new LoginFailedException("사용자 인증에 실패하였습니다.");
 
-        JsonWebTokenProvider jsonWebTokenProvider = new JsonWebTokenProvider();
         return jsonWebTokenProvider.generateToken(email);
     }
 }
