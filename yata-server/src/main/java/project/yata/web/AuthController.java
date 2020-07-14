@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
+import project.yata.common.constant.Code;
 import project.yata.dto.JoinRequest;
+import project.yata.dto.Response;
 import project.yata.service.AuthService;
 
 @Slf4j
@@ -20,7 +22,11 @@ public class AuthController {
 
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody JoinRequest joinRequest) {
-        return new ResponseEntity<>(authService.join(joinRequest), HttpStatus.OK);
+        return new ResponseEntity<>(Response.builder().code(Code.SUCCESS.getCode()).data(authService.join(joinRequest)).build(), HttpStatus.OK);
     }
 
+    @GetMapping("/login")
+    public ResponseEntity<?> login(@RequestHeader("X-USER-EMAIL") String email, @RequestHeader("X-USER-PASSWORD") String password) {
+        return new ResponseEntity<>(authService.login(email, password), HttpStatus.OK);
+    }
 }
