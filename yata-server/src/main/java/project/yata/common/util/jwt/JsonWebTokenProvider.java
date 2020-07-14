@@ -30,7 +30,7 @@ public class JsonWebTokenProvider {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuer("jisu@naver.com")
+                .setIssuer("master@yata.com")
                 .setIssuedAt(getNow)
                 .setExpiration(new Date(getNow.getTime() + tokenValidMilisecond))
                 .signWith(SignatureAlgorithm.HS256, secretKey)

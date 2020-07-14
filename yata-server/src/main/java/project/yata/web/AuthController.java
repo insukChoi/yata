@@ -25,8 +25,8 @@ public class AuthController {
         return new ResponseEntity<>(Response.builder().code(Code.SUCCESS.getCode()).data(authService.join(joinRequest)).build(), HttpStatus.OK);
     }
 
-    @GetMapping("/token")
-    public ResponseEntity<?> getToken(@RequestHeader("X-USER-EMAIL") String email, @RequestHeader("X-USER-PASSWORD") String password) {
-        return new ResponseEntity<>(authService.generateToken(email, password), HttpStatus.OK);
+    @GetMapping("/login")
+    public ResponseEntity<?> login(@RequestHeader("X-USER-EMAIL") String email, @RequestHeader("X-USER-PASSWORD") String password) {
+        return new ResponseEntity<>(authService.login(email, password), HttpStatus.OK);
     }
 }
