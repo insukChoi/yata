@@ -36,6 +36,7 @@ gradle clean test bootRun
 - Redis
 - Spring Security
 
+
 ## Naming Strategy
 ### Sql
 *Table*
@@ -46,8 +47,6 @@ gradle clean test bootRun
 - Lower case (name)
 - Snake case (phone_number)
 
-## Contributor
-insukChoi, kyuli.yeo, kuu2002
 
 ## How to set up git review tool (Gerrit)
 
@@ -57,3 +56,8 @@ insukChoi, kyuli.yeo, kuu2002
 - Sign up : http://gerrithub.io/
 - Create and enroll ssh-key in gerrit site (https://docs.openstack.org/contributors/ko_KR/common/setup-gerrit.html)
 - Generate HTTP password and enroll in Intellij 
+
+
+## Contributor
+insukChoi, kyuli.yeo, kuu2002
+

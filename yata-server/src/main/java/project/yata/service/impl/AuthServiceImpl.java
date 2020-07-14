@@ -19,6 +19,15 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
+    private final JsonWebTokenProvider jsonWebTokenProvider;
+
+
+    @Override
+    public boolean checkDuplicateEmail(String email) {
+        if(!StringUtils.isEmpty(accountRepository.findByEmail(email)))
+            throw new DuplicateEmailException("이미 등록되어 있는 이메일주소입니다.");
+        return true;
+    }
 
     private final JsonWebTokenProvider jsonWebTokenProvider;
 
