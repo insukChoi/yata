@@ -3,7 +3,6 @@ package project.yata.entity;
 import lombok.*;
 import org.springframework.util.StringUtils;
 import project.yata.common.util.date.DateUtil;
-
 import javax.persistence.*;
 
 @Entity

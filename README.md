@@ -48,3 +48,12 @@ gradle clean test bootRun
 
 ## Contributor
 insukChoi, kyuli.yeo, kuu2002
+
+## How to set up git review tool (Gerrit)
+
+- Using IDE built-in plugin system (suggested: you'll get notified when an update is available):
+  - Preferences > Plugins > Browse repositories... > Search for "Gerrit" > Install Plugin
+
+- Sign up : http://gerrithub.io/
+- Create and enroll ssh-key in gerrit site (https://docs.openstack.org/contributors/ko_KR/common/setup-gerrit.html)
+- Generate HTTP password and enroll in Intellij 

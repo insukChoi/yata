@@ -19,6 +19,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
+
     private final JsonWebTokenProvider jsonWebTokenProvider;
 
 
@@ -57,3 +58,4 @@ public class AuthServiceImpl implements AuthService {
         return jsonWebTokenProvider.generateToken(email);
     }
 }
+
