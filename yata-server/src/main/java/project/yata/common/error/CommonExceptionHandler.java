@@ -13,7 +13,7 @@ public class CommonExceptionHandler {
 
     @ExceptionHandler({DuplicateEmailException.class, JoinFailedException.class})
     protected ResponseEntity<ErrorResponse> duplicateEmailException(DuplicateEmailException e) {
-        return new ResponseEntity<>(ErrorResponse.builder().code(Code.ERROR0001.getCode()).message(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ErrorResponse.builder().code(Code.ERROR0002.getCode()).message(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
     }
 
 }

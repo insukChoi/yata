@@ -58,6 +58,9 @@ gradle clean test bootRun
 - Generate HTTP password and enroll in Intellij 
 
 
+## API Docs
+http://localhost:8088/swagger-ui.html
+
 ## Contributor
 insukChoi, kyuli.yeo, kuu2002
 
