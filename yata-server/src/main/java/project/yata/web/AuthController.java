@@ -1,5 +1,6 @@
 package project.yata.web;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -13,9 +14,10 @@ import project.yata.dto.Response;
 import project.yata.service.AuthService;
 
 @Slf4j
-@RequiredArgsConstructor
-@RequestMapping("/auth")
+@Api(tags = {"1. Authentication"})
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v2/auth")
 public class AuthController {
 
     private final AuthService authService;
