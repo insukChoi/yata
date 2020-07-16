@@ -59,4 +59,4 @@ gradle clean test bootRun
 - Snake case (phone_number)
 
 ## Contributor
-insukChoi, kyuli.yeo, kuu2002
+kyuli.yeo, kuu2002, insukChoi
