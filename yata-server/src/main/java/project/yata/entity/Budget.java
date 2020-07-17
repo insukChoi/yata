@@ -1,22 +1,28 @@
 package project.yata.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="BUDGET")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter @Setter
+@Getter
 public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name="travel_id", nullable = false)
-    private long travelId;
+    private Long travelId;
+
     @Column(name="exchange_info", nullable = false)
-    private long exchangeInfo;
+    private String exchangeInfo;
+
+    @Builder
+    public Budget(Long travelId, String exchangeInfo)
+    {
+        this.travelId = travelId;
+        this.exchangeInfo = exchangeInfo;
+    }
 }
