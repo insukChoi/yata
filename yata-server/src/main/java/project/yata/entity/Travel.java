@@ -3,17 +3,18 @@ package project.yata.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="TRAVEL")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Getter @Setter
 public class Travel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name="account_id", nullable = false)
     private long accountId;
     @Column(name="title", nullable = false)
