@@ -47,6 +47,9 @@ gradle clean test bootRun
 - Lower case (name)
 - Snake case (phone_number)
 
+## Design
+[UI prototype](https://ovenapp.io/project/vFFGagJRoYYKO5LvQ92xoJNVsB7pb7SP#zVfq7)
+DE Schema: Intellij - Persistence - entity - ER diagram
 
 ## How to set up git review tool (Gerrit)
 
@@ -56,7 +59,7 @@ gradle clean test bootRun
 - Sign up : http://gerrithub.io/
 - Create and enroll ssh-key in gerrit site (https://docs.openstack.org/contributors/ko_KR/common/setup-gerrit.html)
 - Generate HTTP password and enroll in Intellij 
-
+[gerrit site](https://review.gerrithub.io/admin/repos/insukChoi/yata)
 
 ## API Docs
 http://localhost:8088/swagger-ui.html
