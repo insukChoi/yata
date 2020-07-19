@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JoinRequest {
 
-    private String email;
-    private String name;
-    private String password;
+    private final String email;
+    private final String name;
+    private final String password;
 
 }
