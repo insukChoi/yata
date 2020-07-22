@@ -40,7 +40,6 @@ public class AuthApiTest {
     public void joinSuccessTest() throws Exception {
 
         //given
-//        JoinRequest joinRequest = new JoinRequest("admin@yata.com", "지수","0011");
         JoinRequest joinRequest = JoinRequest.builder().email("admin@yata.com").name("지수").password("0011").build();
 
         given(authService.join(joinRequest)).willReturn(true);

@@ -13,6 +13,8 @@ import project.yata.entity.Account;
 import project.yata.persistence.AccountRepository;
 import project.yata.service.AuthService;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -29,6 +31,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Transactional
     public boolean join(JoinRequest joinRequest) {
 
         checkDuplicateEmail(joinRequest.getEmail());
