@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name="TRANSPORT")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Transport {
+public class Transport extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
