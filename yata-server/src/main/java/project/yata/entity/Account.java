@@ -40,15 +40,5 @@ public class Account {
         this.password = password;
     }
 
-    @PrePersist
-    public void prePersis() {
-        if(StringUtils.isEmpty(this.createdAt))
-            this.createdAt = DateUtil.getNow();
-    }
 
-    @PreUpdate
-    public void preUpdate() {
-        if(StringUtils.isEmpty(this.updatedAt))
-            this.updatedAt = DateUtil.getNow();
-    }
 }
