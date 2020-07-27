@@ -31,8 +31,7 @@ public class JsonWebTokenProvider {
     public String generateToken(String email, String type) {
         Claims claims = Jwts.claims().setSubject(email);
 
-        // 유효시간 (Access Token: 15분, Refresh Token: 24시간)
-        long tokenValid = StringUtils.equals("access", type) ? 1000L * 60 * 15 : 1000L * 60 * 60 * 24;
+        long tokenValid = getTokenValid(type);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -56,4 +55,9 @@ public class JsonWebTokenProvider {
         }
     }
 
+    private long getTokenValid(String type) {
+        // 유효시간 (Access Token: 15분, Refresh Token: 24시간)
+        int min = StringUtils.equals("access", type) ? 15 : 60*24;
+        return DateUtil.getMillisecond(min);
+    }
 }

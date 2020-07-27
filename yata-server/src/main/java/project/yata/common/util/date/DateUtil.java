@@ -26,4 +26,8 @@ public class DateUtil {
     public LocalDateTime asLocalDateTime(Date date) {
         return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
+
+    public long getMillisecond(int min) {
+        return 1000L * 60 * min;
+    }
 }
