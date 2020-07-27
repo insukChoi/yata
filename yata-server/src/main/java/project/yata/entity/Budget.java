@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name="BUDGET")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Budget {
+public class Budget extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

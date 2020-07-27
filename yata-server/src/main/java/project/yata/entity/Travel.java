@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name="TRAVEL")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Travel {
+public class Travel extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
