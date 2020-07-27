@@ -23,6 +23,12 @@ public class JsonWebTokenProvider {
     @Value("test")
     private String secretKey;
 
+    @Value("${jwt.access}")
+    private int accessTokenValid;
+
+    @Value("${jwt.refresh}")
+    private int refreshTokenValid;
+
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
@@ -57,7 +63,7 @@ public class JsonWebTokenProvider {
 
     private long getTokenValid(String type) {
         // 유효시간 (Access Token: 15분, Refresh Token: 24시간)
-        int min = StringUtils.equals("access", type) ? 15 : 60*24;
+        int min = StringUtils.equals("access", type) ? accessTokenValid : refreshTokenValid;
         return DateUtil.getMillisecond(min);
     }
 }
