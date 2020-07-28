@@ -11,6 +11,8 @@ dependencies {
     runtimeOnly ('com.h2database:h2')
     compileOnly ('org.projectlombok:lombok')
     annotationProcessor ('org.projectlombok:lombok')
+    compile ('org.apache.commons:commons-lang3:3.11')
+
 }
 
 bootJar.enabled = true
