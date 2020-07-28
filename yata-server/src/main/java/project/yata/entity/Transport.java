@@ -1,10 +1,12 @@
 package project.yata.entity;
 
+import io.jsonwebtoken.lang.Assert;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="TRANSPORT")
@@ -18,14 +20,11 @@ public class Transport extends BaseEntity {
     @Column(name="travel_id", nullable = false)
     private Long travelId;
 
-    @Column(name="name", nullable = false)
-    private String name;
+    @Column(name="title", nullable = false)
+    private String title;
 
     @Column(name="date")
-    private String date;
-
-    @Column(name="time")
-    private String time;
+    private LocalDateTime date;
 
     @Column(name="price")
     private String price;
@@ -36,16 +35,22 @@ public class Transport extends BaseEntity {
     @Column(name="destination")
     private String destination;
 
+    @Column(name="memo")
+    private String memo;
+
     @Builder
-    public Transport(Long travelId, String name, String date,
-                     String time, String price, String departure, String destination)
+    public Transport(Long travelId, String title, LocalDateTime date,
+                     String price, String departure, String destination, String memo)
     {
+        Assert.notNull(travelId, "Travel ID must be not null from Transport class");
+        Assert.notNull(title, "Type of public transportation must be not null from Transport class");
+
         this.travelId = travelId;
-        this.name = name;
+        this.title = title;
         this.date = date;
-        this.time = time;
         this.price = price;
         this.departure = departure;
         this.destination = destination;
+        this.memo = memo;
     }
 }

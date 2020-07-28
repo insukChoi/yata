@@ -1,8 +1,10 @@
 package project.yata.entity;
 
+import io.jsonwebtoken.lang.Assert;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="ACCOMMODATION")
@@ -20,13 +22,13 @@ public class Accommodation extends BaseEntity {
     private String title;
 
     @Column(name="date")
-    private String date;
+    private LocalDateTime date; // 날짜랑 시간을 입력 받으려는데, 이렇게 사용해도 되나요?
 
     @Column(name="location")
     private String location;
 
-    @Column(name="book_site")
-    private String bookSite;
+    @Column(name="booking_site")
+    private String bookingSite;
 
     @Column(name="price")
     private String price;
@@ -39,13 +41,15 @@ public class Accommodation extends BaseEntity {
 
     @Builder
     public Accommodation(Long travelId, String title,
-                         String date, String location, String bookSite,
+                         LocalDateTime date, String location, String bookingSite,
                          String price, String memo, String picture) {
+        Assert.notNull(travelId, "Travel ID must be not null from Accommodation class");
+
         this.travelId = travelId;
         this.title = title;
         this.date = date;
         this.location = location;
-        this.bookSite = bookSite;
+        this.bookingSite = bookingSite;
         this.price = price;
         this.memo = memo;
         this.picture = picture;

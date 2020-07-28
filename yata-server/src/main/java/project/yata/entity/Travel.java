@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="TRAVEL")
@@ -28,28 +29,25 @@ public class Travel extends BaseEntity {
     @Column(name="period")
     private String period;
 
-    @Column(name="accompany")
-    private String accompany;
-
-    @Column(name="time")
-    private String time;
+    @Column(name="time_difference")
+    private int timeDiff; // 그 나라 시간 등록하기, 변수 타입을 뭘로 해야하나요? int or LocalDateTime
 
     @Column(name="memo")
     private String memo;
 
+
     @Builder
     public Travel(Long accountId, String title, String place,
-                  String period, String accompany, String time, String memo)
+                  String period,  int timeDiff, String memo)
     {
-        Assert.notNull(accountId, "Account ID must be not null");
-        Assert.notNull(title, "Traveling titile must be not null");
+        Assert.notNull(accountId, "Account ID must be not null from Travel class");
+        Assert.notNull(title, "Traveling title must be not null from Travel class");
 
         this.accountId = accountId;
         this.title = title;
         this.place = place;
         this.period = period;
-        this.accompany = accompany;
-        this.time = time;
+        this.timeDiff = timeDiff;
         this.memo = memo;
     }
 }

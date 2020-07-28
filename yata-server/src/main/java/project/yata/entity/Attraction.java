@@ -1,8 +1,10 @@
 package project.yata.entity;
 
+import io.jsonwebtoken.lang.Assert;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="ATTRACTION")
@@ -20,10 +22,13 @@ public class Attraction extends BaseEntity {
     private String title;
 
     @Column(name="date")
-    private String date;
+    private LocalDateTime date;
 
-    @Column(name="location")
-    private String location;
+    @Column(name="place")
+    private String place;
+
+    @Column(name="picture")
+    private String picture;
 
     @Column(name="can_parking")
     private boolean canParking;
@@ -34,18 +39,18 @@ public class Attraction extends BaseEntity {
     @Column(name="memo")
     private String memo;
 
-    @Column(name="picture")
-    private String picture;
 
     @Builder
-    public Attraction(Long travelId, String title, String date,
+    public Attraction(Long travelId, String title, LocalDateTime date,
                       String location, boolean canParking, String predictedPrice,
                       String memo, String picture)
     {
+        Assert.notNull(travelId, "Travel ID must be not null from Attraction class");
+
         this.travelId = travelId;
         this.title = title;
         this.date = date;
-        this.location = location;
+        this.place = place;
         this.canParking = canParking;
         this.predictedPrice = predictedPrice;
         this.memo = memo;

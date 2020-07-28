@@ -1,5 +1,6 @@
 package project.yata.entity;
 
+import io.jsonwebtoken.lang.Assert;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,8 @@ public class Budget extends BaseEntity {
     @Builder
     public Budget(Long travelId, String exchangeInfo)
     {
+        Assert.notNull(travelId, "Travel ID must be not null from Budget class");
+
         this.travelId = travelId;
         this.exchangeInfo = exchangeInfo;
     }
