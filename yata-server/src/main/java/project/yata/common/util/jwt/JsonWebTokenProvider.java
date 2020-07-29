@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import project.yata.common.constant.Security;
 import project.yata.common.util.date.DateUtil;
 
 import javax.annotation.PostConstruct;
@@ -20,14 +21,8 @@ import java.util.Date;
 @Component
 public class JsonWebTokenProvider {
 
-    @Value("test")
+    @Value("${jwt.secret.key}")
     private String secretKey;
-
-    @Value("${jwt.access}")
-    private int accessTokenValid;
-
-    @Value("${jwt.refresh}")
-    private int refreshTokenValid;
 
     @PostConstruct
     protected void init() {
@@ -61,9 +56,9 @@ public class JsonWebTokenProvider {
         }
     }
 
-    private long getTokenValid(String type) {
+    private static long getTokenValid(String type) {
         // 유효시간 (Access Token: 15분, Refresh Token: 24시간)
-        int min = StringUtils.equals("access", type) ? accessTokenValid : refreshTokenValid;
+        int min = StringUtils.equals("access", type) ? Security.VALID_ACCESS_TOKEN : Security.VALID_REFRESH_TOKEN;
         return DateUtil.getMillisecond(min);
     }
 }

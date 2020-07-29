@@ -6,16 +6,15 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class JoinRequest {
+public class JoinResponse {
 
     private String email;
     private String name;
-    private String password;
 
-    @Builder
-    public JoinRequest(String email, String name, String password) {
+    public JoinResponse joinComplete(String email, String name) {
         this.email = email;
         this.name = name;
-        this.password = password;
+        return this;
     }
+
 }
