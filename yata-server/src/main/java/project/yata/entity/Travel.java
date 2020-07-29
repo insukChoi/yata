@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name="TRAVEL")
@@ -30,7 +31,8 @@ public class Travel extends BaseEntity {
     private String period;
 
     @Column(name="time_difference")
-    private int timeDiff; // 그 나라 시간 등록하기, 변수 타입을 뭘로 해야하나요? int or LocalDateTime
+    private ZonedDateTime timeDiff; // 그 나라 시간 등록하기, 변수 타입을 뭘로 해야하나요? int or LocalDateTime
+                                    // https://perfectacle.github.io/2018/09/26/java8-date-time/
 
     @Column(name="memo")
     private String memo;

@@ -34,5 +34,4 @@ public class Restaurant extends BaseEntity {
         this.picture = picture;
         this.bookingSite = bookingSite;
     }
-
 }

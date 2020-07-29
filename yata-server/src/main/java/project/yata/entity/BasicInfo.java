@@ -5,10 +5,11 @@ import lombok.Builder;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Embeddable
-public class BasicInfo {
+public class BasicInfo implements Serializable {
     @Column(name="travel_id", nullable = false)
     private Long travelId;
 
