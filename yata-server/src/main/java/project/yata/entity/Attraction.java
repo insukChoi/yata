@@ -11,9 +11,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Attraction extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="travel_id", nullable = false)
+    private Long travelId;
 
     @Column(name="picture")
     private String picture;
@@ -25,8 +24,11 @@ public class Attraction extends BaseEntity {
     private BasicInfo basicInfo;
 
     @Builder
-    public Attraction(BasicInfo basicInfo, boolean canParking, String picture)
+    public Attraction(Long travelId, BasicInfo basicInfo, boolean canParking, String picture)
     {
+        Assert.notNull(travelId, "Travel ID must be not null from Attraction class");
+
+        this.travelId = travelId;
         this.basicInfo = basicInfo;
         this.canParking = canParking;
         this.picture = picture;

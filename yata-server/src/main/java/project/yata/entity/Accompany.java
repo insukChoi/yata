@@ -13,11 +13,6 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Accompany extends BaseEntity{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name="account_id", nullable = false)
     private Long accountId;
 

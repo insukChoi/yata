@@ -13,9 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Transport extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="travel_id", nullable = false)
+    private Long travelId;
 
     @Column(name="departure")
     private String departure;
@@ -27,9 +26,11 @@ public class Transport extends BaseEntity {
     private BasicInfo basicInfo;
 
     @Builder
-    public Transport(BasicInfo basicInfo, String departure, String destination)
+    public Transport(Long travelId, BasicInfo basicInfo, String departure, String destination)
     {
+        Assert.notNull(travelId, "Travel ID must be not null from Transport class");
 
+        this.travelId = travelId;
         this.basicInfo = basicInfo;
         this.departure = departure;
         this.destination = destination;

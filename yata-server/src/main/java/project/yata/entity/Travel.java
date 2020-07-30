@@ -27,20 +27,21 @@ public class Travel extends BaseEntity {
     @Column(name="place")
     private String place;
 
-    @Column(name="period")
-    private String period;
+    @Column(name="start_date")
+    private LocalDateTime startDate;
+
+    @Column(name="end_date")
+    private LocalDateTime endDate;
 
     @Column(name="time_difference")
-    private ZonedDateTime timeDiff; // 그 나라 시간 등록하기, 변수 타입을 뭘로 해야하나요? int or LocalDateTime
-                                    // https://perfectacle.github.io/2018/09/26/java8-date-time/
+    private ZonedDateTime timeDiff; // 나라는 입력하면, 한국 시간이랑, 그 나라의 시간이 보이도록?!
 
     @Column(name="memo")
     private String memo;
 
-
     @Builder
     public Travel(Long accountId, String title, String place,
-                  String period,  int timeDiff, String memo)
+                  String period,  ZonedDateTime timeDiff, String memo)
     {
         Assert.notNull(accountId, "Account ID must be not null from Travel class");
         Assert.notNull(title, "Traveling title must be not null from Travel class");
@@ -48,7 +49,7 @@ public class Travel extends BaseEntity {
         this.accountId = accountId;
         this.title = title;
         this.place = place;
-        this.period = period;
+
         this.timeDiff = timeDiff;
         this.memo = memo;
     }

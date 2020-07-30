@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 
 @Embeddable
 public class BasicInfo implements Serializable {
-    @Column(name="travel_id", nullable = false)
-    private Long travelId;
 
     @Column(name="title", nullable = false)
     private String title;
@@ -29,12 +27,9 @@ public class BasicInfo implements Serializable {
     private String memo;
 
     @Builder
-    public BasicInfo(Long travelId, String title, LocalDateTime date,
+    public BasicInfo(String title, LocalDateTime date,
                       String location, String price, String memo)
     {
-        Assert.notNull(travelId, "Travel ID must be not null from basicInfo class");
-
-        this.travelId = travelId;
         this.title = title;
         this.date = date;
         this.location = location;
