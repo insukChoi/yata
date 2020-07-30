@@ -18,8 +18,6 @@ import project.yata.common.util.jwt.JsonWebTokenProvider;
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JsonWebTokenProvider jsonWebTokenProvider;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -28,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // JWT를 사용하는 이유로 세션이 불필요하여 STATELESS로 설정
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilter(new JwtAuthenticationFilter(jsonWebTokenProvider));
+//        http.addFilter(new JwtAuthenticationFilter());
 
         // CSRF disable
         http.csrf().disable();

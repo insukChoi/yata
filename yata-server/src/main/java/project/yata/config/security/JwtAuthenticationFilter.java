@@ -1,56 +1,68 @@
 package project.yata.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.security.auth.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import project.yata.common.constant.Security;
-import project.yata.common.error.exception.LoginInputNotFoundException;
+
 import project.yata.common.util.jwt.JsonWebTokenProvider;
 import project.yata.dto.LoginRequest;
-import project.yata.dto.LoginResponse;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.file.attribute.UserPrincipal;
+import java.util.ArrayList;
 
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final JsonWebTokenProvider jsonWebTokenProvider;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-        UsernamePasswordAuthenticationToken authRequest;
-
+        // Grab credentials and map then to LoginViewModel
+        LoginRequest credentials = null;
         try {
-            LoginRequest loginRequest = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
-            authRequest = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
-        } catch(IOException e) {
-            throw new LoginInputNotFoundException("로그인 정보를 입력해주세요.");
+            credentials = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        return this.getAuthenticationManager().authenticate(authRequest);
+        // Create login token
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                credentials.getEmail(),
+                credentials.getPassword(),
+                new ArrayList<>()
+        );
+
+        // Authenticate user
+        Authentication auth = authenticationManager.authenticate(authenticationToken);
+        return auth;
     }
+
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+        // Grab principal
         UserPrincipal principal = (UserPrincipal) authResult.getPrincipal();
 
         // Create JWT Token
-        String accessToken = jsonWebTokenProvider.generateToken(principal.getName(), Security.TOKEN_TYPE_ACCESS);
-        String refreshToken = jsonWebTokenProvider.generateToken(principal.getName(), Security.TOKEN_TYPE_REFRESH);
+        String token = JWT.create()
+                .withSubject(principal.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
+                .sign(Algorithm.HMAC512(JwtProperties.SECRET.getBytes()));
 
-        response.addHeader(Security.HEADER_AUTHORIZATION, Security.TOKEN_PRIFIX+accessToken);
-
+        // Add token in response
+        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token);
     }
 }
