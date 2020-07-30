@@ -1,24 +1,21 @@
 package project.yata.entity;
 
+import io.jsonwebtoken.lang.Assert;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="PLAN")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Plan extends BaseEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name="travel_id", nullable = false)
     private Long travelId;
 
     @Column(name="time", nullable = false)
-    private String time;
+    private LocalDateTime time;
 
     @Column(name="memo")
     private String memo;
@@ -27,8 +24,10 @@ public class Plan extends BaseEntity {
     private String linkTo;
 
     @Builder
-    public Plan(Long travelId, String time, String memo, String linkTo)
+    public Plan(Long travelId, LocalDateTime time, String memo, String linkTo)
     {
+        Assert.notNull(travelId, "Travel ID must be not null from Plan class");
+
         this.travelId = travelId;
         this.time = time;
         this.memo = memo;

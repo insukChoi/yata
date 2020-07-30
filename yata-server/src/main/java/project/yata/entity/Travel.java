@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name="TRAVEL")
@@ -25,31 +27,30 @@ public class Travel extends BaseEntity {
     @Column(name="place")
     private String place;
 
-    @Column(name="period")
-    private String period;
+    @Column(name="start_date")
+    private LocalDateTime startDate;
 
-    @Column(name="accompany")
-    private String accompany;
+    @Column(name="end_date")
+    private LocalDateTime endDate;
 
-    @Column(name="time")
-    private String time;
+    @Column(name="time_difference")
+    private ZonedDateTime timeDiff; // 나라는 입력하면, 한국 시간이랑, 그 나라의 시간이 보이도록?!
 
     @Column(name="memo")
     private String memo;
 
     @Builder
     public Travel(Long accountId, String title, String place,
-                  String period, String accompany, String time, String memo)
+                  String period,  ZonedDateTime timeDiff, String memo)
     {
-        Assert.notNull(accountId, "Account ID must be not null");
-        Assert.notNull(title, "Traveling titile must be not null");
+        Assert.notNull(accountId, "Account ID must be not null from Travel class");
+        Assert.notNull(title, "Traveling title must be not null from Travel class");
 
         this.accountId = accountId;
         this.title = title;
         this.place = place;
-        this.period = period;
-        this.accompany = accompany;
-        this.time = time;
+
+        this.timeDiff = timeDiff;
         this.memo = memo;
     }
 }
