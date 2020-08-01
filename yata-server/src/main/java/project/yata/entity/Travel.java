@@ -5,7 +5,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
@@ -13,7 +15,8 @@ import java.time.ZonedDateTime;
 @Table(name="TRAVEL")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Travel extends BaseEntity {
+public class Travel extends BaseEntity
+        implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,15 +44,13 @@ public class Travel extends BaseEntity {
 
     @Builder
     public Travel(Long accountId, String title, String place,
-                  String period,  ZonedDateTime timeDiff, String memo)
-    {
+                  String period,  ZonedDateTime timeDiff, String memo) {
         Assert.notNull(accountId, "Account ID must be not null from Travel class");
         Assert.notNull(title, "Traveling title must be not null from Travel class");
 
         this.accountId = accountId;
         this.title = title;
         this.place = place;
-
         this.timeDiff = timeDiff;
         this.memo = memo;
     }
