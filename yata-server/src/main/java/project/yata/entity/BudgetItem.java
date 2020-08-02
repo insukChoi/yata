@@ -1,16 +1,21 @@
 package project.yata.entity;
 
 import io.jsonwebtoken.lang.Assert;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name="BUDGET_ITEM")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class BudgetItem extends BaseEntity {
+public class BudgetItem extends BaseEntity
+        implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,8 +40,7 @@ public class BudgetItem extends BaseEntity {
 
     @Builder
     public BudgetItem(Long budgetId, boolean isOnTravel, LocalDateTime date,
-                      String detail, String price, String memo)
-    {
+                      String detail, String price, String memo) {
         Assert.notNull(budgetId, "Budget ID must be not null from BudgetItem class");
 
         this.budgetId = budgetId;
