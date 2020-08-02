@@ -1,16 +1,22 @@
 package project.yata.entity;
 
 import io.jsonwebtoken.lang.Assert;
-import lombok.*;
-import org.springframework.util.StringUtils;
-import project.yata.common.util.date.DateUtil;
-import javax.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name="ACCOUNT")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Account extends BaseEntity {
+public class Account extends BaseEntity
+        implements Serializable {
     @Column(name="email", nullable = false)
     private String email;
 

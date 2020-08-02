@@ -1,15 +1,22 @@
 package project.yata.entity;
 
 import io.jsonwebtoken.lang.Assert;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name="BUDGET")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Budget extends BaseEntity {
+public class Budget extends BaseEntity
+        implements Serializable {
     @Column(name="travel_id", nullable = false)
     private Long travelId;
 
@@ -17,8 +24,7 @@ public class Budget extends BaseEntity {
     private String exchangeInfo;
 
     @Builder
-    public Budget(Long travelId, String exchangeInfo)
-    {
+    public Budget(Long travelId, String exchangeInfo) {
         Assert.notNull(travelId, "Travel ID must be not null from Budget class");
 
         this.travelId = travelId;

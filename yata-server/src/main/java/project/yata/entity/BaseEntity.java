@@ -27,16 +27,7 @@ public abstract class BaseEntity {
 
     @PrePersist
     public void prePersis() {
-        if(StringUtils.isEmpty(this.createdAt))
-            this.createdAt = LocalDateTime.now();
-
         if(StringUtils.isEmpty(this.isDeleted))
             this.isDeleted = false;
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        if(StringUtils.isEmpty(this.updatedAt))
-            this.updatedAt = LocalDateTime.now();
     }
 }
