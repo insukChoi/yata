@@ -1,12 +1,19 @@
 package project.yata.config.security;
 
+
+import com.sun.security.auth.UserPrincipal;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.util.StringUtils;
 import project.yata.common.constant.Security;
 import project.yata.common.util.jwt.JsonWebTokenProvider;
+import project.yata.entity.Account;
+import project.yata.persistence.AccountRepository;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -15,13 +22,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
+
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+
+    private final AccountRepository accountRepository;
 
     @Autowired
     private JsonWebTokenProvider jsonWebTokenProvider;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, AccountRepository accountRepository) {
         super(authenticationManager);
+        this.accountRepository = accountRepository;
     }
 
     @Override
@@ -32,27 +43,25 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
             return;
         }
+
+        Authentication authentication = getUsernamePasswordAuthentication(request);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        chain.doFilter(request, response);
     }
 
     private Authentication getUsernamePasswordAuthentication(HttpServletRequest request) {
         String token = request.getHeader(Security.HEADER_AUTHORIZATION);
         token = token.replace(Security.TOKEN_PRIFIX, "");
 
-        if(token != null){
-            // parse the token and validate it (decode)
-            String username = jsonWebTokenProvider.getEmail(token);
+        String email = jsonWebTokenProvider.getEmail(token);
 
-            // Search in the DB if we find the user by token subject (username)
-            // If so, then grab user details and create spring auth token using username, pass, authorities/roles
-            if(username != null){
-                User user = userRepository.findByUsername(username);
-                UserPrincipal principal = new UserPrincipal(user);
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null, principal.getAuthorities());
-                return auth;
-            }
-
-            return null;
+        if(email != null){
+            Account account = accountRepository.findByEmail(email);
+            UserPrincipal principal = new UserPrincipal(account.getEmail());
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(email, null, principal.getAuthorities());
+            return auth;
         }
+
         return null;
     }
 }
