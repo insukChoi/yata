@@ -1,8 +1,8 @@
 package project.yata.dto;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Email;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
