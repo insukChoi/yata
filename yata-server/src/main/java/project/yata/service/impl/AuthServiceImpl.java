@@ -9,6 +9,7 @@ import project.yata.common.error.exception.JoinFailedException;
 import project.yata.common.error.exception.LoginFailedException;
 import project.yata.common.util.jwt.JsonWebTokenProvider;
 import project.yata.dto.JoinRequest;
+import project.yata.dto.LoginResponse;
 import project.yata.entity.Account;
 import project.yata.persistence.AccountRepository;
 import project.yata.service.AuthService;
@@ -49,14 +50,16 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(String email, String password) {
+    public LoginResponse login(String email, String password) {
 
         // Todo ID+PW 검증
 
         if(false)
             throw new LoginFailedException("사용자 인증에 실패하였습니다.");
 
-        return jsonWebTokenProvider.generateToken(email);
+        LoginResponse loginResponse = new LoginResponse().generateTokens(jsonWebTokenProvider.generateToken(email, "access"), jsonWebTokenProvider.generateToken(email, "refresh"));
+
+        return loginResponse;
     }
 }
 
