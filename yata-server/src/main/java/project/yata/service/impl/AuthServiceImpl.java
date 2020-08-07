@@ -30,7 +30,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public boolean join(JoinRequest joinRequest) {
         checkDuplicateEmail(joinRequest.getEmail());
-        if (!StringUtils.isEmpty(
+        if(StringUtils.isEmpty(
                 accountRepository.save(
                         getAccountByJoinRequest(joinRequest)
                 )
