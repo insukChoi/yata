@@ -65,5 +65,5 @@ DE Schema: Intellij - Persistence - entity - ER diagram
 http://localhost:8088/swagger-ui.html
 
 ## Contributor
-insukChoi, kyuli.yeo, kuu2002
+kyuli.yeo, kuu2002, insukChoi
 
