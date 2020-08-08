@@ -41,7 +41,8 @@ public class Travel extends BaseEntity {
 
     @Builder
     public Travel(Long accountId, String title, String place,
-                  String period,  ZonedDateTime timeDiff, String memo)
+                  String period,  ZonedDateTime timeDiff, String memo,
+                  LocalDateTime startDate, LocalDateTime endDate)
     {
         Assert.notNull(accountId, "Account ID must be not null from Travel class");
         Assert.notNull(title, "Traveling title must be not null from Travel class");
@@ -52,5 +53,7 @@ public class Travel extends BaseEntity {
 
         this.timeDiff = timeDiff;
         this.memo = memo;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 }
