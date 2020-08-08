@@ -18,20 +18,19 @@ import project.yata.service.YataService;
 public class YataController {
 
     private YataService yataService;
+    @GetMapping
+    public ResponseEntity<?> index() {
+        return new ResponseEntity<>("Hello Yata", HttpStatus.OK);
+    }
+
     @PostMapping("/travel")
     public ResponseEntity<?> travel(@RequestBody TravelRequest travelRequest) {
         return new ResponseEntity<>(Response.builder().code(Code.SUCCESS.getCode())
                 .data(yataService.travel(travelRequest)).build(), HttpStatus.OK);
     }
 
-    @PostMapping("/travel")
+    @GetMapping("/travel")
     public ResponseEntity<?> travelInfo(@RequestHeader("ACCOUNT-ID") Long accountId) {
         return new ResponseEntity<>(yataService.travelInfo(accountId), HttpStatus.OK);
     }
-
-    @GetMapping("")
-    public ResponseEntity<?> index() {
-        return new ResponseEntity<>("Hello Yata", HttpStatus.OK);
-    }
-
 }
