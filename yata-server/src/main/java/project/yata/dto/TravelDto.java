@@ -2,11 +2,13 @@ package project.yata.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Getter
+@NoArgsConstructor
 public class TravelDto {
 
     private Long accountId;

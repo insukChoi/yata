@@ -44,8 +44,7 @@ public class YataServiceImpl implements YataService {
     }
 
     @Override
-    public TravelDto travelInfo(Long accountId) {
-        Travel travel = travelRepository.findByAccountId(accountId);
-        return null;
+    public Travel travelInfo(Long accountId) {
+        return travelRepository.findByAccountId(accountId);
     }
 }

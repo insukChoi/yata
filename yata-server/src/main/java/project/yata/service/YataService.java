@@ -9,5 +9,5 @@ import java.util.List;
 public interface YataService {
     List<Account> getAccountList();
     Travel travel(TravelDto travelDto);
-    TravelDto travelInfo(Long accountId);
+    Travel travelInfo(Long accountId);
 }
