@@ -3,7 +3,7 @@ package project.yata.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import project.yata.dto.TravelRequest;
+import project.yata.dto.TravelDto;
 import project.yata.entity.Account;
 import project.yata.entity.Travel;
 import project.yata.persistence.AccountRepository;
@@ -26,22 +26,25 @@ public class YataServiceImpl implements YataService {
     }
 
     @Override
-    public Long travel(TravelRequest travelRequest) {
-        Travel travel = Travel.builder()
-                .accountId(travelRequest.getAccountId())
-                .title(travelRequest.getTitle())
-                .memo(travelRequest.getMemo())
-                .place(travelRequest.getPlace())
-                .timeDiff(travelRequest.getTimeDiff())
-                .endDate(travelRequest.getEndDate())
-                .startDate(travelRequest.getStartDate())
-                .build();
+    //Travel 등록
+    public Travel travel(TravelDto travelDto) {
 
-        return travel.getAccountId();
+        Travel travel = Travel.builder()
+                .accountId(travelDto.getAccountId())
+                .title(travelDto.getTitle())
+                .memo(travelDto.getMemo())
+                .place(travelDto.getPlace())
+                .timeDiff(travelDto.getTimeDiff())
+                .endDate(travelDto.getEndDate())
+                .startDate(travelDto.getStartDate())
+                .build();
+        //DB에 저장하고, 저장된 객체로 return
+
+        return travelRepository.save(travel);
     }
 
     @Override
-    public TravelRequest travelInfo(Long accountId) {
+    public TravelDto travelInfo(Long accountId) {
         Travel travel = travelRepository.findByAccountId(accountId);
         return null;
     }

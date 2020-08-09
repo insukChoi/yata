@@ -2,13 +2,12 @@ package project.yata.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import project.yata.entity.Travel;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Getter
-public class TravelRequest {
+public class TravelDto {
 
     private Long accountId;
     private String title;
@@ -19,8 +18,8 @@ public class TravelRequest {
     private String place;
 
     @Builder
-    public TravelRequest(Long accountId, String title, ZonedDateTime timeDiff, LocalDateTime startDate,
-                         LocalDateTime endDate, String memo, String place){
+    public TravelDto(Long accountId, String title, ZonedDateTime timeDiff, LocalDateTime startDate,
+                     LocalDateTime endDate, String memo, String place){
         this.accountId = accountId;
         this.title = title;
         this.timeDiff = timeDiff;
