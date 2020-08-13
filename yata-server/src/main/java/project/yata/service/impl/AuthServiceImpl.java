@@ -9,6 +9,7 @@ import project.yata.common.error.exception.JoinFailedException;
 import project.yata.common.error.exception.LoginFailedException;
 import project.yata.common.util.jwt.JsonWebTokenProvider;
 import project.yata.dto.JoinRequest;
+import project.yata.dto.JoinResponse;
 import project.yata.dto.LoginResponse;
 import project.yata.entity.Account;
 import project.yata.persistence.AccountRepository;
@@ -28,14 +29,18 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public boolean join(JoinRequest joinRequest) {
+    public JoinResponse join(JoinRequest joinRequest) {
+
         checkDuplicateEmail(joinRequest.getEmail());
-        if(StringUtils.isEmpty(
-                accountRepository.save(
-                        getAccountByJoinRequest(joinRequest)
-                )
-        )) throw new JoinFailedException("회원가입에 문제가 발생하였습니다.");
-        return true;
+
+        Account joinedAccount = accountRepository.save(
+                getAccountByJoinRequest(joinRequest)
+        );
+
+        if(StringUtils.isEmpty(joinedAccount))
+            throw new JoinFailedException("회원가입에 문제가 발생하였습니다.");
+
+        return new JoinResponse(joinedAccount.getEmail(), joinedAccount.getName());
     }
 
     @Override

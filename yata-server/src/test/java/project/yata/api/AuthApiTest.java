@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import project.yata.dto.JoinRequest;
+import project.yata.dto.JoinResponse;
 import project.yata.service.AuthService;
 import project.yata.web.AuthController;
 import javax.transaction.Transactional;
@@ -24,14 +25,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AuthApiTest {
     @Autowired
     MockMvc mockMvc;
+
     @MockBean
     private AuthService authService;
     ObjectMapper mapper = new ObjectMapper();
+
     @Test
     public void joinSuccessTest() throws Exception {
         //given
         JoinRequest joinRequest = JoinRequest.builder().email("admin@yata.com").name("지수").password("0011").build();
-        given(authService.join(joinRequest)).willReturn(true);
+
+        JoinResponse joinResponse = new JoinResponse(joinRequest.getEmail(), joinRequest.getName());
+
+        given(authService.join(joinRequest)).willReturn(joinResponse);
+
         //when
         final ResultActions actions = mockMvc.perform(post("/api/v2/auth/join")
                 .contentType(MediaType.APPLICATION_JSON)
