@@ -1,6 +1,7 @@
 package project.yata.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -34,10 +35,9 @@ public class AuthApiTest {
     public void joinSuccessTest() throws Exception {
         //given
         JoinRequest joinRequest = JoinRequest.builder().email("admin@yata.com").name("지수").password("0011").build();
+        JoinResponse joinResponse = JoinResponse.builder().email(joinRequest.getEmail()).name(joinRequest.getName()).build();
 
-        JoinResponse joinResponse = new JoinResponse(joinRequest.getEmail(), joinRequest.getName());
-
-        given(authService.join(joinRequest)).willReturn(joinResponse);
+        given(authService.join(Mockito.any(JoinRequest.class))).willReturn(joinResponse);
 
         //when
         final ResultActions actions = mockMvc.perform(post("/api/v2/auth/join")

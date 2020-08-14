@@ -1,4 +1,4 @@
-package project.yata.service.impl;
+package project.yata.service;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AuthServiceImplTest {
+class AuthServiceTest {
 
     @Autowired
     AuthService authService;
