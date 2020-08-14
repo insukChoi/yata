@@ -1,20 +1,14 @@
 package project.yata.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class JoinRequest {
-    private String email;
-    private String name;
-    private String password;
-
-    @Builder
-    public JoinRequest(String email, String name, String password) {
-        this.email = email;
-        this.name = name;
-        this.password = password;
-    }
+    private final String email;
+    private final String name;
+    private final String password;
 }
