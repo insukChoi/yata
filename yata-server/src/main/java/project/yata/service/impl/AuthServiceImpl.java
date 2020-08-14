@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
                 getAccountByJoinRequest(joinRequest)
         );
 
-        if(StringUtils.isEmpty(joinedAccount)) {
+        if (StringUtils.isEmpty(joinedAccount)) {
             throw new JoinFailedException("회원가입에 문제가 발생하였습니다.");
         }
 
@@ -49,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Todo ID+PW 검증
 
-        if(false) {
+        if (false) {
             throw new LoginFailedException("사용자 인증에 실패하였습니다.");
         }
 
