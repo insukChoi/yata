@@ -60,4 +60,17 @@ public class Travel extends BaseEntity {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    public void travelUpdate(String title, String place,
+                             ZonedDateTime timeDiff, String memo,
+                             LocalDateTime startDate, LocalDateTime endDate)
+    {
+        this.title = title;
+        this.place = place;
+
+        this.timeDiff = timeDiff;
+        this.memo = memo;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 }

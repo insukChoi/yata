@@ -34,9 +34,15 @@ public abstract class BaseEntity {
             this.isDeleted = false;
     }
 
+    public void updateDelete(boolean delete)
+    {
+        this.isDeleted = delete;
+    }
+
     @PreUpdate
     public void preUpdate() {
         if(StringUtils.isEmpty(this.updatedAt))
             this.updatedAt = LocalDateTime.now();
     }
+
 }

@@ -28,13 +28,27 @@ public class YataController {
         return new ResponseEntity<>(Response.builder().code(Code.SUCCESS.getCode())
                 .data(yataService.travel(travelDto)).build(), HttpStatus.OK);
     }
-    @GetMapping("/travel")
-    public ResponseEntity<?> travelInfo(@RequestHeader("ACCOUNT-ID") Long accountId) {
-        return new ResponseEntity<>(yataService.travelInfo(accountId), HttpStatus.OK);
+    @GetMapping("/travels")
+    public ResponseEntity<?> travelInfos(@RequestHeader("ACCOUNT-ID") Long accountId) {
+        return new ResponseEntity<>(yataService.travelInfos(accountId), HttpStatus.OK);
     }
 
-//    @PutMapping("/travel")
-//    public ResponseEntity travelUpdate(@RequestHeader("ACCOUNT-ID") Long accountId, @RequestBody TravelDto travelDto){
-//
-//    }
+    @GetMapping("/travel/{travelId}")
+    public ResponseEntity<?> travelInfos(@RequestHeader("ACCOUNT-ID") Long accountId,
+                                         @PathVariable Long travelId) {
+        return new ResponseEntity<>(yataService.travelInfo(accountId, travelId), HttpStatus.OK);
+    }
+
+    @PutMapping("/travel/{travelId}")
+    public ResponseEntity travelUpdate(@RequestHeader("ACCOUNT-ID") Long accountId,
+                                       @PathVariable Long travelId,
+                                       @RequestBody TravelDto travelDto){
+        return new ResponseEntity<>(yataService.travelUpdate(accountId, travelId, travelDto), HttpStatus.OK);
+    }
+    @PutMapping("/travel/delete/{travelId}")
+    public ResponseEntity travelUpdate(@RequestHeader("ACCOUNT-ID") Long accountId,
+                                       @PathVariable Long travelId,
+                                       @RequestBody boolean delete){
+        return new ResponseEntity<>(yataService.travelDelete(accountId, travelId, delete), HttpStatus.OK);
+    }
 }
