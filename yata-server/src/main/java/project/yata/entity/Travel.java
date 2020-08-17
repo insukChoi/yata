@@ -6,7 +6,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
@@ -14,7 +16,8 @@ import java.time.ZonedDateTime;
 @Table(name="TRAVEL")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Travel extends BaseEntity {
+public class Travel extends BaseEntity
+        implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -54,7 +57,6 @@ public class Travel extends BaseEntity {
         this.accountId = accountId;
         this.title = title;
         this.place = place;
-
         this.timeDiff = timeDiff;
         this.memo = memo;
         this.startDate = startDate;

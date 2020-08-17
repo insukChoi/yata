@@ -17,32 +17,24 @@ import project.yata.service.AuthService;
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
-
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
     private final JsonWebTokenProvider jsonWebTokenProvider;
 
     @Override
-    public boolean checkDuplicateEmail(String email) {
+    public void checkDuplicateEmail(String email) {
         if(!StringUtils.isEmpty(accountRepository.findByEmail(email)))
             throw new DuplicateEmailException("이미 등록되어 있는 이메일주소입니다.");
-        return true;
     }
 
     @Override
     public boolean join(JoinRequest joinRequest) {
-
         checkDuplicateEmail(joinRequest.getEmail());
-
-        Account account = Account.builder()
-                .email(joinRequest.getEmail())
-                .name(joinRequest.getName())
-                .password(passwordEncoder.encode(joinRequest.getPassword()))
-                .build();
-
-        if(!StringUtils.isEmpty(accountRepository.save(account)))
-            throw new JoinFailedException("회원가입에 문제가 발생하였습니다.");
-
+        if (!StringUtils.isEmpty(
+                accountRepository.save(
+                        getAccountByJoinRequest(joinRequest)
+                )
+        )) throw new JoinFailedException("회원가입에 문제가 발생하였습니다.");
         return true;
     }
 
@@ -58,5 +50,14 @@ public class AuthServiceImpl implements AuthService {
 
         return loginResponse;
     }
+
+    private Account getAccountByJoinRequest(JoinRequest joinRequest) {
+        return Account.builder()
+                .email(joinRequest.getEmail())
+                .name(joinRequest.getName())
+                .password(passwordEncoder.encode(joinRequest.getPassword()))
+                .build();
+    }
+
 }
 
