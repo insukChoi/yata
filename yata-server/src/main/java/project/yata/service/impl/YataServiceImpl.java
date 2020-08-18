@@ -3,6 +3,7 @@ package project.yata.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import project.yata.common.error.exception.CoustomMessageException;
 import project.yata.dto.TravelDto;
 import project.yata.entity.Account;
 import project.yata.entity.Travel;
@@ -10,9 +11,8 @@ import project.yata.persistence.AccountRepository;
 import project.yata.persistence.TravelRepository;
 import project.yata.service.YataService;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -39,29 +39,30 @@ public class YataServiceImpl implements YataService {
                 .endDate(travelDto.getEndDate())
                 .startDate(travelDto.getStartDate())
                 .build();
-        //DB에 저장하고, 저장된 객체로 return
 
         return travelRepository.save(travel);
     }
 
     @Override
     public Travel travelInfo(Long accountId, Long travelId) {
-        return travelRepository.findByAccountIdAndId(accountId, travelId);
+        Optional<Travel> travel = Optional.ofNullable(travelRepository.findByAccountIdAndId(accountId, travelId));
+
+        return travel.orElseThrow(()
+                -> new CoustomMessageException("There is no plan " + travelId + " travel."));
     }
 
     @Override
     public List<Travel> travelInfos(Long accountId) {
-        return travelRepository.findByAccountId(accountId);
+        List<Travel> travel = travelRepository.findByAccountId(accountId);
+        if(travel.isEmpty())
+            throw new CoustomMessageException("There is no travel plan.");
+        return travel;
     }
 
     @Override
     public Travel travelUpdate(Long accountId, Long travelId, TravelDto travelDto) {
         Travel travel = travelRepository.findByAccountIdAndId(accountId, travelId);
-
-
-        travel.travelUpdate(travelDto.getTitle(), travelDto.getPlace(),
-                travelDto.getTimeDiff(), travelDto.getMemo(), travelDto.getStartDate(),
-                travelDto.getEndDate());
+        travel.travelUpdate(travelDto);
 
         return travelRepository.save(travel);
     }
@@ -69,7 +70,6 @@ public class YataServiceImpl implements YataService {
     @Override
     public Travel travelDelete(Long accountId, Long travelId, boolean delete) {
         Travel travel = travelRepository.findByAccountIdAndId(accountId, travelId);
-
         travel.updateDelete(delete);
 
         return travelRepository.save(travel);

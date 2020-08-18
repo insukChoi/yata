@@ -6,6 +6,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project.yata.dto.TravelDto;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -63,16 +65,14 @@ public class Travel extends BaseEntity
         this.endDate = endDate;
     }
 
-    public void travelUpdate(String title, String place,
-                             ZonedDateTime timeDiff, String memo,
-                             LocalDateTime startDate, LocalDateTime endDate)
+    public void travelUpdate(TravelDto travelDto)
     {
-        this.title = title;
-        this.place = place;
+        this.title = travelDto.getTitle();
+        this.place = travelDto.getPlace();
 
-        this.timeDiff = timeDiff;
-        this.memo = memo;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.timeDiff = travelDto.getTimeDiff();
+        this.memo = travelDto.getMemo();
+        this.startDate = travelDto.getStartDate();
+        this.endDate = travelDto.getEndDate();
     }
 }
