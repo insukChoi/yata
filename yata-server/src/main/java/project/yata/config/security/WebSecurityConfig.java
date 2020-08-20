@@ -21,12 +21,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/","/api/**","/h2/**").permitAll();
+                .antMatchers("/","/api/**","/h2/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+        ;
 
         // JWT를 사용하는 이유로 세션이 불필요하여 STATELESS로 설정
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-//        http.addFilter(new JwtAuthenticationFilter());
 
         // CSRF disable
         http.csrf().disable();

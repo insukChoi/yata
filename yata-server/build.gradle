@@ -12,7 +12,7 @@ dependencies {
     compileOnly ('org.projectlombok:lombok')
     annotationProcessor ('org.projectlombok:lombok')
     compile ('org.apache.commons:commons-lang3:3.11')
-
+    implementation group: 'com.auth0', name: 'java-jwt', version: '3.1.0'
 }
 
 bootJar.enabled = true

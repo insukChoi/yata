@@ -30,4 +30,10 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestHeader("X-USER-EMAIL") String email, @RequestHeader("X-USER-PASSWORD") String password) {
         return new ResponseEntity<>(authService.login(email, password), HttpStatus.OK);
     }
+
+    @GetMapping("/test")
+    public ResponseEntity<?> test(@RequestHeader("X-USER-EMAIL") String email, @RequestHeader("X-USER-PASSWORD") String password) {
+        return new ResponseEntity<>(false, HttpStatus.OK);
+    }
+
 }
