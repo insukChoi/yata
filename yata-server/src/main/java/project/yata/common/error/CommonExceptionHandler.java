@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import project.yata.common.constant.Code;
-import project.yata.common.error.exception.CoustomMessageException;
+import project.yata.common.error.exception.CustomMessageException;
 import project.yata.common.error.exception.DuplicateEmailException;
 import project.yata.common.error.exception.JoinFailedException;
 
@@ -17,8 +17,8 @@ public class CommonExceptionHandler {
         return new ResponseEntity<>(ErrorResponse.builder().code(Code.ERROR0002.getCode()).message(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({CoustomMessageException.class})
-    protected ResponseEntity<ErrorResponse> stringException(CoustomMessageException e) {
+    @ExceptionHandler({CustomMessageException.class})
+    protected ResponseEntity<ErrorResponse> stringException(CustomMessageException e) {
         return new ResponseEntity<>(ErrorResponse.builder().code(Code.ERROR0002.getCode()).message(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
     }
 

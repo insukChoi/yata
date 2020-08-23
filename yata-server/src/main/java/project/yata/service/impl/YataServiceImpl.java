@@ -3,7 +3,7 @@ package project.yata.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import project.yata.common.error.exception.CoustomMessageException;
+import project.yata.common.error.exception.CustomMessageException;
 import project.yata.dto.TravelDto;
 import project.yata.entity.Account;
 import project.yata.entity.Travel;
@@ -48,14 +48,14 @@ public class YataServiceImpl implements YataService {
         Optional<Travel> travel = Optional.ofNullable(travelRepository.findByAccountIdAndId(accountId, travelId));
 
         return travel.orElseThrow(()
-                -> new CoustomMessageException("There is no plan " + travelId + " travel."));
+                -> new CustomMessageException("There is no plan " + travelId + " travel."));
     }
 
     @Override
     public List<Travel> travelInfos(Long accountId) {
         List<Travel> travel = travelRepository.findByAccountId(accountId);
         if(travel.isEmpty())
-            throw new CoustomMessageException("There is no travel plan.");
+            throw new CustomMessageException("There is no travel plan.");
         return travel;
     }
 
