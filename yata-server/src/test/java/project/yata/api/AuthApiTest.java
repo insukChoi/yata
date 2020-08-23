@@ -1,4 +1,5 @@
 package project.yata.api;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -8,15 +9,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import project.yata.dto.JoinRequest;
 import project.yata.dto.JoinResponse;
 import project.yata.service.AuthService;
 import project.yata.web.AuthController;
-import javax.transaction.Transactional;
+
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -33,21 +31,21 @@ public class AuthApiTest {
 
     @Test
     public void joinSuccessTest() throws Exception {
-        //given
+        // given
         JoinRequest joinRequest = JoinRequest.builder().email("admin@yata.com").name("지수").password("0011").build();
         JoinResponse joinResponse = JoinResponse.builder().email(joinRequest.getEmail()).name(joinRequest.getName()).build();
 
         given(authService.join(Mockito.any(JoinRequest.class))).willReturn(joinResponse);
 
-        //when
-        final ResultActions actions = mockMvc.perform(post("/api/v2/auth/join")
+        // when
+        mockMvc.perform(post("/api/v2/auth/join")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(joinRequest)))
-                .andDo(print());
-        //then
-        actions.andExpect(status().isOk())
+                .andDo(print())
+                // then
+                .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.code").value("0000"))
-                .andDo(print());
+                .andExpect(jsonPath("$.data.email").value(joinRequest.getEmail()));
     }
 }

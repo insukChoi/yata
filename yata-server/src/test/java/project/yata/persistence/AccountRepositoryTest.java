@@ -6,7 +6,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.util.StringUtils;
 import project.yata.entity.Account;
+
 import javax.transaction.Transactional;
+
 import static org.assertj.core.api.BDDAssertions.then;
 
 @DataJpaTest

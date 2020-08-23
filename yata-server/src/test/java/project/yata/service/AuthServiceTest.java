@@ -1,35 +1,28 @@
 package project.yata.service;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-
+import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import project.yata.dto.JoinRequest;
 import project.yata.dto.JoinResponse;
 import project.yata.entity.Account;
 import project.yata.persistence.AccountRepository;
-import project.yata.service.AuthService;
 
-import static org.assertj.core.api.BDDAssertions.then;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 class AuthServiceTest {
 
     @Autowired
     AuthService authService;
-
-    @Autowired
-    AccountRepository repository;
 
     @DisplayName("회원가입 성공")
     @Test
@@ -45,8 +38,7 @@ class AuthServiceTest {
         final JoinResponse joinResponse = authService.join(joinRequest);
 
         // then
-        then(joinResponse).isNotNull();
-        then(joinResponse.getEmail().equals(joinRequest.getEmail()));
-        then(joinResponse.getName().equals(joinRequest.getName()));
+        assertThat(joinResponse.getEmail(), Matchers.is(joinRequest.getEmail()));
+        assertThat(joinResponse.getName(), Matchers.is(joinRequest.getName()));
     }
 }

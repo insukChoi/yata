@@ -27,7 +27,7 @@ public abstract class BaseEntity {
 
     @PrePersist
     public void prePersis() {
-        if(StringUtils.isEmpty(this.isDeleted))
+        if (StringUtils.isEmpty(this.isDeleted))
             this.isDeleted = false;
     }
 }

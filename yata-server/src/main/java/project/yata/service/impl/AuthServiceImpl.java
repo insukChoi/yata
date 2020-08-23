@@ -24,7 +24,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void checkDuplicateEmail(String email) {
-        if(!StringUtils.isEmpty(accountRepository.findByEmail(email)))
+        if (!StringUtils.isEmpty(accountRepository.findByEmail(email)))
             throw new DuplicateEmailException("이미 등록되어 있는 이메일주소입니다.");
     }
 

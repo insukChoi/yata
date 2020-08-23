@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name="TRAVEL")
+@Table(name = "TRAVEL")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Travel extends BaseEntity
@@ -21,30 +21,30 @@ public class Travel extends BaseEntity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="account_id", nullable = false)
+    @Column(name = "account_id", nullable = false)
     private Long accountId;
 
-    @Column(name="title", nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name="place")
+    @Column(name = "place")
     private String place;
 
-    @Column(name="start_date")
+    @Column(name = "start_date")
     private LocalDateTime startDate;
 
-    @Column(name="end_date")
+    @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @Column(name="time_difference")
+    @Column(name = "time_difference")
     private ZonedDateTime timeDiff; // 나라는 입력하면, 한국 시간이랑, 그 나라의 시간이 보이도록?!
 
-    @Column(name="memo")
+    @Column(name = "memo")
     private String memo;
 
     @Builder
     public Travel(Long accountId, String title, String place,
-                  String period,  ZonedDateTime timeDiff, String memo) {
+                  String period, ZonedDateTime timeDiff, String memo) {
         Assert.notNull(accountId, "Account ID must be not null from Travel class");
         Assert.notNull(title, "Traveling title must be not null from Travel class");
 

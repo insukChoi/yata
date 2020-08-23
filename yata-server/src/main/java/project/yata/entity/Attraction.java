@@ -13,18 +13,18 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name="ATTRACTION")
+@Table(name = "ATTRACTION")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Attraction extends BaseEntity
         implements Serializable {
-    @Column(name="travel_id", nullable = false)
+    @Column(name = "travel_id", nullable = false)
     private Long travelId;
 
-    @Column(name="picture")
+    @Column(name = "picture")
     private String picture;
 
-    @Column(name="can_parking")
+    @Column(name = "can_parking")
     private boolean canParking;
 
     @Embedded
