@@ -12,7 +12,7 @@ public interface YataService {
     Travel travelInfo(Long accountId, Long travelId);
     List<Travel> travelInfos(Long accountId);
 
-    Travel travelUpdate(Long accountId, Long travelId, TravelDto travelDto);
-    Travel travelDelete(Long accountId, Long travelId, boolean delete);
+    Travel updateTravel(Long accountId, Long travelId, TravelDto travelDto);
+    Travel deleteTravel(Long accountId, Long travelId, boolean delete);
 
 }
