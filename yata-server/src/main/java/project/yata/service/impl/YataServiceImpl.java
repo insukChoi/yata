@@ -45,10 +45,15 @@ public class YataServiceImpl implements YataService {
 
     @Override
     public Travel travelInfo(Long accountId, Long travelId) {
-        Optional<Travel> travel = Optional.ofNullable(
-                                    travelRepository.findByAccountIdAndId(accountId, travelId));
+        Optional<Travel> travel = travelRepository.findByAccountIdAndId(accountId, travelId);
         return travel.orElseThrow(()
-                -> new EmptyInfoException("There is no plan " + travelId + " travel."));
+                -> new EmptyInfoException("There is no " + travelId + " travel plan."));
+
+//        Travel travel = travelRepository.findByAccountIdAndId(accountId, travelId);
+//
+//        if(travel == null)
+//            new EmptyInfoException("There is no plan " + travelId + " travel.");
+//        return travel;
     }
 
     @Override
@@ -61,18 +66,19 @@ public class YataServiceImpl implements YataService {
 
     @Override
     public Travel updateTravel(Long accountId, Long travelId, TravelDto travelDto) {
-        Travel travel = travelRepository.findByAccountIdAndId(accountId, travelId);
-        if(travelDto != null) {
-            travel.travelUpdate(travelDto);
-        }
-        return travelRepository.save(travel);
+        Optional<Travel> travel = travelRepository.findByAccountIdAndId(accountId, travelId);
+        travel.orElseThrow(() ->
+                new EmptyInfoException("There is no " + travelId + " travel plan"));
+        travel.ifPresent(it -> it.travelUpdate(travelDto));
+        return travelRepository.save(travel.get());
     }
 
     @Override
     public Travel deleteTravel(Long accountId, Long travelId, boolean delete) {
-        Travel travel = travelRepository.findByAccountIdAndId(accountId, travelId);
-        travel.updateDelete(delete);
-
-        return travelRepository.save(travel);
+        Optional<Travel> travel = travelRepository.findByAccountIdAndId(accountId, travelId);
+        travel.orElseThrow(() ->
+                new EmptyInfoException("There is no " + travelId + " travel plan"));
+        travel.ifPresent(it -> it.updateDelete(delete));
+        return travelRepository.save(travel.get());
     }
 }
