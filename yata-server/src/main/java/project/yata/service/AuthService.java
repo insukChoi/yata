@@ -3,6 +3,7 @@ package project.yata.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import project.yata.common.error.exception.DuplicateEmailException;
 import project.yata.common.error.exception.JoinFailedException;
@@ -13,6 +14,8 @@ import project.yata.dto.JoinResponse;
 import project.yata.dto.LoginResponse;
 import project.yata.entity.Account;
 import project.yata.persistence.AccountRepository;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,10 +36,6 @@ public class AuthService {
         Account joinedAccount = accountRepository.save(
                 getAccountByJoinRequest(joinRequest)
         );
-
-        if (StringUtils.isEmpty(joinedAccount)) {
-            throw new JoinFailedException("회원가입에 문제가 발생하였습니다.");
-        }
 
         return new JoinResponse(joinedAccount.getEmail(), joinedAccount.getName());
     }
