@@ -1,22 +1,14 @@
 package project.yata.service;
 
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import project.yata.dto.JoinRequest;
 import project.yata.dto.JoinResponse;
-import project.yata.entity.Account;
-import project.yata.persistence.AccountRepository;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
 class AuthServiceTest {
