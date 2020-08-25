@@ -17,6 +17,11 @@ import project.yata.persistence.AccountRepository;
 
 import java.util.Optional;
 
+/**
+ * @author JisuNa
+ * @version 1.0
+ * @since 2020.08.25
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthService {
