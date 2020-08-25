@@ -19,6 +19,7 @@ import java.util.Optional;
 
 /**
  * 회원관리 서비스
+ *
  * @author JisuNa
  * @version 1.0
  * @since 2020.08.25
@@ -32,14 +33,18 @@ public class AuthService {
 
     /**
      * 이메일 중복체크
+     *
      * @param email
      */
     public void checkDuplicateEmail(String email) {
-        Optional.ofNullable(accountRepository.findByEmail(email)).orElseThrow(() -> new DuplicateEmailException());
+        if (!StringUtils.isEmpty(accountRepository.findByEmail(email))) {
+            throw new DuplicateEmailException();
+        }
     }
 
     /**
      * 회원가입
+     *
      * @param joinRequest
      * @return JoinResponse
      */
