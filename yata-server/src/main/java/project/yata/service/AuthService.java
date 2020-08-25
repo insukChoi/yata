@@ -35,8 +35,7 @@ public class AuthService {
      * @param email
      */
     public void checkDuplicateEmail(String email) {
-        if (!StringUtils.isEmpty(accountRepository.findByEmail(email)))
-            throw new DuplicateEmailException();
+        Optional.ofNullable(accountRepository.findByEmail(email)).orElseThrow(() -> new DuplicateEmailException());
     }
 
     /**
