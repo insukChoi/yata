@@ -34,7 +34,7 @@ public class AuthService {
     /**
      * 이메일 중복체크
      *
-     * @param email
+     * @param email 이메일 주소
      */
     public void checkDuplicateEmail(String email) {
         if (!StringUtils.isEmpty(accountRepository.findByEmail(email))) {
@@ -59,6 +59,13 @@ public class AuthService {
         return new JoinResponse(joinedAccount.getEmail(), joinedAccount.getName());
     }
 
+    /**
+     * 로그인
+     *
+     * @param email 이메일 주소
+     * @param password 비밀번호
+     * @return JWT
+     */
     public LoginResponse login(String email, String password) {
 
         // Todo ID+PW 검증
