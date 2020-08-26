@@ -32,7 +32,12 @@ public class AuthApiTest {
     @Test
     public void joinSuccessTest() throws Exception {
         // given
-        JoinRequest joinRequest = JoinRequest.builder().email("admin@yata.com").name("지수").password("0011").build();
+        JoinRequest joinRequest = new JoinRequest();
+
+        joinRequest.setEmail("admin@yata.com");
+        joinRequest.setName("지수");
+        joinRequest.setPassword("0011");
+
         JoinResponse joinResponse = JoinResponse.builder().email(joinRequest.getEmail()).name(joinRequest.getName()).build();
 
         given(authService.join(Mockito.any(JoinRequest.class))).willReturn(joinResponse);
