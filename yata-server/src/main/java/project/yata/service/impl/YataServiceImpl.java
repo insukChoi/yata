@@ -45,7 +45,8 @@ public class YataServiceImpl implements YataService {
 
     @Override
     public Travel travelInfo(Long accountId, Long travelId) {
-        Optional<Travel> travel = travelRepository.findByAccountIdAndId(accountId, travelId);
+        Optional<Travel> travel = Optional.ofNullable(
+                                    travelRepository.findByAccountIdAndId(accountId, travelId));
         return travel.orElseThrow(()
                 -> new EmptyInfoException("There is no " + travelId + " travel plan."));
     }
@@ -60,15 +61,15 @@ public class YataServiceImpl implements YataService {
 
     @Override
     public Travel updateTravel(Long accountId, Long travelId, TravelDto travelDto) {
-        Optional<Travel> travel = Optional.ofNullable(travelInfo(accountId, travelId));
-        travel.get().travelUpdate(travelDto);
-        return travelRepository.save(travel.get());
+        Travel travel = travelInfo(accountId, travelId);
+        travel.travelUpdate(travelDto);
+        return travelRepository.save(travel);
     }
 
     @Override
     public Travel deleteTravel(Long accountId, Long travelId, boolean delete) {
-        Optional<Travel> travel = Optional.ofNullable(travelInfo(accountId, travelId));
-        travel.get().updateDelete(delete);
-        return travelRepository.save(travel.get());
+        Travel travel = travelInfo(accountId, travelId);
+        travel.updateDelete(delete);
+        return travelRepository.save(travel);
     }
 }
