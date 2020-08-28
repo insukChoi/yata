@@ -69,8 +69,11 @@ public class YataServiceImpl implements YataService {
         Optional<Travel> travel = travelRepository.findByAccountIdAndId(accountId, travelId);
         travel.orElseThrow(() ->
                 new EmptyInfoException("There is no " + travelId + " travel plan"));
-        travel.ifPresent(it -> it.travelUpdate(travelDto));
-        return travelRepository.save(travel.get());
+        travel.ifPresent(it -> {
+            it.travelUpdate(travelDto);
+            travelRepository.save(travel.get());
+        });
+        return travel.get();
     }
 
     @Override
@@ -78,7 +81,11 @@ public class YataServiceImpl implements YataService {
         Optional<Travel> travel = travelRepository.findByAccountIdAndId(accountId, travelId);
         travel.orElseThrow(() ->
                 new EmptyInfoException("There is no " + travelId + " travel plan"));
-        travel.ifPresent(it -> it.updateDelete(delete));
-        return travelRepository.save(travel.get());
+        travel.ifPresent(it -> {
+            it.updateDelete(delete);
+            travelRepository.save(travel.get());
+        });
+
+        return travel.get();
     }
 }
