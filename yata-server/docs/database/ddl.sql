@@ -13,10 +13,10 @@ create table TRAVEL
 (
     id              bigint auto_increment primary key,
     account_id      bigint not null,
-    title           varchar(8) not null,
-    place           varchar(8) not null,
+    title           varchar(255) not null,
+    place           varchar(255) not null,
     time_difference int          not null,
-    memo            varchar(8) not null,
+    memo            varchar(255) not null,
     start_date      varchar(255) not null,
     end_date        varchar(255) not null,
     is_deleted      tinyint(1)   not null comment 'Delete flag(0:삭제아님/1:삭제)',
