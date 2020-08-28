@@ -30,4 +30,10 @@ public abstract class BaseEntity {
         if(StringUtils.isEmpty(this.isDeleted))
             this.isDeleted = false;
     }
+    public void updateDelete(boolean delete)
+    {
+        this.isDeleted = delete;
+    }
+
+
 }
