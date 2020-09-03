@@ -24,10 +24,7 @@ class AuthServiceTest {
         final String name = "queen";
         final String password = "pulledmytriggernowhesdead";
 
-        JoinRequest joinRequest = new JoinRequest();
-        joinRequest.setEmail(email);
-        joinRequest.setName(name);
-        joinRequest.setPassword(password);
+        JoinRequest joinRequest = JoinRequest.builder().email(email).name(name).password(password).build();
 
         // when
         final JoinResponse joinResponse = authService.join(joinRequest);
