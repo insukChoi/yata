@@ -16,9 +16,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .antMatchers("/","/api/**","/h2/**").permitAll().anyRequest().authenticated();
         http.authorizeRequests()
-                .antMatchers("/","/api/**","/h2/**").permitAll().anyRequest().authenticated();
-
+                .antMatchers("/","/**","/api/**","/h2/**").permitAll().anyRequest().authenticated();
         http.csrf().disable();
 
         http.headers().frameOptions().disable();    // H2 접근차단 해제 관련 설정
