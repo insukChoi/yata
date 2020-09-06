@@ -1,10 +1,12 @@
 package project.yata.service;
 
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.StringUtils;
 import project.yata.dto.JoinRequest;
 import project.yata.dto.JoinResponse;
 
@@ -30,7 +32,7 @@ class AuthServiceTest {
         final JoinResponse joinResponse = authService.join(joinRequest);
 
         // then
-        assertThat(joinResponse.getEmail(), Matchers.is(joinRequest.getEmail()));
-        assertThat(joinResponse.getName(), Matchers.is(joinRequest.getName()));
+        Assertions.assertEquals(joinResponse.getEmail(), joinRequest.getEmail());
+        Assertions.assertEquals(joinResponse.getName(), joinRequest.getName());
     }
 }
