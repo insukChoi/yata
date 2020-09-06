@@ -30,5 +30,4 @@ public class TravelDto {
         this.memo = memo;
         this.place = place;
     }
-
 }
