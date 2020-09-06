@@ -10,8 +10,14 @@ import Icons from "@/pages/Icons.vue";
 import Maps from "@/pages/Maps.vue";
 import Typography from "@/pages/Typography.vue";
 import TableList from "@/pages/TableList.vue";
+import Login from "@/components/Login/Login";
 
 const routes = [
+  {
+    path: "/login",
+    name: "login",
+    component: Login,
+  },
   {
     path: "/",
     component: DashboardLayout,
@@ -20,37 +26,44 @@ const routes = [
       {
         path: "dashboard",
         name: "dashboard",
-        component: Dashboard
+        component: Dashboard,
+        meta: {authRequired: true}
       },
       {
         path: "stats",
         name: "stats",
-        component: UserProfile
+        component: UserProfile,
+        meta: {authRequired: true}
       },
       {
         path: "notifications",
         name: "notifications",
-        component: Notifications
+        component: Notifications,
+        meta: {authRequired: true}
       },
       {
         path: "icons",
         name: "icons",
-        component: Icons
+        component: Icons,
+        meta: {authRequired: true}
       },
       {
         path: "maps",
         name: "maps",
-        component: Maps
+        component: Maps,
+        meta: {authRequired: true}
       },
       {
         path: "typography",
         name: "typography",
-        component: Typography
+        component: Typography,
+        meta: {authRequired: true}
       },
       {
         path: "table-list",
         name: "table-list",
-        component: TableList
+        component: TableList,
+        meta: {authRequired: true}
       }
     ]
   },
