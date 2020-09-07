@@ -24,4 +24,14 @@ public abstract class BaseEntity {
 
     private boolean deleted;
 
+    @PrePersist
+    public void prePersis() {
+        if(StringUtils.isEmpty(this.isDeleted))
+            this.isDeleted = false;
+    }
+    public void updateDelete(boolean delete)
+    {
+        this.isDeleted = delete;
+    }
+
 }
