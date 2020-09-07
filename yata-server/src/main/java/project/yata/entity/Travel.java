@@ -1,10 +1,13 @@
 package project.yata.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.jsonwebtoken.lang.Assert;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project.yata.dto.TravelDto;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,13 +33,17 @@ public class Travel extends BaseEntity
     @Column(name = "place")
     private String place;
 
-    @Column(name = "start_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+    @Column(name="start_date")
     private LocalDateTime startDate;
 
-    @Column(name = "end_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+    @Column(name="end_date")
     private LocalDateTime endDate;
 
-    @Column(name = "time_difference")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss+HH:mm", timezone = "Asia/Seoul")
+    @Column(name="time_difference")
+
     private ZonedDateTime timeDiff; // 나라는 입력하면, 한국 시간이랑, 그 나라의 시간이 보이도록?!
 
     @Column(name = "memo")
@@ -44,7 +51,9 @@ public class Travel extends BaseEntity
 
     @Builder
     public Travel(Long accountId, String title, String place,
-                  String period, ZonedDateTime timeDiff, String memo) {
+                  ZonedDateTime timeDiff, String memo,
+                  LocalDateTime startDate, LocalDateTime endDate)
+    {
         Assert.notNull(accountId, "Account ID must be not null from Travel class");
         Assert.notNull(title, "Traveling title must be not null from Travel class");
 
@@ -53,5 +62,18 @@ public class Travel extends BaseEntity
         this.place = place;
         this.timeDiff = timeDiff;
         this.memo = memo;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public void travelUpdate(TravelDto travelDto)
+    {
+        this.title = travelDto.getTitle();
+        this.place = travelDto.getPlace();
+
+        this.timeDiff = travelDto.getTimeDiff();
+        this.memo = travelDto.getMemo();
+        this.startDate = travelDto.getStartDate();
+        this.endDate = travelDto.getEndDate();
     }
 }
