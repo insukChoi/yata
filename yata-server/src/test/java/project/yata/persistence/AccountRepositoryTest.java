@@ -28,7 +28,7 @@ class AccountRepositoryTest {
 
         Account member = accountRepository.findByEmail(account.getEmail());
 
-        Assertions.assertTrue(!StringUtils.isEmpty(member));
+        Assertions.assertFalse(StringUtils.isEmpty(member));
         Assertions.assertEquals(account.getEmail(), member.getEmail());
         Assertions.assertEquals(account.getName(), member.getName());
         Assertions.assertEquals(account.getPassword(), member.getPassword());
