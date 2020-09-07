@@ -12,18 +12,18 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name="ACCOUNT")
+@Table(name = "ACCOUNT")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Account extends BaseEntity
         implements Serializable {
-    @Column(name="email", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name="password", nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Builder

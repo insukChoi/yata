@@ -13,21 +13,21 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="PLAN")
+@Table(name = "PLAN")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Plan extends BaseEntity
         implements Serializable {
-    @Column(name="travel_id", nullable = false)
+    @Column(name = "travel_id", nullable = false)
     private Long travelId;
 
-    @Column(name="time", nullable = false)
+    @Column(name = "time", nullable = false)
     private LocalDateTime time;
 
-    @Column(name="memo")
+    @Column(name = "memo")
     private String memo;
 
-    @Column(name="linkTo") // linkToAccomodation, linkToBudget, linkToRestaurant, linkToTrasport...?
+    @Column(name = "linkTo") // linkToAccomodation, linkToBudget, linkToRestaurant, linkToTrasport...?
     private String linkTo;
 
     @Builder
