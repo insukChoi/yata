@@ -2,6 +2,7 @@ package project.yata.service;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.StringUtils;
 import project.yata.dto.JoinRequest;
 import project.yata.dto.JoinResponse;
+import project.yata.dto.LoginResponse;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -35,4 +37,31 @@ class AuthServiceTest {
         Assertions.assertEquals(joinResponse.getEmail(), joinRequest.getEmail());
         Assertions.assertEquals(joinResponse.getName(), joinRequest.getName());
     }
+
+    @DisplayName("로그인 성공")
+    @Test
+    void successLogin() throws Exception {
+
+        // given
+        final String email = "admin@yata.com";
+        final String name = "queen";
+        final String password = "0011";
+
+        JoinRequest joinRequest = JoinRequest.builder()
+                .email(email)
+                .name(name)
+                .password(password)
+                .build();
+
+        authService.join(joinRequest);
+
+        // when
+        LoginResponse loginResponse = authService.login(email, password);
+
+        // then
+        Assertions.assertFalse(StringUtils.isEmpty(loginResponse));
+
+    }
+
+
 }
