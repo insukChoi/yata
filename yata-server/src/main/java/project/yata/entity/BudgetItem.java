@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="BUDGET_ITEM")
+@Table(name = "BUDGET_ITEM")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class BudgetItem extends BaseEntity
@@ -20,22 +20,22 @@ public class BudgetItem extends BaseEntity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="budget_id", nullable = false)
+    @Column(name = "budget_id", nullable = false)
     private Long budgetId;
 
-    @Column(name="is_on_Travel", nullable = false)
+    @Column(name = "is_on_Travel", nullable = false)
     private boolean isOnTravel;
 
-    @Column(name="date", nullable = false)
+    @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
-    @Column(name="price", nullable = false)
+    @Column(name = "price", nullable = false)
     private String price;
 
-    @Column(name="detail", nullable = false)
+    @Column(name = "detail", nullable = false)
     private String detail;
 
-    @Column(name="memo")
+    @Column(name = "memo")
     private String memo;
 
     @Builder

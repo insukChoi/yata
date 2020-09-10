@@ -3,7 +3,9 @@ package project.yata.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import project.yata.common.error.exception.EmptyInfoException;
+import project.yata.dto.TravelDeleteDto;
 import project.yata.dto.TravelDto;
 import project.yata.entity.Account;
 import project.yata.entity.Travel;
@@ -46,30 +48,31 @@ public class YataServiceImpl implements YataService {
     @Override
     public Travel travelInfo(Long accountId, Long travelId) {
         Optional<Travel> travel = Optional.ofNullable(
-                                    travelRepository.findByAccountIdAndId(accountId, travelId));
+                travelRepository.findByAccountIdAndId(accountId, travelId));
         return travel.orElseThrow(()
                 -> new EmptyInfoException("There is no " + travelId + " travel plan."));
     }
 
     @Override
-    public List<Travel> travelInfos(Long accountId) {
+    public List<Travel> travelInfos(Long accountId, int offset, int count) {
         List<Travel> travel = travelRepository.findByAccountId(accountId);
-        if(travel.isEmpty())
+        if (travel.isEmpty())
             throw new EmptyInfoException("There is no travel plan.");
-        return travel;
+        return travel.subList(offset, count);
     }
 
     @Override
-    public Travel updateTravel(Long accountId, Long travelId, TravelDto travelDto) {
-        Travel travel = travelInfo(accountId, travelId);
+    public Travel updateTravel(Long travelId, TravelDto travelDto) {
+        System.out.println(travelDto.getAccountId() + " " + travelId);
+        Travel travel = travelInfo(travelDto.getAccountId(), travelId);
         travel.travelUpdate(travelDto);
         return travelRepository.save(travel);
     }
 
     @Override
-    public Travel deleteTravel(Long accountId, Long travelId, boolean delete) {
-        Travel travel = travelInfo(accountId, travelId);
-        travel.updateDelete(delete);
+    public Travel deleteTravel(TravelDeleteDto travelDeleteDto) {
+        Travel travel = travelInfo(travelDeleteDto.getAccountId(), travelDeleteDto.getId());
+        travel.updateDelete(travelDeleteDto.isDelete());
         return travelRepository.save(travel);
     }
 }

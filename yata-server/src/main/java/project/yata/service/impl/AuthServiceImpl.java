@@ -23,7 +23,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void checkDuplicateEmail(String email) {
-        if(!StringUtils.isEmpty(accountRepository.findByEmail(email)))
+        if (!StringUtils.isEmpty(accountRepository.findByEmail(email)))
             throw new DuplicateEmailException("이미 등록되어 있는 이메일주소입니다.");
     }
 
@@ -43,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Todo ID+PW 검증
 
-        if(false)
+        if (false)
             throw new LoginFailedException("사용자 인증에 실패하였습니다.");
 
         LoginResponse loginResponse = new LoginResponse().generateTokens(jsonWebTokenProvider.generateToken(email, "access"), jsonWebTokenProvider.generateToken(email, "refresh"));

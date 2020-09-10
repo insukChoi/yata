@@ -21,7 +21,7 @@ public class TravelDto {
 
     @Builder
     public TravelDto(Long accountId, String title, ZonedDateTime timeDiff, LocalDateTime startDate,
-                     LocalDateTime endDate, String memo, String place){
+                     LocalDateTime endDate, String memo, String place) {
         this.accountId = accountId;
         this.title = title;
         this.timeDiff = timeDiff;

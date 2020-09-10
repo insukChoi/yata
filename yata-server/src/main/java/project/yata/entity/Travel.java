@@ -8,14 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project.yata.dto.TravelDto;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name="TRAVEL")
+@Table(name = "TRAVEL")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Travel extends BaseEntity
@@ -24,35 +23,34 @@ public class Travel extends BaseEntity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="account_id", nullable = false)
+    @Column(name = "account_id", nullable = false)
     private Long accountId;
 
-    @Column(name="title", nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name="place")
+    @Column(name = "place")
     private String place;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-    @Column(name="start_date")
+    @Column(name = "start_date")
     private LocalDateTime startDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-    @Column(name="end_date")
+    @Column(name = "end_date")
     private LocalDateTime endDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss+HH:mm", timezone = "Asia/Seoul")
-    @Column(name="time_difference")
+    @Column(name = "time_difference")
     private ZonedDateTime timeDiff; // 나라는 입력하면, 한국 시간이랑, 그 나라의 시간이 보이도록?!
 
-    @Column(name="memo")
+    @Column(name = "memo")
     private String memo;
 
     @Builder
     public Travel(Long accountId, String title, String place,
                   ZonedDateTime timeDiff, String memo,
-                  LocalDateTime startDate, LocalDateTime endDate)
-    {
+                  LocalDateTime startDate, LocalDateTime endDate) {
         Assert.notNull(accountId, "Account ID must be not null from Travel class");
         Assert.notNull(title, "Traveling title must be not null from Travel class");
 
@@ -65,14 +63,13 @@ public class Travel extends BaseEntity
         this.endDate = endDate;
     }
 
-    public void travelUpdate(TravelDto travelDto)
-    {
-        this.title = travelDto.getTitle();
-        this.place = travelDto.getPlace();
+    public void travelUpdate(TravelDto travelUpdateDto) {
+        this.title = travelUpdateDto.getTitle();
+        this.place = travelUpdateDto.getPlace();
 
-        this.timeDiff = travelDto.getTimeDiff();
-        this.memo = travelDto.getMemo();
-        this.startDate = travelDto.getStartDate();
-        this.endDate = travelDto.getEndDate();
+        this.timeDiff = travelUpdateDto.getTimeDiff();
+        this.memo = travelUpdateDto.getMemo();
+        this.startDate = travelUpdateDto.getStartDate();
+        this.endDate = travelUpdateDto.getEndDate();
     }
 }
