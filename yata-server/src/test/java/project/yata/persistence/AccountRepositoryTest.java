@@ -15,26 +15,26 @@ import javax.transaction.Transactional;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class AccountRepositoryTest {
 
-    @Autowired
-    AccountRepository accountRepository;
+	@Autowired
+	AccountRepository accountRepository;
 
-    @Test
-    void findByEmail() {
+	@Test
+	void findByEmail() {
 
-        //given
-        Account account = Account.builder().email("admin@yata.com").name("queen").password("pulledmytriggernowhesdead").build();
+		//given
+		Account account = Account.builder().email("admin@yata.com").name("queen").password("pulledmytriggernowhesdead").build();
 
-        insertAccount(account);
+		insertAccount(account);
 
-        Account member = accountRepository.findByEmail(account.getEmail());
+		Account member = accountRepository.findByEmail(account.getEmail());
 
-        Assertions.assertFalse(StringUtils.isEmpty(member));
-        Assertions.assertEquals(account.getEmail(), member.getEmail());
-        Assertions.assertEquals(account.getName(), member.getName());
-        Assertions.assertEquals(account.getPassword(), member.getPassword());
-    }
+		Assertions.assertFalse(StringUtils.isEmpty(member));
+		Assertions.assertEquals(account.getEmail(), member.getEmail());
+		Assertions.assertEquals(account.getName(), member.getName());
+		Assertions.assertEquals(account.getPassword(), member.getPassword());
+	}
 
-    private void insertAccount(Account account) {
+	private void insertAccount(Account account) {
 		accountRepository.save(account);
 	}
 }

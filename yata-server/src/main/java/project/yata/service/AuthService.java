@@ -68,15 +68,18 @@ public class AuthService {
      */
     public LoginResponse login(String email, String password) {
 
-        // Todo ID+PW 검증
+        Account account = accountRepository.findByEmail(email);
 
-        if (false) {
+        boolean checkPwd = passwordEncoder.matches(password, account.getPassword());
+
+        if (!checkPwd) {
             throw new LoginFailedException("사용자 인증에 실패하였습니다.");
         }
 
-        LoginResponse loginResponse = new LoginResponse().generateTokens(jsonWebTokenProvider.generateToken(email, "access"), jsonWebTokenProvider.generateToken(email, "refresh"));
-
-        return loginResponse;
+        return new LoginResponse().generateTokens(
+                jsonWebTokenProvider.generateToken(email, "access"),
+                jsonWebTokenProvider.generateToken(email, "refresh")
+        );
     }
 
     private Account getAccountByJoinRequest(JoinRequest joinRequest) {
