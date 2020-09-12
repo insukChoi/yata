@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name="TRAVEL")
+@Table(name = "TRAVEL")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Travel extends BaseEntity
@@ -24,13 +24,13 @@ public class Travel extends BaseEntity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="account_id", nullable = false)
+    @Column(name = "account_id", nullable = false)
     private Long accountId;
 
-    @Column(name="title", nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name="place")
+    @Column(name = "place")
     private String place;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
@@ -43,9 +43,10 @@ public class Travel extends BaseEntity
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss+HH:mm", timezone = "Asia/Seoul")
     @Column(name="time_difference")
+
     private ZonedDateTime timeDiff; // 나라는 입력하면, 한국 시간이랑, 그 나라의 시간이 보이도록?!
 
-    @Column(name="memo")
+    @Column(name = "memo")
     private String memo;
 
     @Builder

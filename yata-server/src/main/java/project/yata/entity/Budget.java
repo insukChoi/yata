@@ -12,15 +12,15 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name="BUDGET")
+@Table(name = "BUDGET")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Budget extends BaseEntity
         implements Serializable {
-    @Column(name="travel_id", nullable = false)
+    @Column(name = "travel_id", nullable = false)
     private Long travelId;
 
-    @Column(name="exchange_info", nullable = false)
+    @Column(name = "exchange_info", nullable = false)
     private String exchangeInfo;
 
     @Builder
