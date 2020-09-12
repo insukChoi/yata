@@ -20,22 +20,19 @@
                   dark
                   flat
               >
-                <v-toolbar-title>Login form</v-toolbar-title>
+                <v-toolbar-title>YATA Login</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn
-                        :href="source"
-                        icon
-                        large
-                        target="_blank"
-                        v-on="on"
-                    >
-                      <v-icon>mdi-code-tags</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>Source</span>
-                </v-tooltip>
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                      :href="source"
+                      icon
+                      large
+                      target="_blank"
+                      v-on="on"
+                  >
+                    <v-icon>mdi-code-tags</v-icon>
+                  </v-btn>
+                </template>
               </v-toolbar>
               <v-card-text>
                 <v-form>
@@ -57,7 +54,8 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary">Login</v-btn>
+                <v-btn color="primary" v-on:click="checkLogin">Login</v-btn>
+                <v-btn color="primary" v-on:click="register">Register</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -80,6 +78,15 @@
     props: {
       source: String,
     },
+    methods: {
+      checkLogin: function () {
+        localStorage.setItem('user', 'insuk');
+        this.$router.push({name: 'dashboard'});
+      },
+      register: function () {
+        this.$router.push({name: 'register'});
+      }
+    }
   }
 </script>
 
