@@ -15,7 +15,7 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="ti-panel"></i>
+              <i class="ti-drupal"></i>
               <p>Stats</p>
             </a>
           </li>
@@ -37,41 +37,54 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" v-on:click="logout">
+              <i class="ti-close"></i>
+              <p>
+                Logout
+              </p>
+            </a>
+          </li>
         </ul>
       </div>
-    </div></nav>
+    </div>
+  </nav>
 </template>
 <script>
-export default {
-  computed: {
-    routeName() {
-      const { name } = this.$route;
-      return this.capitalizeFirstLetter(name);
+  export default {
+    computed: {
+      routeName() {
+        const {name} = this.$route;
+        return this.capitalizeFirstLetter(name);
+      }
+    },
+    data() {
+      return {
+        activeNotifications: false
+      };
+    },
+    methods: {
+      capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      },
+      toggleNotificationDropDown() {
+        this.activeNotifications = !this.activeNotifications;
+      },
+      closeDropDown() {
+        this.activeNotifications = false;
+      },
+      toggleSidebar() {
+        this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+      },
+      hideSidebar() {
+        this.$sidebar.displaySidebar(false);
+      },
+      logout() {
+        localStorage.removeItem('user');
+        this.$router.push({name: 'login'});
+      }
     }
-  },
-  data() {
-    return {
-      activeNotifications: false
-    };
-  },
-  methods: {
-    capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    },
-    toggleNotificationDropDown() {
-      this.activeNotifications = !this.activeNotifications;
-    },
-    closeDropDown() {
-      this.activeNotifications = false;
-    },
-    toggleSidebar() {
-      this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
-    },
-    hideSidebar() {
-      this.$sidebar.displaySidebar(false);
-    }
-  }
-};
+  };
 </script>
 <style>
 </style>

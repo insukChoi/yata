@@ -43,7 +43,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Paper Dashboard"
+      default: "야타랑 떠나볼텨?"
     },
     backgroundColor: {
       type: String,

@@ -11,12 +11,18 @@ import Maps from "@/pages/Maps.vue";
 import Typography from "@/pages/Typography.vue";
 import TableList from "@/pages/TableList.vue";
 import Login from "@/components/Login/Login";
+import Register from "@/components/Login/Register";
 
 const routes = [
   {
     path: "/login",
     name: "login",
     component: Login,
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: Register,
   },
   {
     path: "/",
@@ -27,43 +33,36 @@ const routes = [
         path: "dashboard",
         name: "dashboard",
         component: Dashboard,
-        meta: {authRequired: true}
       },
       {
         path: "stats",
         name: "stats",
         component: UserProfile,
-        meta: {authRequired: true}
       },
       {
         path: "notifications",
         name: "notifications",
         component: Notifications,
-        meta: {authRequired: true}
       },
       {
         path: "icons",
         name: "icons",
         component: Icons,
-        meta: {authRequired: true}
       },
       {
         path: "maps",
         name: "maps",
         component: Maps,
-        meta: {authRequired: true}
       },
       {
         path: "typography",
         name: "typography",
         component: Typography,
-        meta: {authRequired: true}
       },
       {
         path: "table-list",
         name: "table-list",
         component: TableList,
-        meta: {authRequired: true}
       }
     ]
   },
