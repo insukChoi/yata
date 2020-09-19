@@ -1,19 +1,25 @@
 package project.yata.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import project.yata.dto.JoinRequest;
+import project.yata.dto.JoinResponse;
+import project.yata.service.AuthService;
 import project.yata.web.AuthController;
 
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(AuthController.class)
 @AutoConfigureMockMvc
@@ -22,31 +28,54 @@ public class AuthControllerTest {
     @Autowired
     MockMvc mockMvc;
 
+    @MockBean
+    private AuthService authService;
+
     ObjectMapper mapper = new ObjectMapper();
+
+    JoinRequest joinRequest;
+    JoinResponse joinResponse;
 
     @Test
     public void joinTest() throws Exception {
 
+        // given
+        join();
+
         // when
         mockMvc.perform(post("/api/v2/auth/join")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(null)))
+                .content(mapper.writeValueAsString(joinRequest)))
                 .andDo(print())
                 // then
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.code").value("0000"))
+                .andExpect(jsonPath("$.data.email").value(joinRequest.getEmail()));
     }
 
     @Test
     public void loginTest() throws Exception {
 
+        // given
+        join();
+
         // when
-        mockMvc.perform(get("/api/v2/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(null)))
+        mockMvc.perform(
+                get("/api/v2/auth/login")
+                        .header("X-USER-EMAIL",joinRequest.getEmail())
+                        .header("X-USER-PASSWORD",joinRequest.getPassword()))
                 // then
                 .andDo(print())
                 .andExpect(status().isOk())
-        ;
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.code").value("0000"));
+    }
+
+    private void join() {
+        joinRequest = JoinRequest.builder().email("admin@yata.com").name("지수").password("0011").build();
+        joinResponse = JoinResponse.builder().email(joinRequest.getEmail()).name(joinRequest.getName()).build();
+
+        given(authService.join(Mockito.any(JoinRequest.class))).willReturn(joinResponse);
     }
 }

@@ -27,6 +27,7 @@ public class AuthController {
     }
 
     @GetMapping("/login")
+    @ResponseBody
     public ResponseEntity<?> login(@RequestHeader("X-USER-EMAIL") String email, @RequestHeader("X-USER-PASSWORD") String password) {
         return new ResponseEntity<>(authService.login(email, password), HttpStatus.OK);
     }

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.StringUtils;
 import project.yata.dto.JoinRequest;
 import project.yata.dto.JoinResponse;
 import project.yata.dto.LoginResponse;
@@ -56,7 +55,7 @@ class AuthServiceTest {
         LoginResponse loginResponse = authService.login(email, password);
 
         // then
-        Assertions.assertFalse(StringUtils.isEmpty(loginResponse));
+        Assertions.assertNotNull(loginResponse);// 수정
 
     }
 
