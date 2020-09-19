@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import project.yata.common.error.exception.EmptyInfoException;
 import project.yata.dto.TravelDeleteDto;
 import project.yata.dto.TravelDto;
+import project.yata.dto.TravelUpdateDto;
 import project.yata.entity.Account;
 import project.yata.entity.Travel;
 import project.yata.persistence.AccountRepository;
@@ -58,21 +59,23 @@ public class YataServiceImpl implements YataService {
         List<Travel> travel = travelRepository.findByAccountId(accountId);
         if (travel.isEmpty())
             throw new EmptyInfoException("There is no travel plan.");
+        if(travel.size() < count)
+            return travel.subList(offset, travel.size());
+//            throw new EmptyInfoException("The count exceeds travel size.");
         return travel.subList(offset, count);
     }
 
     @Override
-    public Travel updateTravel(Long travelId, TravelDto travelDto) {
-        System.out.println(travelDto.getAccountId() + " " + travelId);
-        Travel travel = travelInfo(travelDto.getAccountId(), travelId);
-        travel.travelUpdate(travelDto);
+    public Travel updateTravel(TravelUpdateDto travelUpdateDto) {
+        Travel travel = travelInfo(travelUpdateDto.getAccountId(), travelUpdateDto.getId());
+        travel.travelUpdate(travelUpdateDto);
         return travelRepository.save(travel);
     }
 
     @Override
     public Travel deleteTravel(TravelDeleteDto travelDeleteDto) {
         Travel travel = travelInfo(travelDeleteDto.getAccountId(), travelDeleteDto.getId());
-        travel.updateDelete(travelDeleteDto.isDelete());
+        travel.updateDelete(travelDeleteDto.isDeleted());
         return travelRepository.save(travel);
     }
 }

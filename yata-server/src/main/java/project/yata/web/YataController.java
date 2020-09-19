@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.yata.dto.TravelDeleteDto;
 import project.yata.dto.TravelDto;
+import project.yata.dto.TravelUpdateDto;
 import project.yata.entity.Travel;
 import project.yata.service.YataService;
 
@@ -44,13 +45,13 @@ public class YataController {
         return new ResponseEntity<>(yataService.travelInfo(accountId, travelId), HttpStatus.OK);
     }
 
-    @PutMapping("/travel/{travelId}")
-    public ResponseEntity<Travel> travelUpdate(@PathVariable Long travelId,TravelDto travelDto) {
-        return new ResponseEntity<>(yataService.updateTravel(travelId, travelDto), HttpStatus.OK);
+    @PutMapping("/travel")
+    public ResponseEntity<Travel> travelUpdate(@RequestBody TravelUpdateDto travelUpdateDto) {
+        return new ResponseEntity<>(yataService.updateTravel(travelUpdateDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/travel")
-    public ResponseEntity<Travel> travelUpdate(TravelDeleteDto travelDeleteDto) {
+    public ResponseEntity<Travel> travelUpdate(@RequestBody TravelDeleteDto travelDeleteDto) {
         return new ResponseEntity<>(yataService.deleteTravel(travelDeleteDto), HttpStatus.OK);
     }
 }

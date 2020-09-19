@@ -6,9 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -19,6 +17,10 @@ public class Accompany extends BaseEntity
         implements Serializable {
     @Column(name = "account_id", nullable = false)
     private Long accountId;
+
+    @ManyToOne
+    @JoinColumn(name="id", nullable=false)
+    private Travel travel;
 
     @Column(name = "travel_id", nullable = false)
     private Long travelId;

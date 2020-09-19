@@ -7,11 +7,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project.yata.dto.TravelDto;
+import project.yata.dto.TravelUpdateDto;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "TRAVEL")
@@ -47,6 +49,9 @@ public class Travel extends BaseEntity
     @Column(name = "memo")
     private String memo;
 
+    @OneToMany(mappedBy="Accompany")
+    private Set<Accompany> accompanySet;
+
     @Builder
     public Travel(Long accountId, String title, String place,
                   ZonedDateTime timeDiff, String memo,
@@ -63,7 +68,7 @@ public class Travel extends BaseEntity
         this.endDate = endDate;
     }
 
-    public void travelUpdate(TravelDto travelUpdateDto) {
+    public void travelUpdate(TravelUpdateDto travelUpdateDto) {
         this.title = travelUpdateDto.getTitle();
         this.place = travelUpdateDto.getPlace();
 
