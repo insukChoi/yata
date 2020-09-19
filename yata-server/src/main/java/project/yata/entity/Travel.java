@@ -49,7 +49,7 @@ public class Travel extends BaseEntity
     @Column(name = "memo")
     private String memo;
 
-    @OneToMany(mappedBy="Accompany")
+    @OneToMany(mappedBy="ACCOMPANY")
     private Set<Accompany> accompanySet;
 
     @Builder
