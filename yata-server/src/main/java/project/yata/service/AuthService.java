@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import project.yata.common.error.exception.DuplicateEmailException;
 import project.yata.common.error.exception.JoinFailedException;
 import project.yata.common.error.exception.LoginFailedException;
+import project.yata.common.util.date.DateUtil;
 import project.yata.common.util.jwt.JsonWebTokenProvider;
 import project.yata.dto.JoinRequest;
 import project.yata.dto.JoinResponse;
@@ -15,6 +16,7 @@ import project.yata.dto.LoginResponse;
 import project.yata.entity.Account;
 import project.yata.persistence.AccountRepository;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 /**
@@ -37,7 +39,7 @@ public class AuthService {
      * @param email 이메일 주소
      */
     public void checkDuplicateEmail(String email) {
-        if (!StringUtils.isEmpty(accountRepository.findByEmail(email))) {
+        if(accountRepository.findByEmail(email).isPresent()) {
             throw new DuplicateEmailException();
         }
     }
@@ -56,7 +58,14 @@ public class AuthService {
                 getAccountByJoinRequest(joinRequest)
         );
 
-        return new JoinResponse(joinedAccount.getEmail(), joinedAccount.getName());
+        return new JoinResponse(
+                joinedAccount.getEmail(),
+                joinedAccount.getName(),
+                joinedAccount.getPhone(),
+                joinedAccount.getAddress(),
+                joinedAccount.getEmail(),
+                String.valueOf(joinedAccount.getBirthday())
+        );
     }
 
     /**
@@ -68,9 +77,9 @@ public class AuthService {
      */
     public LoginResponse login(String email, String password) {
 
-        Account account = accountRepository.findByEmail(email);
+        Optional<Account> account = accountRepository.findByEmail(email);
 
-        boolean checkPwd = passwordEncoder.matches(password, account.getPassword());
+        boolean checkPwd = passwordEncoder.matches(password, account.get().getPassword());
 
         if (!checkPwd) {
             throw new LoginFailedException("사용자 인증에 실패하였습니다.");
@@ -83,10 +92,23 @@ public class AuthService {
     }
 
     private Account getAccountByJoinRequest(JoinRequest joinRequest) {
+
+        LocalDate birthday = null;
+
+        // TODO JoinRequest validation check
+
+        if(null != joinRequest.getBirthday()) {
+            birthday = DateUtil.strToLocalDate(joinRequest.getBirthday());
+        }
+
         return Account.builder()
                 .email(joinRequest.getEmail())
                 .name(joinRequest.getName())
                 .password(passwordEncoder.encode(joinRequest.getPassword()))
+                .phone(joinRequest.getPhone())
+                .address(joinRequest.getAddress())
+                .gender(joinRequest.getGender())
+                .birthday(birthday)
                 .build();
     }
 
