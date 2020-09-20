@@ -26,7 +26,7 @@ class AccountRepositoryTest {
 
 		insertAccount(account);
 
-		Account member = accountRepository.findByEmail(account.getEmail());
+		Account member = accountRepository.findByEmail(account.getEmail()).get();
 
 		Assertions.assertNotNull(member);
 		Assertions.assertEquals(account.getEmail(), member.getEmail());
