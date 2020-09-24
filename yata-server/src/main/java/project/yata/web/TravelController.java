@@ -9,16 +9,16 @@ import project.yata.dto.TravelDeleteDto;
 import project.yata.dto.TravelDto;
 import project.yata.dto.TravelUpdateDto;
 import project.yata.entity.Travel;
-import project.yata.service.YataService;
+import project.yata.service.TravelService;
 
 import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-public class YataController {
+public class TravelController {
 
-    private final YataService yataService;
+    private final TravelService yataService;
 
     public ResponseEntity<?> index() {
         return new ResponseEntity<>("Hello Yata", HttpStatus.OK);

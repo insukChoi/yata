@@ -3,7 +3,6 @@ package project.yata.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import project.yata.common.error.exception.EmptyInfoException;
 import project.yata.dto.TravelDeleteDto;
 import project.yata.dto.TravelDto;
@@ -12,7 +11,7 @@ import project.yata.entity.Account;
 import project.yata.entity.Travel;
 import project.yata.persistence.AccountRepository;
 import project.yata.persistence.TravelRepository;
-import project.yata.service.YataService;
+import project.yata.service.TravelService;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +19,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class YataServiceImpl implements YataService {
+public class TravelServiceImpl implements TravelService {
 
     private final AccountRepository accountRepository;
     private final TravelRepository travelRepository;

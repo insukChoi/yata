@@ -13,6 +13,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -49,8 +50,8 @@ public class Travel extends BaseEntity
     @Column(name = "memo")
     private String memo;
 
-    @OneToMany(mappedBy="ACCOMPANY")
-    private Set<Accompany> accompanySet;
+    @OneToMany(targetEntity=Accompany.class)
+    private List<Accompany> accompanies;
 
     @Builder
     public Travel(Long accountId, String title, String place,

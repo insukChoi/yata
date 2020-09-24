@@ -8,7 +8,7 @@ import project.yata.entity.Travel;
 
 import java.util.List;
 
-public interface YataService {
+public interface TravelService {
     List<Account> getAccountList();
 
     Travel travel(TravelDto travelDto);
