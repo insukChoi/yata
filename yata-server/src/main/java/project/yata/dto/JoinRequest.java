@@ -13,12 +13,12 @@ public class JoinRequest {
     private String name;
     private String password;
     private String gender;
-    private String birthday;
+    private LocalDate birthday;
     private String phone;
     private String address;
 
     @Builder
-    public JoinRequest(String email, String name, String password, String gender, String birthday, String phone, String address) {
+    public JoinRequest(String email, String name, String password, String gender, LocalDate birthday, String phone, String address) {
         this.email = email;
         this.name = name;
         this.password = password;

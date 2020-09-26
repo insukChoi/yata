@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import project.yata.common.util.date.DateUtil;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +29,9 @@ public class Account extends BaseEntity
 
     @Column(name = "phone", nullable = true)
     private String phone;
+
+    @Column(name = "post_code", nullable = true)
+    private String postCode;
 
     @Column(name = "address", nullable = true)
     private String address;

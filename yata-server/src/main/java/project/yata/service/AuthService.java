@@ -17,6 +17,7 @@ import project.yata.entity.Account;
 import project.yata.persistence.AccountRepository;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Optional;
 
 /**
@@ -39,9 +40,9 @@ public class AuthService {
      * @param email 이메일 주소
      */
     public void checkDuplicateEmail(String email) {
-        if(accountRepository.findByEmail(email).isPresent()) {
+        accountRepository.findByEmail(email).ifPresent(value -> {
             throw new DuplicateEmailException();
-        }
+        });
     }
 
     /**
@@ -79,10 +80,10 @@ public class AuthService {
 
         Optional<Account> account = accountRepository.findByEmail(email);
 
-        boolean checkPwd = passwordEncoder.matches(password, account.get().getPassword());
+        account.orElseThrow(() -> new LoginFailedException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다."));
 
-        if (!checkPwd) {
-            throw new LoginFailedException("사용자 인증에 실패하였습니다.");
+        if(!passwordEncoder.matches(password, account.get().getPassword())) {
+            throw new LoginFailedException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
         }
 
         return new LoginResponse().generateTokens(
@@ -93,13 +94,7 @@ public class AuthService {
 
     private Account getAccountByJoinRequest(JoinRequest joinRequest) {
 
-        LocalDate birthday = null;
-
         // TODO JoinRequest validation check
-
-        if(null != joinRequest.getBirthday()) {
-            birthday = DateUtil.strToLocalDate(joinRequest.getBirthday());
-        }
 
         return Account.builder()
                 .email(joinRequest.getEmail())
@@ -108,7 +103,7 @@ public class AuthService {
                 .phone(joinRequest.getPhone())
                 .address(joinRequest.getAddress())
                 .gender(joinRequest.getGender())
-                .birthday(birthday)
+                .birthday(joinRequest.getBirthday())
                 .build();
     }
 
