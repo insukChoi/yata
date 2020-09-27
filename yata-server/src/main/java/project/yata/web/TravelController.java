@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 public class TravelController {
 
-    private final TravelService yataService;
+    private final TravelService travelService;
 
     public ResponseEntity<?> index() {
         return new ResponseEntity<>("Hello Yata", HttpStatus.OK);
@@ -28,30 +28,30 @@ public class TravelController {
     public ResponseEntity<Travel> travel(@RequestBody TravelDto travelDto) {
 //        return new ResponseEntity<>(Response.builder().code(Code.SUCCESS.getCode())
 //                .data(yataService.travel(travelDto)).build(), HttpStatus.OK);
-        return new ResponseEntity<>(yataService.travel(travelDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(travelService.travel(travelDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/travels")
     public ResponseEntity<List<Travel>> travelInfos(@RequestParam("accountId") Long accountId,
                                                     @RequestParam("offset") int offset,
                                                     @RequestParam("count") int count) {
-        return new ResponseEntity<>(yataService.travelInfos(accountId, offset, count), HttpStatus.OK);
+        return new ResponseEntity<>(travelService.travelInfos(accountId, offset, count), HttpStatus.OK);
     }
 
 
     @GetMapping("/travel")
     public ResponseEntity<Travel> travelInfos(@RequestParam("accountId") Long accountId,
                                               @RequestParam("travelId") Long travelId) {
-        return new ResponseEntity<>(yataService.travelInfo(accountId, travelId), HttpStatus.OK);
+        return new ResponseEntity<>(travelService.travelInfo(accountId, travelId), HttpStatus.OK);
     }
 
     @PutMapping("/travel")
     public ResponseEntity<Travel> travelUpdate(@RequestBody TravelUpdateDto travelUpdateDto) {
-        return new ResponseEntity<>(yataService.updateTravel(travelUpdateDto), HttpStatus.OK);
+        return new ResponseEntity<>(travelService.updateTravel(travelUpdateDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/travel")
     public ResponseEntity<Travel> travelUpdate(@RequestBody TravelDeleteDto travelDeleteDto) {
-        return new ResponseEntity<>(yataService.deleteTravel(travelDeleteDto), HttpStatus.OK);
+        return new ResponseEntity<>(travelService.deleteTravel(travelDeleteDto), HttpStatus.OK);
     }
 }

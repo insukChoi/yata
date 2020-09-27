@@ -21,9 +21,8 @@ public class Accompany extends BaseEntity
     @Column(name = "travel_id", nullable = false)
     private Long travelId;
 
-
-    @ManyToOne
-    private Travel travel;
+//    @ManyToOne
+//    private Travel travel;
 
     @Builder
     public Accompany(Long accountId, Long id) {
