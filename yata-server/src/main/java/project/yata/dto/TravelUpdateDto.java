@@ -9,8 +9,9 @@ import java.time.ZonedDateTime;
 
 @Getter
 @NoArgsConstructor
-public class TravelDto {
+public class TravelUpdateDto {
 
+    private Long id;
     private Long accountId;
     private String title;
     private ZonedDateTime timeDiff;
@@ -20,8 +21,9 @@ public class TravelDto {
     private String place;
 
     @Builder
-    public TravelDto(Long accountId, String title, ZonedDateTime timeDiff, LocalDateTime startDate,
-                     LocalDateTime endDate, String memo, String place) {
+    public TravelUpdateDto(Long id, Long accountId, String title, ZonedDateTime timeDiff, LocalDateTime startDate,
+                           LocalDateTime endDate, String memo, String place) {
+        this.id = id;
         this.accountId = accountId;
         this.title = title;
         this.timeDiff = timeDiff;
