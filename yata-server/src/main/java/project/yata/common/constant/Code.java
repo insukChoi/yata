@@ -9,7 +9,7 @@ public enum Code {
     SUCCESS("0000", "정상처리"),
     ERROR0001("0001", "필수값 누락"),
     ERROR0002("0002", "중복"),
-    ERROR0003("0003","올바르지 않은 정보");
+    ERROR0003("0003", "올바르지 않은 정보");
 
     final String code;
     final String message;

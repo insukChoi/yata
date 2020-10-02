@@ -11,7 +11,9 @@ public class JoinResponse {
     private final String email;
     private final String name;
     private final String phone;
-    private final String address;
+    private final String zipCode;
+    private final String address1;
+    private final String address2;
     private final String gender;
     private final String birthday;
 }

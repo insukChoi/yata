@@ -3,21 +3,16 @@ package project.yata.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 import project.yata.common.error.exception.DuplicateEmailException;
-import project.yata.common.error.exception.JoinFailedException;
 import project.yata.common.error.exception.LoginFailedException;
-import project.yata.common.util.date.DateUtil;
 import project.yata.common.util.jwt.JsonWebTokenProvider;
 import project.yata.dto.JoinRequest;
 import project.yata.dto.JoinResponse;
 import project.yata.dto.LoginResponse;
 import project.yata.entity.Account;
+import project.yata.entity.Address;
 import project.yata.persistence.AccountRepository;
 
-import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Optional;
 
 /**
@@ -63,7 +58,9 @@ public class AuthService {
                 joinedAccount.getEmail(),
                 joinedAccount.getName(),
                 joinedAccount.getPhone(),
-                joinedAccount.getAddress(),
+                joinedAccount.getAddress().getZipCode(),
+                joinedAccount.getAddress().getAddress1(),
+                joinedAccount.getAddress().getAddress2(),
                 joinedAccount.getEmail(),
                 String.valueOf(joinedAccount.getBirthday())
         );
@@ -72,7 +69,7 @@ public class AuthService {
     /**
      * 로그인
      *
-     * @param email 이메일 주소
+     * @param email    이메일 주소
      * @param password 비밀번호
      * @return JWT
      */
@@ -82,7 +79,7 @@ public class AuthService {
 
         account.orElseThrow(() -> new LoginFailedException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다."));
 
-        if(!passwordEncoder.matches(password, account.get().getPassword())) {
+        if (!passwordEncoder.matches(password, account.get().getPassword())) {
             throw new LoginFailedException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
         }
 
@@ -101,7 +98,13 @@ public class AuthService {
                 .name(joinRequest.getName())
                 .password(passwordEncoder.encode(joinRequest.getPassword()))
                 .phone(joinRequest.getPhone())
-                .address(joinRequest.getAddress())
+                .address(
+                        Address.builder()
+                                .zipCode(joinRequest.getZipCode())
+                                .address1(joinRequest.getAddress1())
+                                .address2(joinRequest.getAddress2())
+                                .build()
+                )
                 .gender(joinRequest.getGender())
                 .birthday(joinRequest.getBirthday())
                 .build();

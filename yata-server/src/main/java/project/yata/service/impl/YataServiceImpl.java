@@ -46,7 +46,7 @@ public class YataServiceImpl implements YataService {
     @Override
     public Travel travelInfo(Long accountId, Long travelId) {
         Optional<Travel> travel = Optional.ofNullable(
-                                    travelRepository.findByAccountIdAndId(accountId, travelId));
+                travelRepository.findByAccountIdAndId(accountId, travelId));
         return travel.orElseThrow(()
                 -> new EmptyInfoException("There is no " + travelId + " travel plan."));
     }
@@ -54,7 +54,7 @@ public class YataServiceImpl implements YataService {
     @Override
     public List<Travel> travelInfos(Long accountId) {
         List<Travel> travel = travelRepository.findByAccountId(accountId);
-        if(travel.isEmpty())
+        if (travel.isEmpty())
             throw new EmptyInfoException("There is no travel plan.");
         return travel;
     }

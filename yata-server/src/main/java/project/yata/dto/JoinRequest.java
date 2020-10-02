@@ -15,16 +15,20 @@ public class JoinRequest {
     private String gender;
     private LocalDate birthday;
     private String phone;
-    private String address;
+    private String zipCode;
+    private String address1;
+    private String address2;
 
     @Builder
-    public JoinRequest(String email, String name, String password, String gender, LocalDate birthday, String phone, String address) {
+    public JoinRequest(String email, String name, String password, String gender, LocalDate birthday, String phone, String zipCode, String address1, String address2) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.gender = gender;
         this.birthday = birthday;
         this.phone = phone;
-        this.address = address;
+        this.zipCode = zipCode;
+        this.address1 = address1;
+        this.address2 = address2;
     }
 }

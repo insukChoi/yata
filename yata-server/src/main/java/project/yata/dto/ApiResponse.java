@@ -7,12 +7,12 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-public class Response {
+public class ApiResponse {
     private String code;
     private Object data;
 
     @Builder
-    public Response(String code, Object data) {
+    public ApiResponse(String code, Object data) {
         this.code = code;
         this.data = data;
     }

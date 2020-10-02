@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -30,11 +31,8 @@ public class Account extends BaseEntity
     @Column(name = "phone", nullable = true)
     private String phone;
 
-    @Column(name = "post_code", nullable = true)
-    private String postCode;
-
-    @Column(name = "address", nullable = true)
-    private String address;
+    @Embedded
+    private Address address;
 
     @Column(name = "gender", nullable = true)
     private String gender;
@@ -43,7 +41,7 @@ public class Account extends BaseEntity
     private LocalDate birthday;
 
     @Builder
-    public Account(String email, String name, String password, String phone, String address, String gender, LocalDate birthday) {
+    public Account(String email, String name, String password, String phone, Address address, String gender, LocalDate birthday) {
         Assert.notNull(email, "e-mail must be not null from Account class");
         Assert.notNull(name, "Name must be not null from Account class");
         Assert.notNull(password, "Password must be not null from Account class");
