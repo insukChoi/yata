@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import project.yata.common.error.exception.DuplicateEmailException;
 import project.yata.common.error.exception.LoginFailedException;
 import project.yata.common.util.jwt.JsonWebTokenProvider;
-import project.yata.dto.JoinRequest;
-import project.yata.dto.JoinResponse;
+import project.yata.dto.AccountRequest;
+import project.yata.dto.AccountResponse;
 import project.yata.dto.LoginResponse;
 import project.yata.entity.Account;
 import project.yata.entity.Address;
@@ -16,7 +16,7 @@ import project.yata.persistence.AccountRepository;
 import java.util.Optional;
 
 /**
- * 회원관리 서비스
+ * 회원인증 서비스
  *
  * @author JisuNa
  * @version 1.0
@@ -43,10 +43,10 @@ public class AuthService {
     /**
      * 회원가입
      *
-     * @param joinRequest
-     * @return JoinResponse
+     * @param   joinRequest
+     * @return  AccountResponse
      */
-    public JoinResponse join(JoinRequest joinRequest) {
+    public AccountResponse join(AccountRequest joinRequest) {
 
         checkDuplicateEmail(joinRequest.getEmail());
 
@@ -54,7 +54,7 @@ public class AuthService {
                 getAccountByJoinRequest(joinRequest)
         );
 
-        return new JoinResponse(
+        return new AccountResponse(
                 joinedAccount.getEmail(),
                 joinedAccount.getName(),
                 joinedAccount.getPhone(),
@@ -69,9 +69,9 @@ public class AuthService {
     /**
      * 로그인
      *
-     * @param email    이메일 주소
-     * @param password 비밀번호
-     * @return JWT
+     * @param   email    이메일 주소
+     * @param   password 비밀번호
+     * @return  JWT
      */
     public LoginResponse login(String email, String password) {
 
@@ -89,7 +89,7 @@ public class AuthService {
         );
     }
 
-    private Account getAccountByJoinRequest(JoinRequest joinRequest) {
+    private Account getAccountByJoinRequest(AccountRequest joinRequest) {
 
         // TODO JoinRequest validation check
 

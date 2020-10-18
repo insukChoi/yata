@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
-public class JoinRequest {
+public class AccountRequest {
     private String email;
     private String name;
     private String password;
@@ -20,7 +20,7 @@ public class JoinRequest {
     private String address2;
 
     @Builder
-    public JoinRequest(String email, String name, String password, String gender, LocalDate birthday, String phone, String zipCode, String address1, String address2) {
+    public AccountRequest(String email, String name, String password, String gender, LocalDate birthday, String phone, String zipCode, String address1, String address2) {
         this.email = email;
         this.name = name;
         this.password = password;

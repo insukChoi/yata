@@ -8,12 +8,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.yata.common.constant.Code;
 import project.yata.dto.ApiResponse;
-import project.yata.dto.JoinRequest;
+import project.yata.dto.AccountRequest;
 import project.yata.service.AuthService;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @Api(tags = {"1. Authentication"})
@@ -25,11 +22,11 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/join")
-    public ResponseEntity<ApiResponse> join(@NonNull @RequestBody JoinRequest joinRequest, HttpServletRequest request) {
+    public ResponseEntity<ApiResponse> join(@NonNull @RequestBody AccountRequest joinRequest) {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .header(HttpHeaders.LOCATION, request.getRequestURI())
+                .header(HttpHeaders.LOCATION, "/api/v2/account?email="+joinRequest.getEmail())
                 .body(
                         ApiResponse.success(
                                 authService.join(joinRequest)

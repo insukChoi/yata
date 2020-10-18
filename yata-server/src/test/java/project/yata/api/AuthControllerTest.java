@@ -1,7 +1,6 @@
 package project.yata.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import project.yata.dto.JoinRequest;
-import project.yata.dto.JoinResponse;
+import project.yata.dto.AccountRequest;
+import project.yata.dto.AccountResponse;
 import project.yata.service.AuthService;
 import project.yata.web.AuthController;
 
@@ -33,8 +32,8 @@ public class AuthControllerTest {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    JoinRequest joinRequest;
-    JoinResponse joinResponse;
+    AccountRequest joinRequest;
+    AccountResponse joinResponse;
 
     @Test
     public void joinTest() throws Exception {
@@ -73,9 +72,9 @@ public class AuthControllerTest {
     }
 
     private void join() {
-        joinRequest = JoinRequest.builder().email("admin@yata.com").name("지수").password("0011").build();
-        joinResponse = JoinResponse.builder().email(joinRequest.getEmail()).name(joinRequest.getName()).build();
+        joinRequest = AccountRequest.builder().email("admin@yata.com").name("지수").password("0011").build();
+        joinResponse = AccountResponse.builder().email(joinRequest.getEmail()).name(joinRequest.getName()).build();
 
-        given(authService.join(Mockito.any(JoinRequest.class))).willReturn(joinResponse);
+        given(authService.join(Mockito.any(AccountRequest.class))).willReturn(joinResponse);
     }
 }

@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class JoinResponse {
+public class AccountResponse {
     private final String email;
     private final String name;
     private final String phone;

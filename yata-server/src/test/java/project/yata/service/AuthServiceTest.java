@@ -5,8 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import project.yata.dto.JoinRequest;
-import project.yata.dto.JoinResponse;
+import project.yata.dto.AccountRequest;
+import project.yata.dto.AccountResponse;
 import project.yata.dto.LoginResponse;
 
 @SpringBootTest
@@ -24,10 +24,10 @@ class AuthServiceTest {
         final String name = "queen";
         final String password = "pulledmytriggernowhesdead";
 
-        JoinRequest joinRequest = JoinRequest.builder().email(email).name(name).password(password).build();
+        AccountRequest joinRequest = AccountRequest.builder().email(email).name(name).password(password).build();
 
         // when
-        final JoinResponse joinResponse = authService.join(joinRequest);
+        final AccountResponse joinResponse = authService.join(joinRequest);
 
         // then
         Assertions.assertEquals(joinResponse.getEmail(), joinRequest.getEmail());
@@ -43,7 +43,7 @@ class AuthServiceTest {
         final String name = "queen";
         final String password = "0011";
 
-        JoinRequest joinRequest = JoinRequest.builder()
+        AccountRequest joinRequest = AccountRequest.builder()
                 .email(email)
                 .name(name)
                 .password(password)
