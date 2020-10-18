@@ -27,23 +27,25 @@ public class AuthController {
     @PostMapping("/join")
     public ResponseEntity<ApiResponse> join(@NonNull @RequestBody JoinRequest joinRequest, HttpServletRequest request) {
 
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
                 .header(HttpHeaders.LOCATION, request.getRequestURI())
-                .body(ApiResponse.builder()
-                        .code(Code.SUCCESS.getCode())
-                        .data(authService.join(joinRequest))
-                        .build()
+                .body(
+                        ApiResponse.success(
+                                authService.join(joinRequest)
+                        )
                 );
     }
 
     @GetMapping("/login")
     public ResponseEntity<ApiResponse> login(@RequestHeader("X-USER-EMAIL") String email, @RequestHeader("X-USER-PASSWORD") String password) {
-        return new ResponseEntity<>(
-                ApiResponse.builder()
-                        .code(Code.SUCCESS.getCode())
-                        .data(authService.login(email, password))
-                        .build()
-                , HttpStatus.OK
-        );
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        ApiResponse.success(
+                                authService.login(email, password)
+                        )
+                );
     }
 }

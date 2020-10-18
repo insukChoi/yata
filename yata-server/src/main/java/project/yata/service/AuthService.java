@@ -61,7 +61,7 @@ public class AuthService {
                 joinedAccount.getAddress().getZipCode(),
                 joinedAccount.getAddress().getAddress1(),
                 joinedAccount.getAddress().getAddress2(),
-                joinedAccount.getEmail(),
+                joinedAccount.getGender(),
                 String.valueOf(joinedAccount.getBirthday())
         );
     }

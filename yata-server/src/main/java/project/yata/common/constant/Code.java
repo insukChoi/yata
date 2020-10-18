@@ -11,6 +11,6 @@ public enum Code {
     ERROR0002("0002", "중복"),
     ERROR0003("0003", "올바르지 않은 정보");
 
-    final String code;
-    final String message;
+    private final String code;
+    private final String message;
 }
