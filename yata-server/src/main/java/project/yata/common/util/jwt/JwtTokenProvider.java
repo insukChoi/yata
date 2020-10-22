@@ -16,7 +16,7 @@ import java.util.Base64;
 import java.util.Date;
 
 @Component
-public class JsonWebTokenProvider {
+public class JwtTokenProvider {
 
     @Value("test")
     private String secretKey;
@@ -63,5 +63,14 @@ public class JsonWebTokenProvider {
         // 유효시간 (Access Token: 15분, Refresh Token: 24시간)
         int min = StringUtils.equals("access", type) ? accessTokenValid : refreshTokenValid;
         return DateUtil.getMillisecond(min);
+    }
+
+    public String getUserEmailFromJWT(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return String.valueOf(claims.getSubject());
     }
 }

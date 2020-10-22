@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.yata.common.error.exception.DuplicateEmailException;
 import project.yata.common.error.exception.LoginFailedException;
-import project.yata.common.util.jwt.JsonWebTokenProvider;
+import project.yata.common.util.jwt.JwtTokenProvider;
 import project.yata.dto.AccountRequest;
 import project.yata.dto.AccountResponse;
 import project.yata.dto.LoginResponse;
@@ -27,7 +27,7 @@ import java.util.Optional;
 public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
-    private final JsonWebTokenProvider jsonWebTokenProvider;
+    private final JwtTokenProvider jsonWebTokenProvider;
 
     /**
      * 이메일 중복체크
