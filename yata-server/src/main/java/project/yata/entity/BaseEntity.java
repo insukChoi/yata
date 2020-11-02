@@ -23,15 +23,16 @@ public abstract class BaseEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    private boolean deleted;
+    private boolean isDeleted;
 
     @PrePersist
     public void prePersis() {
-        if (StringUtils.isEmpty(this.deleted))
-            this.deleted = false;
+        if (StringUtils.isEmpty(this.isDeleted))
+            this.isDeleted = false;
     }
+
     public void updateDelete(boolean delete) {
-        this.deleted = delete;
+        this.isDeleted = delete;
     }
 
 }

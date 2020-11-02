@@ -3,6 +3,8 @@ package project.yata.persistence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import project.yata.entity.Account;
 
+import java.util.Optional;
+
 public interface AccountRepository extends JpaRepository<Account, Long> {
-    Account findByEmail(String email);
+    Optional<Account> findByEmail(String email);
 }

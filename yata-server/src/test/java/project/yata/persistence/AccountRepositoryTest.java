@@ -11,7 +11,7 @@ import project.yata.entity.Account;
 import javax.transaction.Transactional;
 
 @DataJpaTest
-@Transactional
+@Transactional // 제거
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class AccountRepositoryTest {
 
@@ -26,9 +26,9 @@ class AccountRepositoryTest {
 
 		insertAccount(account);
 
-		Account member = accountRepository.findByEmail(account.getEmail());
+		Account member = accountRepository.findByEmail(account.getEmail()).get();
 
-		Assertions.assertFalse(StringUtils.isEmpty(member));
+		Assertions.assertNotNull(member);
 		Assertions.assertEquals(account.getEmail(), member.getEmail());
 		Assertions.assertEquals(account.getName(), member.getName());
 		Assertions.assertEquals(account.getPassword(), member.getPassword());

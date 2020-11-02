@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface TravelRepository extends JpaRepository<Travel, Long> {
     Travel findByAccountIdAndId(Long accountId, Long travelId);
+
     List<Travel> findByAccountId(Long accountId);
 }
