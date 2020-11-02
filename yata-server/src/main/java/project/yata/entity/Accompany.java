@@ -6,9 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -23,8 +21,11 @@ public class Accompany extends BaseEntity
     @Column(name = "travel_id", nullable = false)
     private Long travelId;
 
+//    @ManyToOne
+//    private Travel travel;
+
     @Builder
-    public Accompany(Long accountId, Long travelId) {
+    public Accompany(Long accountId, Long id) {
         Assert.notNull(accountId, "Account ID must be not null from Accompany class");
         Assert.notNull(travelId, "Travel ID must be not null from Accompany class");
 

@@ -1,94 +1,12 @@
 package project.yata.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
-import project.yata.common.error.exception.DuplicateEmailException;
-import project.yata.common.error.exception.JoinFailedException;
-import project.yata.common.error.exception.LoginFailedException;
-import project.yata.common.util.jwt.JsonWebTokenProvider;
 import project.yata.dto.JoinRequest;
-import project.yata.dto.JoinResponse;
 import project.yata.dto.LoginResponse;
-import project.yata.entity.Account;
-import project.yata.persistence.AccountRepository;
 
-import java.util.Optional;
+public interface AuthService {
+    void checkDuplicateEmail(String email);
 
-/**
- * 회원관리 서비스
- *
- * @author JisuNa
- * @version 1.0
- * @since 2020.08.25
- */
-@Service
-@RequiredArgsConstructor
-public class AuthService {
-    private final PasswordEncoder passwordEncoder;
-    private final AccountRepository accountRepository;
-    private final JsonWebTokenProvider jsonWebTokenProvider;
+    boolean join(JoinRequest joinRequest);
 
-    /**
-     * 이메일 중복체크
-     *
-     * @param email 이메일 주소
-     */
-    public void checkDuplicateEmail(String email) {
-        if (!StringUtils.isEmpty(accountRepository.findByEmail(email))) {
-            throw new DuplicateEmailException();
-        }
-    }
-
-    /**
-     * 회원가입
-     *
-     * @param joinRequest
-     * @return JoinResponse
-     */
-    public JoinResponse join(JoinRequest joinRequest) {
-
-        checkDuplicateEmail(joinRequest.getEmail());
-
-        Account joinedAccount = accountRepository.save(
-                getAccountByJoinRequest(joinRequest)
-        );
-
-        return new JoinResponse(joinedAccount.getEmail(), joinedAccount.getName());
-    }
-
-    /**
-     * 로그인
-     *
-     * @param email 이메일 주소
-     * @param password 비밀번호
-     * @return JWT
-     */
-    public LoginResponse login(String email, String password) {
-
-        Account account = accountRepository.findByEmail(email);
-
-        boolean checkPwd = passwordEncoder.matches(password, account.getPassword());
-
-        if (!checkPwd) {
-            throw new LoginFailedException("사용자 인증에 실패하였습니다.");
-        }
-
-        return new LoginResponse().generateTokens(
-                jsonWebTokenProvider.generateToken(email, "access"),
-                jsonWebTokenProvider.generateToken(email, "refresh")
-        );
-    }
-
-    private Account getAccountByJoinRequest(JoinRequest joinRequest) {
-        return Account.builder()
-                .email(joinRequest.getEmail())
-                .name(joinRequest.getName())
-                .password(passwordEncoder.encode(joinRequest.getPassword()))
-                .build();
-    }
-
+    LoginResponse login(String email, String password);
 }
-
