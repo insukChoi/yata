@@ -26,8 +26,6 @@ public class TravelController {
 
     @PostMapping("/travel")
     public ResponseEntity<Travel> travel(@RequestBody TravelDto travelDto) {
-//        return new ResponseEntity<>(Response.builder().code(Code.SUCCESS.getCode())
-//                .data(yataService.travel(travelDto)).build(), HttpStatus.OK);
         return new ResponseEntity<>(travelService.travel(travelDto), HttpStatus.CREATED);
     }
 
