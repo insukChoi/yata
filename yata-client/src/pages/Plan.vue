@@ -1,12 +1,12 @@
 <template>
     <div class="row">
       <div class="col-xl-4 col-lg-5 col-md-6">
-        <user-card>
+        <maps>
 
-        </user-card>
-        <members-card>
+        </maps>
+        <plan-time-line>
 
-        </members-card>
+        </plan-time-line>
       </div>
       <div class="col-xl-8 col-lg-7 col-md-6">
         <edit-profile-form>
@@ -16,14 +16,14 @@
     </div>
 </template>
 <script>
-import EditProfileForm from "./UserProfile/EditProfileForm.vue";
-import UserCard from "./UserProfile/UserCard.vue";
-import MembersCard from "./UserProfile/MembersCard.vue";
+import EditProfileForm from "./Plan/EditPlanForm.vue";
+import Maps from "./Plan/Maps.vue";
+import PlanTimeLine from "./Plan/PlanTimeLine.vue";
 export default {
   components: {
     EditProfileForm,
-    UserCard,
-    MembersCard
+    Maps,
+    PlanTimeLine
   }
 };
 </script>

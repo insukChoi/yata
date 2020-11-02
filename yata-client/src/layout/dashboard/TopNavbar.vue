@@ -16,7 +16,7 @@
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="ti-drupal"></i>
-              <p>Stats</p>
+              <p>Plan</p>
             </a>
           </li>
           <drop-down class="nav-item"
