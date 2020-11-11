@@ -1,11 +1,16 @@
 package project.yata.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.yata.common.error.exception.DuplicateEmailException;
 import project.yata.common.error.exception.LoginFailedException;
 import project.yata.common.util.jwt.JwtTokenProvider;
+import project.yata.config.security.UserDetailServiceImpl;
 import project.yata.dto.AccountRequest;
 import project.yata.dto.AccountResponse;
 import project.yata.dto.LoginResponse;
@@ -28,6 +33,8 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
     private final JwtTokenProvider jsonWebTokenProvider;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailServiceImpl userDetailServiceImpl;
 
     /**
      * 이메일 중복체크
@@ -73,20 +80,33 @@ public class AuthService {
      * @param   password 비밀번호
      * @return  JWT
      */
-    public LoginResponse login(String email, String password) {
+    public LoginResponse login(String email, String password) throws Exception {
 
-        Optional<Account> account = accountRepository.findByEmail(email);
-
-        account.orElseThrow(() -> new LoginFailedException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다."));
-
-        if (!passwordEncoder.matches(password, account.get().getPassword())) {
-            throw new LoginFailedException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password)
+            );
+        } catch (BadCredentialsException e) {
+            throw new Exception("Incorrect username or passsword", e);
         }
 
         return new LoginResponse().generateTokens(
                 jsonWebTokenProvider.generateToken(email, "access"),
                 jsonWebTokenProvider.generateToken(email, "refresh")
         );
+
+//        Optional<Account> account = accountRepository.findByEmail(email);
+//
+//        account.orElseThrow(() -> new LoginFailedException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다."));
+//
+//        if (!passwordEncoder.matches(password, account.get().getPassword())) {
+//            throw new LoginFailedException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
+//        }
+//
+//        return new LoginResponse().generateTokens(
+//                jsonWebTokenProvider.generateToken(email, "access"),
+//                jsonWebTokenProvider.generateToken(email, "refresh")
+//        );
     }
 
     private Account getAccountByJoinRequest(AccountRequest joinRequest) {
