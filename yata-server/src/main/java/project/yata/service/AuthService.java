@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import project.yata.common.error.exception.DuplicateEmailException;
 import project.yata.common.error.exception.LoginFailedException;
 import project.yata.common.util.jwt.JwtTokenProvider;
+import project.yata.config.security.JwtProvider;
 import project.yata.config.security.UserDetailServiceImpl;
 import project.yata.dto.AccountRequest;
 import project.yata.dto.AccountResponse;
@@ -32,9 +33,8 @@ import java.util.Optional;
 public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
-    private final JwtTokenProvider jsonWebTokenProvider;
+    private final JwtProvider jwtProvider;
     private final AuthenticationManager authenticationManager;
-    private final UserDetailServiceImpl userDetailServiceImpl;
 
     /**
      * 이메일 중복체크
@@ -91,8 +91,8 @@ public class AuthService {
         }
 
         return new LoginResponse().generateTokens(
-                jsonWebTokenProvider.generateToken(email, "access"),
-                jsonWebTokenProvider.generateToken(email, "refresh")
+                jwtProvider.generateToken(email),
+                jwtProvider.generateToken(email)
         );
 
 //        Optional<Account> account = accountRepository.findByEmail(email);
