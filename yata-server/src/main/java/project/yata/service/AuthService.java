@@ -91,8 +91,8 @@ public class AuthService {
         }
 
         return new LoginResponse().generateTokens(
-                jwtProvider.generateToken(email),
-                jwtProvider.generateToken(email)
+                jwtProvider.generateToken(email, "access"),
+                jwtProvider.generateToken(email, "refresh")
         );
 
 //        Optional<Account> account = accountRepository.findByEmail(email);
