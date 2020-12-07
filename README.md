@@ -27,7 +27,7 @@ gradle clean test bootRun
 ```
 
 ## 라이브러리 및 오픈소스
-- Kotlin
+- java 8
 - SpringBoot2.3.1
 - JPA
 - Lombok
