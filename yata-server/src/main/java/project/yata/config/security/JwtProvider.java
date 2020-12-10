@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import project.yata.common.error.exception.InvalidJwtException;
 import project.yata.common.util.date.DateUtil;
 
 import java.time.LocalDate;
@@ -29,7 +30,13 @@ public class JwtProvider {
     private int REFRESH_TOKEN_VALID;
 
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        String extractClaim = null;
+        try {
+            extractClaim = extractClaim(token, Claims::getSubject);
+        } catch (InvalidJwtException e) {
+            e.printStackTrace();
+        }
+        return extractClaim;
     }
 
     public Date extractExpiration(String token) {
@@ -40,6 +47,7 @@ public class JwtProvider {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
+
     private Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
@@ -58,7 +66,11 @@ public class JwtProvider {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(DateUtil.asDate(LocalDate.now()))
-                .setExpiration(DateUtil.asDate(LocalDateTime.now().plusMinutes(StringUtils.equals("access", tokenType) ? 15 : 60)))
+                .setExpiration(
+                        DateUtil.asDate(LocalDateTime.now().plusMinutes(
+                                StringUtils.equals("access", tokenType) ? ACCESS_TOKEN_VALID : REFRESH_TOKEN_VALID)
+                        )
+                )
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }

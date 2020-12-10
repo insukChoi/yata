@@ -1,7 +1,6 @@
 package project.yata.dto;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import project.yata.common.constant.Code;
