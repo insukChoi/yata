@@ -6,6 +6,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import project.yata.common.constant.Security;
 import project.yata.common.error.exception.DuplicateEmailException;
 import project.yata.common.error.exception.LoginFailedException;
 import project.yata.config.security.JwtProvider;
@@ -82,8 +83,8 @@ public class AuthService {
         }
 
         return new LoginResponse().generateTokens(
-                jwtProvider.generateToken(email, "access"),
-                jwtProvider.generateToken(email, "refresh")
+                jwtProvider.generateToken(email, Security.ACCESS.getType()),
+                jwtProvider.generateToken(email, Security.REFRESH.getType())
         );
     }
 

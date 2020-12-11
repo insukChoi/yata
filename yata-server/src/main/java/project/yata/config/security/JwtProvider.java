@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import project.yata.common.error.exception.InvalidJwtException;
+import project.yata.common.constant.Security;
 import project.yata.common.util.date.DateUtil;
 
 import java.time.LocalDate;
@@ -20,23 +20,17 @@ import java.util.function.Function;
 @Component
 public class JwtProvider {
 
-    @Value("secret")
-    private String SECRET_KEY;
+    @Value("${jwt.secret.key}")
+    private String secretKey;
 
     @Value("${jwt.access}")
-    private int ACCESS_TOKEN_VALID;
+    private int accessTokenValid;
 
     @Value("${jwt.refresh}")
-    private int REFRESH_TOKEN_VALID;
+    private int refreshTokenValid;
 
     public String extractUsername(String token) {
-        String extractClaim = null;
-        try {
-            extractClaim = extractClaim(token, Claims::getSubject);
-        } catch (InvalidJwtException e) {
-            e.printStackTrace();
-        }
-        return extractClaim;
+        return extractClaim(token, Claims::getSubject);
     }
 
     public Date extractExpiration(String token) {
@@ -49,7 +43,7 @@ public class JwtProvider {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 
     private Boolean isTokenExpired(String token) {
@@ -68,10 +62,10 @@ public class JwtProvider {
                 .setIssuedAt(DateUtil.asDate(LocalDate.now()))
                 .setExpiration(
                         DateUtil.asDate(LocalDateTime.now().plusMinutes(
-                                StringUtils.equals("access", tokenType) ? ACCESS_TOKEN_VALID : REFRESH_TOKEN_VALID)
+                                StringUtils.equals(Security.ACCESS.getType(), tokenType) ? accessTokenValid : refreshTokenValid)
                         )
                 )
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 

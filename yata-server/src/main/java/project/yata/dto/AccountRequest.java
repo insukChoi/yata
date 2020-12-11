@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Getter
@@ -14,11 +13,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountRequest {
-    @NotNull(message = "Email cannot be an empty value.")
+    @NotBlank(message = "Email cannot be an empty value.")
     private String email;
-    @NotEmpty(message = "name cannot be an empty value.")
+    @NotBlank(message = "name cannot be an empty value.")
     private String name;
-    @NotEmpty(message = "password cannot be an empty value.")
+    @NotBlank(message = "password cannot be an empty value.")
     private String password;
     private String gender;
     private LocalDate birthday;
