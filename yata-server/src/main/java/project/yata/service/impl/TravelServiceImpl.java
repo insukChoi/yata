@@ -55,10 +55,11 @@ public class TravelServiceImpl implements TravelService {
 
     @Override
     public List<Travel> travelInfos(Long accountId, int offset, int count) {
-        List<Travel> travel = travelRepository.findByAccountId(accountId);
         int cnt = travelRepository.countByAccountId(accountId);
         if (cnt == 0)
             throw new EmptyInfoException("There is no travel plan.");
+
+        List<Travel> travel = travelRepository.findByAccountId(accountId);
         if(cnt < count)
             return travel.subList(offset, cnt);
         return travel.subList(offset, count);
