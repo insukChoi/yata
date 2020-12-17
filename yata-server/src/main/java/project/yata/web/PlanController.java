@@ -2,16 +2,16 @@ package project.yata.web;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import project.yata.dto.PlanDto;
 import project.yata.entity.Plan;
 import project.yata.service.PlanService;
 
 import java.net.URI;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,6 +28,13 @@ public class PlanController {
                 .fromController(getClass()).path("/id")
                 .buildAndExpand(savePlan.getTravelId()).toUri();
         return ResponseEntity.created(location).body(savePlan);
+    }
 
+    @GetMapping("/plan")
+    public ResponseEntity<List<Plan>> planLists(@RequestParam("accountId") Long accountId,
+                                                @RequestParam("accountId") Long travelId)
+    {
+
+        return new ResponseEntity<>(planService.planLists(accountId, travelId), HttpStatus.OK);
     }
 }

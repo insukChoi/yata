@@ -26,7 +26,7 @@ public class TravelController {
     @PostMapping("/travel")
     public ResponseEntity<Travel> travel(@RequestBody TravelDto travelDto) {
         Travel saveTravel = travelService.travel(travelDto);
-                URI location = MvcUriComponentsBuilder
+        URI location = MvcUriComponentsBuilder
                 .fromController(getClass()).path("/id")
                 .buildAndExpand(saveTravel.getAccountId()).toUri();
 
