@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 @Getter
 @NoArgsConstructor
-public class PlanDto {
+public class PlanUpdateDto {
+    private Long id;
     private Long accountId;
     private Long travelId;
     private String linkTo;
@@ -17,7 +17,8 @@ public class PlanDto {
     private String memo;
 
     @Builder
-    public PlanDto(Long accountId, Long travelId, LocalDateTime time, String memo, String linkTo) {
+    public PlanUpdateDto(Long id, Long accountId, Long travelId, LocalDateTime time, String memo, String linkTo) {
+        this.id = id;
         this.accountId = accountId;
         this.travelId = travelId;
         this.time = time;

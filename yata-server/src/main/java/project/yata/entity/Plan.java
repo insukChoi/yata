@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project.yata.dto.PlanUpdateDto;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,6 +21,9 @@ public class Plan extends BaseEntity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "account_id", nullable = false)
+    private Long accountId;
+
     @Column(name = "travel_id", nullable = false)
     private Long travelId;
 
@@ -33,13 +37,20 @@ public class Plan extends BaseEntity
     private String linkTo;
 
     @Builder
-    public Plan(Long travelId, LocalDateTime time, String memo, String linkTo) {
-        Assert.notNull(travelId, "Travel ID must be not null from Plan class");
+    public Plan(Long accountId, Long travelId, LocalDateTime time, String memo, String linkTo) {
+        Assert.notNull(accountId, "Account ID must be not null in Plan class");
+        Assert.notNull(travelId, "Travel ID must be not null in Plan class");
 
+        this.accountId = accountId;
         this.travelId = travelId;
         this.time = time;
         this.memo = memo;
         this.linkTo = linkTo;
     }
 
+    public void planUpdate(PlanUpdateDto planUpdateDto) {
+        this.time = planUpdateDto.getTime();
+        this.memo = planUpdateDto.getMemo();
+        this.linkTo = planUpdateDto.getLinkTo();
+    }
 }
