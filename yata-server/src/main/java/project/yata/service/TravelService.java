@@ -15,6 +15,8 @@ public interface TravelService {
 
     Travel travelInfo(Long accountId, Long travelId);
 
+    Travel findById(Long travelId);
+
     List<Travel> travelInfos(Long accountId, int offset, int count);
 
     Travel updateTravel(TravelUpdateDto travelUpdateDto);

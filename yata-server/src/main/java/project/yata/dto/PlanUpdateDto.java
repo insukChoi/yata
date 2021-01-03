@@ -10,17 +10,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PlanUpdateDto {
     private Long id;
-    private Long accountId;
+    private  Long accountId;
     private Long travelId;
     private String linkTo;
     private LocalDateTime time;
     private String memo;
 
     @Builder
-    public PlanUpdateDto(Long id, Long accountId, Long travelId, LocalDateTime time, String memo, String linkTo) {
+    public PlanUpdateDto(Long id, LocalDateTime time, String memo, String linkTo) {
         this.id = id;
-        this.accountId = accountId;
-        this.travelId = travelId;
         this.time = time;
         this.memo = memo;
         this.linkTo = linkTo;

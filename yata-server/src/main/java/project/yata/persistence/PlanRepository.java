@@ -5,12 +5,12 @@ import project.yata.entity.Plan;
 import project.yata.entity.Travel;
 
 import java.util.List;
+import java.util.Set;
 
 public interface PlanRepository extends JpaRepository<Plan, Long> {
+    int countAllByTravel(Travel travel);
 
-    List<Plan> findPlansByAccountIdAndTravelId(Long accountId, Long travelId);
-    int countPlansByAccountIdAndTravelId(Long accountId, Long travelId);
+    List<Plan> findAllByTravel(Travel travel);
 
-    Travel findByAccountIdAndTravelId(Long accountId, Long travelId);
-    Plan findPlanByIdAndAccountIdAndTravelId(Long id, Long accountId, Long travelId);
+    Plan findPlanByIdAndTravel(Long id, Travel travel);
 }

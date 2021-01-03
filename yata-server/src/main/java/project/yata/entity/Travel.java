@@ -1,6 +1,7 @@
 package project.yata.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.jsonwebtoken.lang.Assert;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,6 +14,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +27,10 @@ public class Travel extends BaseEntity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "travel", fetch = FetchType.EAGER)
+    private List<Plan> plans;
 
     @Column(name = "account_id", nullable = false)
     private Long accountId;
@@ -75,4 +81,13 @@ public class Travel extends BaseEntity
         this.startDate = travelUpdateDto.getStartDate();
         this.endDate = travelUpdateDto.getEndDate();
     }
+
+//    public void addPlan(Plan plan)
+//    {
+//        this.plans.add(plan);
+//        if(plan.getTravel() != this)
+//        {
+//            plan.setTravel(this);
+//        }
+//    }
 }

@@ -10,6 +10,7 @@ import project.yata.dto.PlanUpdateDto;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "PLAN")
@@ -21,11 +22,11 @@ public class Plan extends BaseEntity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "account_id", nullable = false)
-    private Long accountId;
-
-    @Column(name = "travel_id", nullable = false)
-    private Long travelId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "TRAVEL_ID"/*, insertable = false, updatable = false */)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+    private Travel travel;
 
     @Column(name = "time", nullable = false)
     private LocalDateTime time;
@@ -37,12 +38,7 @@ public class Plan extends BaseEntity
     private String linkTo;
 
     @Builder
-    public Plan(Long accountId, Long travelId, LocalDateTime time, String memo, String linkTo) {
-        Assert.notNull(accountId, "Account ID must be not null in Plan class");
-        Assert.notNull(travelId, "Travel ID must be not null in Plan class");
-
-        this.accountId = accountId;
-        this.travelId = travelId;
+    public Plan(LocalDateTime time, String memo, String linkTo) {
         this.time = time;
         this.memo = memo;
         this.linkTo = linkTo;
@@ -52,5 +48,14 @@ public class Plan extends BaseEntity
         this.time = planUpdateDto.getTime();
         this.memo = planUpdateDto.getMemo();
         this.linkTo = planUpdateDto.getLinkTo();
+    }
+
+    public void setTravel(Travel travel)
+    {
+        this.travel = travel;
+        if(!travel.getPlans().contains(this))
+        {
+            travel.getPlans().add(this);
+        }
     }
 }
