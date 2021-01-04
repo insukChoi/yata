@@ -11,6 +11,7 @@ import javax.persistence.Embeddable;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Address {
+    @javax.persistence.Column(name = "zip_code")
     private String zipCode;
     private String address1;
     private String address2;
