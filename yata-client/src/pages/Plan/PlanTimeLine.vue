@@ -124,13 +124,11 @@
     methods: {
       comment () {
         if (this.input === "" || this.input == null) return false;
-        const time = (new Date()).toTimeString()
+        const time = new Date()
         this.events.push({
           id: this.nonce++,
           text: this.input,
-          time: time.replace(/:\d{2}\sGMT-\d{4}\s\((.*)\)/, (match, contents, offset) => {
-            return ` ${contents.split(' ').map(v => v.charAt(0)).join('')}`
-          }),
+          time: time.getHours() + ':' + time.getMinutes()
         })
 
         this.input = null
