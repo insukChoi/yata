@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Address {
+    @Column(name = "zip_code")
     private String zipCode;
     private String address1;
     private String address2;

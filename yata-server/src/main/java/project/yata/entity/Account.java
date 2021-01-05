@@ -17,8 +17,7 @@ import java.time.LocalDate;
 @Table(name = "ACCOUNT")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Account extends BaseEntity
-        implements Serializable {
+public class Account extends BaseEntity implements Serializable {
     @Column(name = "email", nullable = false)
     private String email;
 

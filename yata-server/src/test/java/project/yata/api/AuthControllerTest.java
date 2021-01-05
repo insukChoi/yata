@@ -1,6 +1,7 @@
 package project.yata.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,20 +25,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class AuthControllerTest {
 
+    private static final String ACCOUNT_EMAIL = "admin@yata.com";
+    private static final String ACCOUNT_NAME = "jisu";
+    private static final String ACCOUNT_PASSWORD = "0011";
     @Autowired
     MockMvc mockMvc;
-
+    ObjectMapper mapper = new ObjectMapper();
+    AccountRequest joinRequest;
+    AccountResponse joinResponse;
     @MockBean
     private AuthService authService;
 
-    ObjectMapper mapper = new ObjectMapper();
-
-    AccountRequest joinRequest;
-    AccountResponse joinResponse;
-
     @Test
+    @DisplayName("회원가입 성공")
     public void joinTest() throws Exception {
-
         // given
         join();
 
@@ -54,16 +55,16 @@ public class AuthControllerTest {
     }
 
     @Test
+    @DisplayName("로그인 성공")
     public void loginTest() throws Exception {
-
         // given
         join();
 
         // when
         mockMvc.perform(
                 get("/api/v2/auth/login")
-                        .header("X-USER-EMAIL",joinRequest.getEmail())
-                        .header("X-USER-PASSWORD",joinRequest.getPassword()))
+                        .header("X-USER-EMAIL", joinRequest.getEmail())
+                        .header("X-USER-PASSWORD", joinRequest.getPassword()))
                 // then
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -71,8 +72,22 @@ public class AuthControllerTest {
                 .andExpect(jsonPath("$.code").value("0000"));
     }
 
+//    @Test
+//    @DisplayName("로그인 없이 접근 권한 없는 페이지 접근시 실패")
+//    public void requestPageWithoutAuthentication() throws Exception {
+//        // given
+//        join();
+//
+//        // when
+//        mockMvc.perform(
+//                get("/api/v2/account?email="+ACCOUNT_EMAIL))
+//                // then
+//                .andDo(print())
+//                .andExpect(status().isForbidden());
+//    }
+
     private void join() {
-        joinRequest = AccountRequest.builder().email("admin@yata.com").name("지수").password("0011").build();
+        joinRequest = AccountRequest.builder().email(ACCOUNT_EMAIL).name(ACCOUNT_NAME).password(ACCOUNT_PASSWORD).build();
         joinResponse = AccountResponse.builder().email(joinRequest.getEmail()).name(joinRequest.getName()).build();
 
         given(authService.join(Mockito.any(AccountRequest.class))).willReturn(joinResponse);

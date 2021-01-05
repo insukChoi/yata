@@ -1,19 +1,21 @@
 package project.yata.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import project.yata.common.constant.Security;
 import project.yata.common.error.exception.DuplicateEmailException;
 import project.yata.common.error.exception.LoginFailedException;
-import project.yata.common.util.jwt.JsonWebTokenProvider;
+import project.yata.config.security.JwtProvider;
 import project.yata.dto.AccountRequest;
 import project.yata.dto.AccountResponse;
 import project.yata.dto.LoginResponse;
 import project.yata.entity.Account;
 import project.yata.entity.Address;
 import project.yata.persistence.AccountRepository;
-
-import java.util.Optional;
 
 /**
  * 회원인증 서비스
@@ -27,7 +29,8 @@ import java.util.Optional;
 public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
-    private final JsonWebTokenProvider jsonWebTokenProvider;
+    private final JwtProvider jwtProvider;
+    private final AuthenticationManager authenticationManager;
 
     /**
      * 이메일 중복체크
@@ -43,16 +46,14 @@ public class AuthService {
     /**
      * 회원가입
      *
-     * @param   joinRequest
-     * @return  AccountResponse
+     * @param joinRequest 회원가입 정보
+     * @return {@link AccountResponse}
      */
     public AccountResponse join(AccountRequest joinRequest) {
 
         checkDuplicateEmail(joinRequest.getEmail());
 
-        Account joinedAccount = accountRepository.save(
-                getAccountByJoinRequest(joinRequest)
-        );
+        Account joinedAccount = accountRepository.save(getAccountByJoinRequest(joinRequest));
 
         return new AccountResponse(
                 joinedAccount.getEmail(),
@@ -69,23 +70,21 @@ public class AuthService {
     /**
      * 로그인
      *
-     * @param   email    이메일 주소
-     * @param   password 비밀번호
-     * @return  JWT
+     * @param email    이메일 주소
+     * @param password 비밀번호
+     * @return JWT
      */
-    public LoginResponse login(String email, String password) {
+    public LoginResponse login(String email, String password) throws Exception {
 
-        Optional<Account> account = accountRepository.findByEmail(email);
-
-        account.orElseThrow(() -> new LoginFailedException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다."));
-
-        if (!passwordEncoder.matches(password, account.get().getPassword())) {
-            throw new LoginFailedException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        } catch (BadCredentialsException e) {
+            throw new LoginFailedException("Incorrect email or password");
         }
 
         return new LoginResponse().generateTokens(
-                jsonWebTokenProvider.generateToken(email, "access"),
-                jsonWebTokenProvider.generateToken(email, "refresh")
+                jwtProvider.generateToken(email, Security.ACCESS.getType()),
+                jwtProvider.generateToken(email, Security.REFRESH.getType())
         );
     }
 

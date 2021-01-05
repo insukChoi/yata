@@ -1,16 +1,23 @@
 package project.yata.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class AccountRequest {
+    @NotBlank(message = "Email cannot be an empty value.")
     private String email;
+    @NotBlank(message = "name cannot be an empty value.")
     private String name;
+    @NotBlank(message = "password cannot be an empty value.")
     private String password;
     private String gender;
     private LocalDate birthday;
@@ -19,16 +26,4 @@ public class AccountRequest {
     private String address1;
     private String address2;
 
-    @Builder
-    public AccountRequest(String email, String name, String password, String gender, LocalDate birthday, String phone, String zipCode, String address1, String address2) {
-        this.email = email;
-        this.name = name;
-        this.password = password;
-        this.gender = gender;
-        this.birthday = birthday;
-        this.phone = phone;
-        this.zipCode = zipCode;
-        this.address1 = address1;
-        this.address2 = address2;
-    }
 }

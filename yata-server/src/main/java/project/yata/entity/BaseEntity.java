@@ -18,18 +18,14 @@ public abstract class BaseEntity {
     private Long id;
 
     @CreatedDate
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     private boolean deleted;
-
-    @PrePersist
-    public void prePersist() {
-        if (StringUtils.isEmpty(this.deleted))
-            this.deleted = false;
-    }
 
     public void updateDelete(boolean delete) {
         this.deleted = delete;
