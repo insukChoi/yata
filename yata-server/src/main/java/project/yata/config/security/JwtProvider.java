@@ -46,7 +46,7 @@ public class JwtProvider {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
+    private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(DateUtil.asDate(LocalDate.now()));
     }
 
