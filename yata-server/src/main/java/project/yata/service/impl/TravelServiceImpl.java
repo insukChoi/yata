@@ -54,11 +54,6 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public Travel findById(Long travelId) {
-        return null;
-    }
-
-    @Override
     public List<Travel> travelInfos(Long accountId, int offset, int count) {
         int cnt = travelRepository.countByAccountId(accountId);
         if (cnt == 0)

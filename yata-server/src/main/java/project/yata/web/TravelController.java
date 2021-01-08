@@ -25,10 +25,10 @@ public class TravelController {
 
     @PostMapping("/travel")
     public ResponseEntity<Travel> travel(@RequestBody TravelDto travelDto) {
-        Travel saveTravel = travelService.travel(travelDto);
-        URI location = MvcUriComponentsBuilder
-                .fromController(getClass()).path("/id")
-                .buildAndExpand(saveTravel.getAccountId()).toUri();
+        final Travel saveTravel = travelService.travel(travelDto);
+        final URI location = MvcUriComponentsBuilder
+                .fromController(getClass()).path("/travel/{id}/{id}")
+                .buildAndExpand(saveTravel.getAccountId(), saveTravel.getId()).toUri();
 
         return ResponseEntity.created(location).body(saveTravel);
     }

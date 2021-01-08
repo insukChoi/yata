@@ -29,8 +29,9 @@ public class Travel extends BaseEntity
     private Long id;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "travel", fetch = FetchType.EAGER)
-    private List<Plan> plans;
+    @OneToMany(mappedBy = "travel", orphanRemoval = true, fetch = FetchType.EAGER)
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "travel")
+    private Set<Plan> plans;
 
     @Column(name = "account_id", nullable = false)
     private Long accountId;

@@ -23,8 +23,7 @@ public class PlanServiceImpl implements PlanService {
     private final PlanRepository planRepository;
 
     @Override
-    public Plan plan(PlanDto planDto, Travel travel)
-    {
+    public Plan plan(PlanDto planDto, Travel travel) {
         Plan plan = Plan.builder()
                 .linkTo(planDto.getLinkTo())
                 .memo(planDto.getMemo())
@@ -36,15 +35,14 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public List<Plan> planLists(Travel travel) {
-        System.out.println(planRepository.countAllByTravel(travel));
+    public Set<Plan> planLists(Travel travel) {
          if(planRepository.findAllByTravel(travel).isEmpty())
              throw new EmptyInfoException("There is no plan");
          return planRepository.findAllByTravel(travel);
     }
 
 
-    public Plan planInfo(Long id, Travel travel){
+    private Plan planInfo(Long id, Travel travel){
         Plan plan = planRepository.findPlanByIdAndTravel(id, travel);
         if(plan == null)
             throw new EmptyInfoException("There is no suitable information in plans");

@@ -16,7 +16,6 @@ import project.yata.service.PlanService;
 import project.yata.service.TravelService;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -26,7 +25,7 @@ public class PlanController {
     private final PlanService planService;
     private final TravelService travelService;
 
-    public Travel findTravel(Long accountId, Long travelId)
+    private Travel findTravel(Long accountId, Long travelId)
     {
         Travel findTravel = travelService.travelInfo(accountId, travelId);
 
@@ -34,21 +33,18 @@ public class PlanController {
             throw new EmptyInfoException("There is not suitable Travel information");
         return findTravel;
     }
+
     @PostMapping("/plan")
     public ResponseEntity<Plan> plan(@RequestBody PlanDto planDto) {
-
-
-        Plan savePlan = planService.plan(planDto, findTravel(planDto.getAccountId(), planDto.getTravelId()));
-        URI location= MvcUriComponentsBuilder
-                .fromController(getClass()).path("/id")
-                .buildAndExpand(savePlan.getTravel().getId()).toUri();
-
-        return ResponseEntity.created(location).body(savePlan);
+        final Plan savePlan = planService.plan(planDto, findTravel(planDto.getAccountId(), planDto.getTravelId()));
+        return ResponseEntity
+                .created(URI.create(String.format("/plan/%d/%d/%d", savePlan.getTravel().getAccountId(), savePlan.getTravel().getId(), savePlan.getId())))
+                .body(savePlan);
     }
 
     @GetMapping("/plan")
-    public ResponseEntity<List<Plan>> planLists(@RequestParam("accountId") Long accountId,
-                                               @RequestParam("travelId") Long travelId) {
+    public ResponseEntity<Set<Plan>> planLists(@RequestParam("accountId") Long accountId,
+                                                @RequestParam("travelId") Long travelId) {
         return new ResponseEntity<>(planService.planLists(findTravel(accountId, travelId)), HttpStatus.OK);
     }
 

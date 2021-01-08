@@ -12,7 +12,7 @@ import java.util.Set;
 public interface PlanService {
      Plan plan(PlanDto planDto, Travel travel);
 
-     List<Plan> planLists(Travel travel);
+     Set<Plan> planLists(Travel travel);
 
      Plan updatePlan(PlanUpdateDto planUpdateDto, Travel travel);
 
