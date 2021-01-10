@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import project.yata.common.error.exception.EmptyInfoException;
@@ -21,6 +22,7 @@ import java.util.Set;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@Transactional
 public class PlanController {
     private final PlanService planService;
     private final TravelService travelService;

@@ -3,6 +3,7 @@ package project.yata.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.yata.common.error.exception.EmptyInfoException;
 import project.yata.dto.PlanDeleteDto;
 import project.yata.dto.PlanDto;
@@ -17,6 +18,7 @@ import java.util.Set;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PlanServiceImpl implements PlanService {
 //    private final AccountRepository accountRepository;
@@ -35,6 +37,7 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Set<Plan> planLists(Travel travel) {
          if(planRepository.findAllByTravel(travel).isEmpty())
              throw new EmptyInfoException("There is no plan");

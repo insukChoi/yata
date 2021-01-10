@@ -29,8 +29,7 @@ public class Travel extends BaseEntity
     private Long id;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "travel", orphanRemoval = true, fetch = FetchType.EAGER)
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "travel")
+    @OneToMany(mappedBy = "travel", orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Plan> plans;
 
     @Column(name = "account_id", nullable = false)
