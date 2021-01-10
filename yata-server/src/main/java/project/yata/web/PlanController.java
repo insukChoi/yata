@@ -22,7 +22,6 @@ import java.util.Set;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@Transactional
 public class PlanController {
     private final PlanService planService;
     private final TravelService travelService;
@@ -37,6 +36,7 @@ public class PlanController {
     }
 
     @PostMapping("/plan")
+    @Transactional
     public ResponseEntity<Plan> plan(@RequestBody PlanDto planDto) {
         final Plan savePlan = planService.plan(planDto, findTravel(planDto.getAccountId(), planDto.getTravelId()));
         return ResponseEntity
@@ -45,18 +45,21 @@ public class PlanController {
     }
 
     @GetMapping("/plan")
+    @Transactional
     public ResponseEntity<Set<Plan>> planLists(@RequestParam("accountId") Long accountId,
                                                 @RequestParam("travelId") Long travelId) {
         return new ResponseEntity<>(planService.planLists(findTravel(accountId, travelId)), HttpStatus.OK);
     }
 
     @PutMapping("/plan")
+    @Transactional
     public ResponseEntity<Plan> updatePlan(@RequestBody PlanUpdateDto planUpdateDto) {
         return new ResponseEntity<>(planService.updatePlan(planUpdateDto,
                 findTravel(planUpdateDto.getAccountId(), planUpdateDto.getTravelId()) ), HttpStatus.OK);
     }
 
     @DeleteMapping("/plan")
+    @Transactional
     public ResponseEntity<Plan> updatePlan(@RequestBody PlanDeleteDto planDeleteDto) {
         return new ResponseEntity<>(planService.deletePlan(planDeleteDto,
                 findTravel(planDeleteDto.getAccountId(), planDeleteDto.getTravelId())), HttpStatus.OK);
