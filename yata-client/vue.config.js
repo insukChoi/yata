@@ -1,6 +1,13 @@
 module.exports = {
-  lintOnSave: false,
   "transpileDependencies": [
     "vuetify"
-  ]
+  ],
+  devServer: {
+    proxy: {
+      '^/api': {
+        target: 'http://localhost:8080',
+        crossOrigin: true
+      }
+    }
+  }
 };
