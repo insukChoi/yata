@@ -37,8 +37,9 @@
               <v-card-text>
                 <v-form>
                   <v-text-field
-                      label="Login"
-                      name="login"
+                      label="Email"
+                      name="email"
+                      v-model="email"
                       prepend-icon="mdi-account"
                       type="text"
                   ></v-text-field>
@@ -47,6 +48,7 @@
                       id="password"
                       label="Password"
                       name="password"
+                      v-model="password"
                       prepend-icon="mdi-lock"
                       type="password"
                   ></v-text-field>
@@ -72,7 +74,9 @@
       return {
         cssProps: {
           backgroundImage: `url(${require('@/assets/img/loginback.jpeg')})`
-        }
+        },
+        email: '',
+        password: ''
       }
     },
     props: {
@@ -80,8 +84,19 @@
     },
     methods: {
       checkLogin: function () {
-        localStorage.setItem('user', 'insuk');
-        this.$router.push({name: 'dashboard'});
+        this.$Axios.get('/api/v2/auth/login', {headers: {
+            'X-USER-EMAIL' : this.email,
+            'X-USER-PASSWORD' : this.password
+          }}).then(res => {
+            if (res.data.code === '0000') {
+              this.$toast.success("야타 로그인 성공 >.<");
+              localStorage.setItem('accessToken', res.data.accessToken);
+              this.$router.push({name: 'dashboard'});
+            }
+        }).catch(function (error) {
+          alert("아이디 또는 비밀번호가 틀렸습니다.")
+        })
+
       },
       register: function () {
         this.$router.push({name: 'register'});
