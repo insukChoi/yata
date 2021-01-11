@@ -84,17 +84,18 @@
     },
     methods: {
       checkLogin: function () {
-        this.$Axios.get('/api/v2/auth/login', {headers: {
-            'X-USER-EMAIL' : this.email,
-            'X-USER-PASSWORD' : this.password
+        const _this = this;
+        _this.$Axios.get('/api/v2/auth/login', {headers: {
+            'X-USER-EMAIL' : _this.email,
+            'X-USER-PASSWORD' : _this.password
           }}).then(res => {
             if (res.data.code === '0000') {
-              this.$toast.success("야타 로그인 성공 >.<");
+              _this.$toast.success("야타 로그인 성공 >.<");
               localStorage.setItem('accessToken', res.data.accessToken);
-              this.$router.push({name: 'dashboard'});
+              _this.$router.push({name: 'dashboard'});
             }
         }).catch(function (error) {
-          alert("아이디 또는 비밀번호가 틀렸습니다.")
+          _this.$toast.error("아이디 또는 비밀번호가 틀렸습니다.")
         })
 
       },

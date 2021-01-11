@@ -199,15 +199,16 @@
           address2: this.address2
         };
 
-        this.$Axios.post('/api/v2/auth/join', data)
+        const _this = this;
+        _this.$Axios.post('/api/v2/auth/join', data)
             .then(res => {
               if (res.status === 201) {
-                this.$toast.success("야타 회원가입 성공 >.<");
-                this.$router.push({name: 'login'});
+                _this.$toast.success("야타 회원가입 성공 >.<");
+                _this.$router.push({name: 'login'});
               }
             })
             .catch(function (error) {
-              alert("회원가입 실패 ㅠㅠ")
+              _this.$toast.error("회원가입 실패 하였습니다.")
             })
       }
     },
