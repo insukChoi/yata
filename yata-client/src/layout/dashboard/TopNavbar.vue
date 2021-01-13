@@ -80,7 +80,7 @@
         this.$sidebar.displaySidebar(false);
       },
       logout() {
-        localStorage.removeItem('user');
+        localStorage.removeItem('accessToken');
         this.$router.push({name: 'login'});
       }
     }

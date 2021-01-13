@@ -17,12 +17,19 @@ import Vue from "vue";
 import App from "./App";
 import router from "./router/index";
 import vuetify from './plugins/vuetify'
+import axios from 'axios'
+import Toast, { POSITION } from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 import PaperDashboard from "./plugins/paperDashboard";
 
-Vue.use(PaperDashboard);
+Vue.prototype.$Axios = axios
 
-/* eslint-disable no-new */
+Vue.use(PaperDashboard);
+Vue.use(Toast, {
+  position: POSITION.TOP_RIGHT
+});
+
 new Vue({
   vuetify,
   router,
