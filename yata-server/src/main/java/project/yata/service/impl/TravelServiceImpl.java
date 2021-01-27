@@ -4,17 +4,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import project.yata.common.error.exception.EmptyInfoException;
-import project.yata.dto.TravelDeleteDto;
-import project.yata.dto.TravelDto;
-import project.yata.dto.TravelUpdateDto;
+import project.yata.dto.*;
 import project.yata.entity.Account;
+import project.yata.entity.Plan;
 import project.yata.entity.Travel;
 import project.yata.persistence.AccountRepository;
+import project.yata.persistence.PlanRepository;
 import project.yata.persistence.TravelRepository;
 import project.yata.service.TravelService;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -23,6 +25,8 @@ public class TravelServiceImpl implements TravelService {
 
     private final AccountRepository accountRepository;
     private final TravelRepository travelRepository;
+    private final PlanRepository planRepository;
+    private final PlanServiceImpl planService;
 
     @Override
     public List<Account> getAccountList() {
@@ -76,6 +80,16 @@ public class TravelServiceImpl implements TravelService {
     public Travel deleteTravel(TravelDeleteDto travelDeleteDto) {
         Travel travel = travelInfo(travelDeleteDto.getAccountId(), travelDeleteDto.getId());
         travel.updateDelete(travelDeleteDto.isDeleted());
+
+        Set<Plan> plans = planRepository.findAllByTravel(travel);
+
+        for(Plan p : plans) {
+            planService.deletePlan(new PlanDeleteDto(p.getId(),
+                                        travelDeleteDto.getAccountId(),
+                                        travelDeleteDto.getId(),
+                                        travelDeleteDto.isDeleted()));
+        }
+
         return travelRepository.save(travel);
     }
 }

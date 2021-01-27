@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 import java.time.LocalTime;
 
 @Getter
-@NoArgsConstructor
 public class PlanDto {
     private Long accountId;
     private Long travelId;
     private String linkTo;
     private LocalTime time;
     private String memo;
+
+    public PlanDto(){}
 
     @Builder
     public PlanDto(LocalTime  time, String memo, String linkTo) {

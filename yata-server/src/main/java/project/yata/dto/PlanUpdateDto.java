@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Getter
-@NoArgsConstructor
 public class PlanUpdateDto {
     private Long id;
     private Long accountId;
@@ -17,6 +16,7 @@ public class PlanUpdateDto {
     private LocalTime time;
     private String memo;
 
+    public PlanUpdateDto(){}
     @Builder
     public PlanUpdateDto(Long id, LocalTime  time, String memo, String linkTo) {
         this.id = id;

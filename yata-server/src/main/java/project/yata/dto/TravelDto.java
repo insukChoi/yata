@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Getter
-@NoArgsConstructor
 public class TravelDto {
 
     private Long accountId;
@@ -18,6 +17,8 @@ public class TravelDto {
     private LocalDateTime endDate;
     private String memo;
     private String place;
+
+    public TravelDto(){}
 
     @Builder
     public TravelDto(Long accountId, String title, ZonedDateTime timeDiff, LocalDateTime startDate,

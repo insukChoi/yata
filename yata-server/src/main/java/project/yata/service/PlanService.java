@@ -6,15 +6,18 @@ import project.yata.dto.PlanUpdateDto;
 import project.yata.entity.Plan;
 import project.yata.entity.Travel;
 
-import java.util.List;
 import java.util.Set;
 
+import java.util.Optional;
+
 public interface PlanService {
-     Plan plan(PlanDto planDto, Travel travel);
 
-     Set<Plan> planLists(Travel travel);
 
-     Plan updatePlan(PlanUpdateDto planUpdateDto, Travel travel);
+     Plan plan(PlanDto planDto);
 
-     Plan deletePlan(PlanDeleteDto planDeleteDto, Travel travel);
+     Set<Plan> planLists(Long accountId, Long travelId);
+
+     Plan updatePlan(PlanUpdateDto planUpdateDto);
+
+     Plan deletePlan(PlanDeleteDto planDeleteDto);
 }
