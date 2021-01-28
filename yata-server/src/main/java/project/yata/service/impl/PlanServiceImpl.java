@@ -27,7 +27,6 @@ public class PlanServiceImpl implements PlanService {
     private final PlanRepository planRepository;
     private final TravelRepository travelRepository;
 
-
     private Travel findTravel(Long accountId, Long travelId)
     {
         Travel findTravel = travelRepository.findByAccountIdAndId(accountId, travelId);
@@ -45,6 +44,7 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
+    @Transactional
     public Plan plan(PlanDto planDto) {
         Plan plan = Plan.builder()
                 .linkTo(planDto.getLinkTo())
@@ -66,6 +66,7 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
+    @Transactional
     public Plan updatePlan(PlanUpdateDto planUpdateDto) {
         Travel travel = findTravel(planUpdateDto.getAccountId(), planUpdateDto.getTravelId());
         Plan plan = planInfo(planUpdateDto.getId(), travel);
@@ -74,6 +75,7 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
+    @Transactional
     public Plan deletePlan(PlanDeleteDto planDeleteDto) {
         Travel travel = findTravel(planDeleteDto.getAccountId(), planDeleteDto.getTravelId());
         Plan plan = planInfo(planDeleteDto.getId(), travel);

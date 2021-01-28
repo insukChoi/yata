@@ -24,19 +24,8 @@ import java.util.Set;
 @RestController
 public class PlanController {
     private final PlanService planService;
-    private final TravelService travelService;
-
-    private Travel findTravel(Long accountId, Long travelId)
-    {
-        Travel findTravel = travelService.travelInfo(accountId, travelId);
-
-        if(findTravel == null)
-            throw new EmptyInfoException("There is not suitable Travel information");
-        return findTravel;
-    }
 
     @PostMapping("/plan")
-    @Transactional
     public ResponseEntity<Plan> plan(@RequestBody PlanDto planDto) {
         final Plan savePlan = planService.plan(planDto);
         return ResponseEntity
@@ -45,20 +34,17 @@ public class PlanController {
     }
 
     @GetMapping("/plan")
-    @Transactional
     public ResponseEntity<Set<Plan>> planLists(@RequestParam("accountId") Long accountId,
                                                 @RequestParam("travelId") Long travelId) {
         return new ResponseEntity<>(planService.planLists(accountId, travelId), HttpStatus.OK);
     }
 
     @PutMapping("/plan")
-    @Transactional
     public ResponseEntity<Plan> updatePlan(@RequestBody PlanUpdateDto planUpdateDto) {
         return new ResponseEntity<>(planService.updatePlan(planUpdateDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/plan")
-    @Transactional
     public ResponseEntity<Plan> updatePlan(@RequestBody PlanDeleteDto planDeleteDto) {
         return new ResponseEntity<>(planService.deletePlan(planDeleteDto), HttpStatus.OK);
     }

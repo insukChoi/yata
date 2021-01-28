@@ -81,15 +81,21 @@ public class TravelServiceImpl implements TravelService {
         Travel travel = travelInfo(travelDeleteDto.getAccountId(), travelDeleteDto.getId());
         travel.updateDelete(travelDeleteDto.isDeleted());
 
+
+        updateChildPlans(travelDeleteDto, travel);
+
+        return travelRepository.save(travel);
+    }
+
+    private void updateChildPlans(TravelDeleteDto travelDeleteDto, Travel travel)
+    {
         Set<Plan> plans = planRepository.findAllByTravel(travel);
 
         for(Plan p : plans) {
             planService.deletePlan(new PlanDeleteDto(p.getId(),
-                                        travelDeleteDto.getAccountId(),
-                                        travelDeleteDto.getId(),
-                                        travelDeleteDto.isDeleted()));
+                    travelDeleteDto.getAccountId(),
+                    travelDeleteDto.getId(),
+                    travelDeleteDto.isDeleted()));
         }
-
-        return travelRepository.save(travel);
     }
 }
