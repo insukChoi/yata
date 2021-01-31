@@ -1,16 +1,11 @@
 package project.yata.entity;
 
-import io.jsonwebtoken.lang.Assert;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import project.yata.dto.PlanUpdateRequest;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "PLAN")
@@ -18,11 +13,18 @@ import java.time.LocalDateTime;
 @Getter
 public class Plan extends BaseEntity
         implements Serializable {
-    @Column(name = "travel_id", nullable = false)
-    private Long travelId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TRAVEL_ID")
+//    @JsonBackReference
+//    @EqualsAndHashCode.Exclude
+    private Travel travel;
 
     @Column(name = "time", nullable = false)
-    private LocalDateTime time;
+    private LocalTime time;
 
     @Column(name = "memo")
     private String memo;
@@ -31,13 +33,24 @@ public class Plan extends BaseEntity
     private String linkTo;
 
     @Builder
-    public Plan(Long travelId, LocalDateTime time, String memo, String linkTo) {
-        Assert.notNull(travelId, "Travel ID must be not null from Plan class");
-
-        this.travelId = travelId;
+    public Plan(LocalTime time, String memo, String linkTo) {
         this.time = time;
         this.memo = memo;
         this.linkTo = linkTo;
     }
 
+    public void planUpdate(PlanUpdateRequest planUpdateRequest) {
+        this.time = planUpdateRequest.getTime();
+        this.memo = planUpdateRequest.getMemo();
+        this.linkTo = planUpdateRequest.getLinkTo();
+    }
+
+    public void setTravel(Travel travel)
+    {
+        this.travel = travel;
+        if(!travel.getPlans().contains(this))
+        {
+            travel.getPlans().add(this);
+        }
+    }
 }

@@ -6,10 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import project.yata.dto.TravelDeleteDto;
-import project.yata.dto.TravelDto;
-import project.yata.dto.TravelUpdateDto;
+import project.yata.dto.TravelDeleteRequest;
+import project.yata.dto.TravelRequest;
+import project.yata.dto.TravelUpdateRequest;
 import project.yata.entity.Travel;
 import project.yata.service.TravelService;
 
@@ -24,11 +23,11 @@ public class TravelController {
     private final TravelService travelService;
 
     @PostMapping("/travel")
-    public ResponseEntity<Travel> travel(@RequestBody TravelDto travelDto) {
-        Travel saveTravel = travelService.travel(travelDto);
-                URI location = MvcUriComponentsBuilder
-                .fromController(getClass()).path("/id")
-                .buildAndExpand(saveTravel.getAccountId()).toUri();
+    public ResponseEntity<Travel> travel(@RequestBody TravelRequest travelRequest) {
+        final Travel saveTravel = travelService.travel(travelRequest);
+        final URI location = MvcUriComponentsBuilder
+                .fromController(getClass()).path("/travel/{id}/{id}")
+                .buildAndExpand(saveTravel.getAccountId(), saveTravel.getId()).toUri();
 
         return ResponseEntity.created(location).body(saveTravel);
     }
@@ -48,12 +47,12 @@ public class TravelController {
     }
 
     @PutMapping("/travel")
-    public ResponseEntity<Travel> updateTravel(@RequestBody TravelUpdateDto travelUpdateDto) {
-        return new ResponseEntity<>(travelService.updateTravel(travelUpdateDto), HttpStatus.OK);
+    public ResponseEntity<Travel> updateTravel(@RequestBody TravelUpdateRequest travelUpdateRequest) {
+        return new ResponseEntity<>(travelService.updateTravel(travelUpdateRequest), HttpStatus.OK);
     }
 
     @DeleteMapping("/travel")
-    public ResponseEntity<Travel> updateTravel(@RequestBody TravelDeleteDto travelDeleteDto) {
-        return new ResponseEntity<>(travelService.deleteTravel(travelDeleteDto), HttpStatus.OK);
+    public ResponseEntity<Travel> updateTravel(@RequestBody TravelDeleteRequest travelDeleteRequest) {
+        return new ResponseEntity<>(travelService.deleteTravel(travelDeleteRequest), HttpStatus.OK);
     }
 }
