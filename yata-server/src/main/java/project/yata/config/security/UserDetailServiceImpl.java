@@ -17,6 +17,7 @@ import java.util.Optional;
 public class UserDetailServiceImpl implements UserDetailsService {
 
     private final AccountRepository accountRepository;
+    private final JwtProvider jwtProvider;
 
     @Override
     public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
@@ -25,7 +26,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         final Account account = optional.orElseThrow(
                 () -> new UsernameNotFoundException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.")//
         );
-
+        jwtProvider.setAccountId(account.getId());
         return new User(email, account.getPassword(), new ArrayList<>());
     }
 }

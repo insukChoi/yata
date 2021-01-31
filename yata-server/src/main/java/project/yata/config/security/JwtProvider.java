@@ -17,8 +17,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Component
 public class JwtProvider {
+
+    @Getter
+    @Setter
+    private long accountId;
 
     @Value("${jwt.secret.key}")
     private String secretKey;

@@ -21,7 +21,6 @@ public class AccountController {
 
     @GetMapping("")
     public ResponseEntity<ApiResponse> getAccount(@RequestParam String email) {
-
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(
