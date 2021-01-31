@@ -14,6 +14,8 @@ import project.yata.dto.AccountRequest;
 import project.yata.dto.AccountResponse;
 import project.yata.service.AuthService;
 import project.yata.web.AuthController;
+import project.yata.config.security.UserDetailServiceImpl;
+import project.yata.config.security.JwtProvider;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -33,6 +35,11 @@ public class AuthControllerTest {
     ObjectMapper mapper = new ObjectMapper();
     AccountRequest joinRequest;
     AccountResponse joinResponse;
+
+    @MockBean
+    private UserDetailServiceImpl userDetailsService;
+    @MockBean
+    private JwtProvider jwtProvider;
     @MockBean
     private AuthService authService;
 
