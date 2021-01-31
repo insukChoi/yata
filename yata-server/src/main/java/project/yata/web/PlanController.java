@@ -2,19 +2,13 @@ package project.yata.web;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import project.yata.common.error.exception.EmptyInfoException;
-import project.yata.dto.PlanDeleteDto;
-import project.yata.dto.PlanDto;
-import project.yata.dto.PlanUpdateDto;
+import project.yata.dto.*;
 import project.yata.entity.Plan;
-import project.yata.entity.Travel;
 import project.yata.service.PlanService;
-import project.yata.service.TravelService;
 
 import java.net.URI;
 import java.util.Set;
@@ -26,11 +20,17 @@ public class PlanController {
     private final PlanService planService;
 
     @PostMapping("/plan")
-    public ResponseEntity<Plan> plan(@RequestBody PlanDto planDto) {
-        final Plan savePlan = planService.plan(planDto);
+    public ResponseEntity<ApiResponse> plan(@RequestBody PlanRequest planRequest) {
+        final Plan savePlan = planService.plan(planRequest);
+
         return ResponseEntity
-                .created(URI.create(String.format("/plan/%d/%d/%d", savePlan.getTravel().getAccountId(), savePlan.getTravel().getId(), savePlan.getId())))
-                .body(savePlan);
+                .status(HttpStatus.CREATED)
+                .header(HttpHeaders.LOCATION, "/plan/" + savePlan.getId())
+                .body(
+                        ApiResponse.success(
+                                planService.getPlan(savePlan)
+                        )
+                );
     }
 
     @GetMapping("/plan")
@@ -40,12 +40,12 @@ public class PlanController {
     }
 
     @PutMapping("/plan")
-    public ResponseEntity<Plan> updatePlan(@RequestBody PlanUpdateDto planUpdateDto) {
-        return new ResponseEntity<>(planService.updatePlan(planUpdateDto), HttpStatus.OK);
+    public ResponseEntity<Plan> updatePlan(@RequestBody PlanUpdateRequest planUpdateRequest) {
+        return new ResponseEntity<>(planService.updatePlan(planUpdateRequest), HttpStatus.OK);
     }
 
     @DeleteMapping("/plan")
-    public ResponseEntity<Plan> updatePlan(@RequestBody PlanDeleteDto planDeleteDto) {
-        return new ResponseEntity<>(planService.deletePlan(planDeleteDto), HttpStatus.OK);
+    public ResponseEntity<Plan> updatePlan(@RequestBody PlanDeleteRequest planDeleteRequest) {
+        return new ResponseEntity<>(planService.deletePlan(planDeleteRequest), HttpStatus.OK);
     }
 }

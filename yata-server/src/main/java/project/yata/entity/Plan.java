@@ -1,20 +1,11 @@
 package project.yata.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.jsonwebtoken.lang.Assert;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import project.yata.dto.PlanUpdateDto;
+import lombok.*;
+import project.yata.dto.PlanUpdateRequest;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 @Entity
 @Table(name = "PLAN")
@@ -28,6 +19,8 @@ public class Plan extends BaseEntity
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TRAVEL_ID")
+//    @JsonBackReference
+//    @EqualsAndHashCode.Exclude
     private Travel travel;
 
     @Column(name = "time", nullable = false)
@@ -46,10 +39,10 @@ public class Plan extends BaseEntity
         this.linkTo = linkTo;
     }
 
-    public void planUpdate(PlanUpdateDto planUpdateDto) {
-        this.time = planUpdateDto.getTime();
-        this.memo = planUpdateDto.getMemo();
-        this.linkTo = planUpdateDto.getLinkTo();
+    public void planUpdate(PlanUpdateRequest planUpdateRequest) {
+        this.time = planUpdateRequest.getTime();
+        this.memo = planUpdateRequest.getMemo();
+        this.linkTo = planUpdateRequest.getLinkTo();
     }
 
     public void setTravel(Travel travel)

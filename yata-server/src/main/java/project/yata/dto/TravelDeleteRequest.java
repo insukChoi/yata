@@ -5,19 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-public class TravelDeleteDto {
+@NoArgsConstructor
+public class TravelDeleteRequest {
     private Long id;
     private Long accountId;
     private boolean deleted;
 
-    public TravelDeleteDto(){}
-
     @Builder
-    public TravelDeleteDto(Long id, Long accountId, boolean deleted)
+    public TravelDeleteRequest(Long id, Long accountId, boolean deleted)
     {
         this.id = id;
         this.accountId = accountId;
         this.deleted = deleted;
     }
-
 }

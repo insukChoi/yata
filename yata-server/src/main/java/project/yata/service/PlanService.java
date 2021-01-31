@@ -1,23 +1,21 @@
 package project.yata.service;
 
-import project.yata.dto.PlanDeleteDto;
-import project.yata.dto.PlanDto;
-import project.yata.dto.PlanUpdateDto;
+import project.yata.dto.PlanDeleteRequest;
+import project.yata.dto.PlanRequest;
+import project.yata.dto.PlanResponse;
+import project.yata.dto.PlanUpdateRequest;
 import project.yata.entity.Plan;
-import project.yata.entity.Travel;
 
 import java.util.Set;
 
-import java.util.Optional;
-
 public interface PlanService {
+     Plan plan(PlanRequest planRequest);
 
-
-     Plan plan(PlanDto planDto);
+     PlanResponse getPlan(Plan plan);
 
      Set<Plan> planLists(Long accountId, Long travelId);
 
-     Plan updatePlan(PlanUpdateDto planUpdateDto);
+     Plan updatePlan(PlanUpdateRequest planUpdateRequest);
 
-     Plan deletePlan(PlanDeleteDto planDeleteDto);
+     Plan deletePlan(PlanDeleteRequest planDeleteRequest);
 }

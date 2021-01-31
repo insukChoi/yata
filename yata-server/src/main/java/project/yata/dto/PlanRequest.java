@@ -4,22 +4,19 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Getter
-public class PlanUpdateDto {
-    private Long id;
+@NoArgsConstructor
+public class PlanRequest {
     private Long accountId;
     private Long travelId;
     private String linkTo;
     private LocalTime time;
     private String memo;
 
-    public PlanUpdateDto(){}
     @Builder
-    public PlanUpdateDto(Long id, LocalTime  time, String memo, String linkTo) {
-        this.id = id;
+    public PlanRequest(LocalTime  time, String memo, String linkTo) {
         this.time = time;
         this.memo = memo;
         this.linkTo = linkTo;

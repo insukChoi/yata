@@ -13,7 +13,6 @@ import project.yata.persistence.PlanRepository;
 import project.yata.persistence.TravelRepository;
 import project.yata.service.TravelService;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,7 +21,6 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class TravelServiceImpl implements TravelService {
-
     private final AccountRepository accountRepository;
     private final TravelRepository travelRepository;
     private final PlanRepository planRepository;
@@ -34,16 +32,15 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    //Travel 등록
-    public Travel travel(TravelDto travelDto) {
+    public Travel travel(TravelRequest travelRequest) {
         Travel travel = Travel.builder()
-                .accountId(travelDto.getAccountId())
-                .title(travelDto.getTitle())
-                .memo(travelDto.getMemo())
-                .place(travelDto.getPlace())
-                .timeDiff(travelDto.getTimeDiff())
-                .endDate(travelDto.getEndDate())
-                .startDate(travelDto.getStartDate())
+                .accountId(travelRequest.getAccountId())
+                .title(travelRequest.getTitle())
+                .memo(travelRequest.getMemo())
+                .place(travelRequest.getPlace())
+                .timeDiff(travelRequest.getTimeDiff())
+                .endDate(travelRequest.getEndDate())
+                .startDate(travelRequest.getStartDate())
                 .build();
 
         return travelRepository.save(travel);
@@ -70,32 +67,32 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public Travel updateTravel(TravelUpdateDto travelUpdateDto) {
-        Travel travel = travelInfo(travelUpdateDto.getAccountId(), travelUpdateDto.getId());
-        travel.travelUpdate(travelUpdateDto);
+    public Travel updateTravel(TravelUpdateRequest travelUpdateRequest) {
+        Travel travel = travelInfo(travelUpdateRequest.getAccountId(), travelUpdateRequest.getId());
+        travel.travelUpdate(travelUpdateRequest);
         return travelRepository.save(travel);
     }
 
     @Override
-    public Travel deleteTravel(TravelDeleteDto travelDeleteDto) {
-        Travel travel = travelInfo(travelDeleteDto.getAccountId(), travelDeleteDto.getId());
-        travel.updateDelete(travelDeleteDto.isDeleted());
+    public Travel deleteTravel(TravelDeleteRequest travelDeleteRequest) {
+        Travel travel = travelInfo(travelDeleteRequest.getAccountId(), travelDeleteRequest.getId());
+        travel.updateDelete(travelDeleteRequest.isDeleted());
 
 
-        updateChildPlans(travelDeleteDto, travel);
+        updateChildPlans(travelDeleteRequest, travel);
 
         return travelRepository.save(travel);
     }
 
-    private void updateChildPlans(TravelDeleteDto travelDeleteDto, Travel travel)
+    private void updateChildPlans(TravelDeleteRequest travelDeleteRequest, Travel travel)
     {
         Set<Plan> plans = planRepository.findAllByTravel(travel);
 
         for(Plan p : plans) {
-            planService.deletePlan(new PlanDeleteDto(p.getId(),
-                    travelDeleteDto.getAccountId(),
-                    travelDeleteDto.getId(),
-                    travelDeleteDto.isDeleted()));
+            planService.deletePlan(new PlanDeleteRequest(p.getId(),
+                    travelDeleteRequest.getAccountId(),
+                    travelDeleteRequest.getId(),
+                    travelDeleteRequest.isDeleted()));
         }
     }
 }

@@ -1,21 +1,14 @@
 package project.yata.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.jsonwebtoken.lang.Assert;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import project.yata.dto.TravelDto;
-import project.yata.dto.TravelUpdateDto;
+import lombok.*;
+import project.yata.dto.TravelUpdateRequest;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,8 +21,7 @@ public class Travel extends BaseEntity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "travel", orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "travel", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Plan> plans;
 
     @Column(name = "account_id", nullable = false)
@@ -41,15 +33,12 @@ public class Travel extends BaseEntity
     @Column(name = "place")
     private String place;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     @Column(name = "start_date")
     private LocalDateTime startDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss+HH:mm", timezone = "Asia/Seoul")
     @Column(name = "time_difference")
     private ZonedDateTime timeDiff; // 나라는 입력하면, 한국 시간이랑, 그 나라의 시간이 보이도록?!
 
@@ -72,22 +61,13 @@ public class Travel extends BaseEntity
         this.endDate = endDate;
     }
 
-    public void travelUpdate(TravelUpdateDto travelUpdateDto) {
-        this.title = travelUpdateDto.getTitle();
-        this.place = travelUpdateDto.getPlace();
+    public void travelUpdate(TravelUpdateRequest travelUpdateRequest) {
+        this.title = travelUpdateRequest.getTitle();
+        this.place = travelUpdateRequest.getPlace();
 
-        this.timeDiff = travelUpdateDto.getTimeDiff();
-        this.memo = travelUpdateDto.getMemo();
-        this.startDate = travelUpdateDto.getStartDate();
-        this.endDate = travelUpdateDto.getEndDate();
+        this.timeDiff = travelUpdateRequest.getTimeDiff();
+        this.memo = travelUpdateRequest.getMemo();
+        this.startDate = travelUpdateRequest.getStartDate();
+        this.endDate = travelUpdateRequest.getEndDate();
     }
-
-//    public void addPlan(Plan plan)
-//    {
-//        this.plans.add(plan);
-//        if(plan.getTravel() != this)
-//        {
-//            plan.setTravel(this);
-//        }
-//    }
 }

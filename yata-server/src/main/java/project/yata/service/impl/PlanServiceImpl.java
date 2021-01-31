@@ -2,21 +2,19 @@ package project.yata.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.yata.common.error.exception.EmptyInfoException;
-import project.yata.dto.PlanDeleteDto;
-import project.yata.dto.PlanDto;
-import project.yata.dto.PlanUpdateDto;
+import project.yata.dto.PlanDeleteRequest;
+import project.yata.dto.PlanRequest;
+import project.yata.dto.PlanResponse;
+import project.yata.dto.PlanUpdateRequest;
 import project.yata.entity.Plan;
 import project.yata.entity.Travel;
 import project.yata.persistence.PlanRepository;
 import project.yata.persistence.TravelRepository;
 import project.yata.service.PlanService;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -45,15 +43,26 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     @Transactional
-    public Plan plan(PlanDto planDto) {
+    public Plan plan(PlanRequest planRequest) {
         Plan plan = Plan.builder()
-                .linkTo(planDto.getLinkTo())
-                .memo(planDto.getMemo())
-                .time(planDto.getTime())
+                .linkTo(planRequest.getLinkTo())
+                .memo(planRequest.getMemo())
+                .time(planRequest.getTime())
                 .build();
 
-        plan.setTravel(findTravel(planDto.getAccountId(), planDto.getTravelId()));
+        plan.setTravel(findTravel(planRequest.getAccountId(), planRequest.getTravelId()));
+
         return planRepository.save(plan);
+    }
+
+    @Override
+    public PlanResponse getPlan(Plan plan)
+    {
+        return PlanResponse.builder()
+                .linkTo(plan.getLinkTo())
+                .time(plan.getTime())
+                .memo(plan.getMemo())
+                .build();
     }
 
     @Override
@@ -67,19 +76,19 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     @Transactional
-    public Plan updatePlan(PlanUpdateDto planUpdateDto) {
-        Travel travel = findTravel(planUpdateDto.getAccountId(), planUpdateDto.getTravelId());
-        Plan plan = planInfo(planUpdateDto.getId(), travel);
-        plan.planUpdate(planUpdateDto);
+    public Plan updatePlan(PlanUpdateRequest planUpdateRequest) {
+        Travel travel = findTravel(planUpdateRequest.getAccountId(), planUpdateRequest.getTravelId());
+        Plan plan = planInfo(planUpdateRequest.getId(), travel);
+        plan.planUpdate(planUpdateRequest);
         return planRepository.save(plan);
     }
 
     @Override
     @Transactional
-    public Plan deletePlan(PlanDeleteDto planDeleteDto) {
-        Travel travel = findTravel(planDeleteDto.getAccountId(), planDeleteDto.getTravelId());
-        Plan plan = planInfo(planDeleteDto.getId(), travel);
-        plan.updateDelete(planDeleteDto.isDeleted());
+    public Plan deletePlan(PlanDeleteRequest planDeleteRequest) {
+        Travel travel = findTravel(planDeleteRequest.getAccountId(), planDeleteRequest.getTravelId());
+        Plan plan = planInfo(planDeleteRequest.getId(), travel);
+        plan.updateDelete(planDeleteRequest.isDeleted());
         return planRepository.save(plan);
     }
 }

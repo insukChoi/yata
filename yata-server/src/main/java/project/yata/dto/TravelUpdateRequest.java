@@ -8,8 +8,10 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Getter
-public class TravelDto {
+@NoArgsConstructor
+public class TravelUpdateRequest {
 
+    private Long id;
     private Long accountId;
     private String title;
     private ZonedDateTime timeDiff;
@@ -18,11 +20,10 @@ public class TravelDto {
     private String memo;
     private String place;
 
-    public TravelDto(){}
-
     @Builder
-    public TravelDto(Long accountId, String title, ZonedDateTime timeDiff, LocalDateTime startDate,
-                     LocalDateTime endDate, String memo, String place) {
+    public TravelUpdateRequest(Long id, Long accountId, String title, ZonedDateTime timeDiff, LocalDateTime startDate,
+                               LocalDateTime endDate, String memo, String place) {
+        this.id = id;
         this.accountId = accountId;
         this.title = title;
         this.timeDiff = timeDiff;

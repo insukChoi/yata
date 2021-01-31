@@ -1,7 +1,6 @@
 package project.yata.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import project.yata.dto.PlanDeleteDto;
 import project.yata.entity.Plan;
 import project.yata.entity.Travel;
 
