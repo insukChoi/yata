@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import project.yata.config.security.JwtProvider;
 import project.yata.dto.TravelDeleteRequest;
 import project.yata.dto.TravelRequest;
 import project.yata.dto.TravelUpdateRequest;
@@ -21,10 +22,14 @@ import java.util.List;
 public class TravelController {
 
     private final TravelService travelService;
+    private final JwtProvider jwtProvider;
 
     @PostMapping("/travel")
     public ResponseEntity<Travel> travel(@RequestBody TravelRequest travelRequest) {
-        final Travel saveTravel = travelService.travel(travelRequest);
+        System.out.println("==========kkk" + jwtProvider.getAccountId());
+
+        jwtProvider.getAccountId();
+        final Travel saveTravel = travelService.travel(jwtProvider.getAccountId(), travelRequest);
         final URI location = MvcUriComponentsBuilder
                 .fromController(getClass()).path("/travel/{id}/{id}")
                 .buildAndExpand(saveTravel.getAccountId(), saveTravel.getId()).toUri();

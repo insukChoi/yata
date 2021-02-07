@@ -36,7 +36,8 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<ApiResponse> login(@RequestHeader("X-USER-EMAIL") String email, @RequestHeader("X-USER-PASSWORD") String password) throws Exception {
+    public ResponseEntity<ApiResponse> login(@RequestHeader("X-USER-EMAIL") String email,
+                                             @RequestHeader("X-USER-PASSWORD") String password) throws Exception {
 
         return ResponseEntity
                 .status(HttpStatus.OK)

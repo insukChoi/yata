@@ -13,6 +13,8 @@ import project.yata.persistence.PlanRepository;
 import project.yata.persistence.TravelRepository;
 import project.yata.service.TravelService;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -32,9 +34,9 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public Travel travel(TravelRequest travelRequest) {
+    public Travel travel(Long accountId, TravelRequest travelRequest) {
         Travel travel = Travel.builder()
-                .accountId(travelRequest.getAccountId())
+                .accountId(accountId)
                 .title(travelRequest.getTitle())
                 .memo(travelRequest.getMemo())
                 .place(travelRequest.getPlace())
