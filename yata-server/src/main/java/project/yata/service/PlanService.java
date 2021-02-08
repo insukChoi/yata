@@ -9,13 +9,13 @@ import project.yata.entity.Plan;
 import java.util.Set;
 
 public interface PlanService {
-     Plan plan(PlanRequest planRequest);
+     Plan plan(Long accountId, PlanRequest planRequest);
 
-     PlanResponse getPlan(Plan plan);
+     PlanResponse getPlanResponse(Plan plan);
 
      Set<Plan> planLists(Long accountId, Long travelId);
 
-     Plan updatePlan(PlanUpdateRequest planUpdateRequest);
+     Plan updatePlan(Long accountId, PlanUpdateRequest planUpdateRequest);
 
-     Plan deletePlan(PlanDeleteRequest planDeleteRequest);
+     Plan deletePlan(Long accountId, PlanDeleteRequest planDeleteRequest);
 }

@@ -43,22 +43,23 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     @Transactional
-    public Plan plan(PlanRequest planRequest) {
+    public Plan plan(Long accountId, PlanRequest planRequest) {
         Plan plan = Plan.builder()
                 .linkTo(planRequest.getLinkTo())
                 .memo(planRequest.getMemo())
                 .time(planRequest.getTime())
                 .build();
 
-        plan.setTravel(findTravel(planRequest.getAccountId(), planRequest.getTravelId()));
+        plan.setTravel(findTravel(accountId, planRequest.getTravelId()));
 
         return planRepository.save(plan);
     }
 
     @Override
-    public PlanResponse getPlan(Plan plan)
+    public PlanResponse getPlanResponse(Plan plan)
     {
         return PlanResponse.builder()
+                .id(plan.getId())
                 .linkTo(plan.getLinkTo())
                 .time(plan.getTime())
                 .memo(plan.getMemo())
@@ -76,8 +77,8 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     @Transactional
-    public Plan updatePlan(PlanUpdateRequest planUpdateRequest) {
-        Travel travel = findTravel(planUpdateRequest.getAccountId(), planUpdateRequest.getTravelId());
+    public Plan updatePlan(Long accountId, PlanUpdateRequest planUpdateRequest) {
+        Travel travel = findTravel(accountId, planUpdateRequest.getTravelId());
         Plan plan = planInfo(planUpdateRequest.getId(), travel);
         plan.planUpdate(planUpdateRequest);
         return planRepository.save(plan);
@@ -85,8 +86,8 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     @Transactional
-    public Plan deletePlan(PlanDeleteRequest planDeleteRequest) {
-        Travel travel = findTravel(planDeleteRequest.getAccountId(), planDeleteRequest.getTravelId());
+    public Plan deletePlan(Long accountId, PlanDeleteRequest planDeleteRequest) {
+        Travel travel = findTravel(accountId, planDeleteRequest.getTravelId());
         Plan plan = planInfo(planDeleteRequest.getId(), travel);
         plan.updateDelete(planDeleteRequest.isDeleted());
         return planRepository.save(plan);

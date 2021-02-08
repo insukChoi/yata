@@ -11,6 +11,7 @@ import java.time.LocalTime;
 @Builder
 @AllArgsConstructor
 public class PlanResponse {
+    private Long id;
     private String linkTo;
     private LocalTime time;
     private String memo;

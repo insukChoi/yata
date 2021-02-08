@@ -12,7 +12,6 @@ import java.time.ZonedDateTime;
 public class TravelUpdateRequest {
 
     private Long id;
-    private Long accountId;
     private String title;
     private ZonedDateTime timeDiff;
     private LocalDateTime startDate;
@@ -21,10 +20,9 @@ public class TravelUpdateRequest {
     private String place;
 
     @Builder
-    public TravelUpdateRequest(Long id, Long accountId, String title, ZonedDateTime timeDiff, LocalDateTime startDate,
+    public TravelUpdateRequest(Long id, String title, ZonedDateTime timeDiff, LocalDateTime startDate,
                                LocalDateTime endDate, String memo, String place) {
         this.id = id;
-        this.accountId = accountId;
         this.title = title;
         this.timeDiff = timeDiff;
         this.startDate = startDate;

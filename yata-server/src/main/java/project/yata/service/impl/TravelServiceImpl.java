@@ -34,6 +34,18 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
+    public TravelResponse getTravelResponse(Travel travel) {
+        return TravelResponse.builder()
+                .title(travel.getTitle())
+                .endDate(travel.getEndDate())
+                .memo(travel.getMemo())
+                .place(travel.getPlace())
+                .startDate(travel.getStartDate())
+                .timeDiff(travel.getTimeDiff())
+                .build();
+    }
+
+    @Override
     public Travel travel(Long accountId, TravelRequest travelRequest) {
         Travel travel = Travel.builder()
                 .accountId(accountId)
@@ -69,32 +81,29 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public Travel updateTravel(TravelUpdateRequest travelUpdateRequest) {
-        Travel travel = travelInfo(travelUpdateRequest.getAccountId(), travelUpdateRequest.getId());
+    public Travel updateTravel(Long accountId, TravelUpdateRequest travelUpdateRequest) {
+        Travel travel = travelInfo(accountId, travelUpdateRequest.getId());
         travel.travelUpdate(travelUpdateRequest);
         return travelRepository.save(travel);
     }
 
     @Override
-    public Travel deleteTravel(TravelDeleteRequest travelDeleteRequest) {
-        Travel travel = travelInfo(travelDeleteRequest.getAccountId(), travelDeleteRequest.getId());
+    public Travel deleteTravel(Long accountId, TravelDeleteRequest travelDeleteRequest) {
+        Travel travel = travelInfo(accountId, travelDeleteRequest.getId());
         travel.updateDelete(travelDeleteRequest.isDeleted());
 
 
-        updateChildPlans(travelDeleteRequest, travel);
+        updateChildPlans(accountId, travelDeleteRequest, travel);
 
         return travelRepository.save(travel);
     }
 
-    private void updateChildPlans(TravelDeleteRequest travelDeleteRequest, Travel travel)
+    private void updateChildPlans(Long accountId, TravelDeleteRequest travelDeleteRequest, Travel travel)
     {
         Set<Plan> plans = planRepository.findAllByTravel(travel);
 
         for(Plan p : plans) {
-            planService.deletePlan(new PlanDeleteRequest(p.getId(),
-                    travelDeleteRequest.getAccountId(),
-                    travelDeleteRequest.getId(),
-                    travelDeleteRequest.isDeleted()));
+            planService.deletePlan(accountId, new PlanDeleteRequest(p.getId(), travelDeleteRequest.getId(), travelDeleteRequest.isDeleted()));
         }
     }
 }

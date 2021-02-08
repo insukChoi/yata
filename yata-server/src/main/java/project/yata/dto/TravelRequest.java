@@ -10,6 +10,7 @@ import java.time.ZonedDateTime;
 @Getter
 @NoArgsConstructor
 public class TravelRequest {
+    private Long accountId;
     private String title;
     private ZonedDateTime timeDiff;
     private LocalDateTime startDate;
@@ -18,8 +19,9 @@ public class TravelRequest {
     private String place;
 
     @Builder
-    public TravelRequest(String title, ZonedDateTime timeDiff, LocalDateTime startDate,
+    public TravelRequest(Long accountId, String title, ZonedDateTime timeDiff, LocalDateTime startDate,
                          LocalDateTime endDate, String memo, String place) {
+        this.accountId = accountId;
         this.title = title;
         this.timeDiff = timeDiff;
         this.startDate = startDate;

@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PlanDeleteRequest {
     private Long id;
-    private  Long accountId;
     private Long travelId;
     private boolean deleted;
 
@@ -20,9 +19,8 @@ public class PlanDeleteRequest {
         this.deleted = deleted;
     }
     @Builder
-    public PlanDeleteRequest(Long id, Long accountId, Long travelId, boolean deleted) {
+    public PlanDeleteRequest(Long id, Long travelId, boolean deleted) {
         this.id = id;
-        this.accountId = accountId;
         this.travelId = travelId;
         this.deleted = deleted;
     }
