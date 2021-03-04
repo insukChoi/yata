@@ -22,7 +22,7 @@ public class Travel extends BaseEntity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
+    @JsonIgnore //failed to lazily initialize a collection of role: project.yata.entity.Travel.plans, could not initialize proxy - no Session (through reference chain: project.yata.entity.Travel["plans"])]
     @OneToMany(mappedBy = "travel", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Plan> plans;
 
