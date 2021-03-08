@@ -16,5 +16,5 @@ public interface BudgetService {
 
     BudgetResponse updateBudget(BudgetUpdateRequest budgetUpdateRequest);
 
-    BudgetResponse deleteBudget(Long travelId, BudgetDeleteRequest budgetDeleteRequest);
+    Budget deleteBudget(Long travelId, BudgetDeleteRequest budgetDeleteRequest);
 }

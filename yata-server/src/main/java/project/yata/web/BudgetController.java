@@ -44,7 +44,7 @@ public class BudgetController {
     }
 
     @DeleteMapping("/budget")
-    public ResponseEntity<BudgetResponse> updateBudget(@RequestBody BudgetDeleteRequest budgetDeleteRequest) {
+    public ResponseEntity<Budget> updateBudget(@RequestBody BudgetDeleteRequest budgetDeleteRequest) {
         return new ResponseEntity<>(budgetService.deleteBudget(jwtProvider.getAccountId(), budgetDeleteRequest), HttpStatus.OK);
     }
 }

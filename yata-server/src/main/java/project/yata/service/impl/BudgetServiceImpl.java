@@ -26,7 +26,7 @@ public class BudgetServiceImpl implements BudgetService {
                 .exchangeInfo(budgetRequest.getExchangeInfo())
                 .build();
 
-        if(getBudgetResponse(budget) != null)
+        if(budgetRepository.findBudgetByTravelId(budgetRequest.getTravelId()) != null)
             throw new EmptyInfoException("The budget is already created, you can create budget only one.");
 
         return budgetRepository.save(budget);
@@ -55,10 +55,10 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public BudgetResponse deleteBudget(Long travelId, BudgetDeleteRequest budgetDeleteRequest) {
+    public Budget deleteBudget(Long travelId, BudgetDeleteRequest budgetDeleteRequest) {
         Budget budget = budgetRepository.findBudgetByTravelId(travelId);
         budget.updateDelete(budgetDeleteRequest.isDeleted());
-        budgetRepository.save(budget);
-        return getBudgetResponse(budget);
+
+        return budgetRepository.save(budget);
     }
 }

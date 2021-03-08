@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class BudgetResponse {
     private Long travelId;
     private String exchangeInfo;
+    private boolean isDeleted;
 }
