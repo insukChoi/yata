@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@Builder
 public class BudgetDeleteRequest {
     private Long travelId;
     private boolean deleted;
 
-    @Builder
     public BudgetDeleteRequest(Long travelId, boolean deleted)
     {
         this.travelId = travelId;

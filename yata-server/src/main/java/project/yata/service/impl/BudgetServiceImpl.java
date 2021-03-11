@@ -20,7 +20,7 @@ import project.yata.service.BudgetService;
 public class BudgetServiceImpl implements BudgetService {
     private final BudgetRepository budgetRepository;
     @Override
-    public Budget budget(BudgetRequest budgetRequest) {
+    public Budget saveBudget(BudgetRequest budgetRequest) {
         Budget budget = Budget.builder()
                 .travelId(budgetRequest.getTravelId())
                 .exchangeInfo(budgetRequest.getExchangeInfo())
@@ -41,7 +41,7 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public BudgetResponse budgetInfo(Long travelId) {
+    public BudgetResponse getBudget(Long travelId) {
         return getBudgetResponse(budgetRepository.findBudgetByTravelId(travelId));
     }
 

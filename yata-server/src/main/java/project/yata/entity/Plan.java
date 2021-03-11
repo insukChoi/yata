@@ -18,7 +18,7 @@ public class Plan extends BaseEntity
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TRAVEL_ID")
+    @JoinColumn(name = "travel_id")
 //    @JsonBackReference
 //    @EqualsAndHashCode.Exclude
     private Travel travel;

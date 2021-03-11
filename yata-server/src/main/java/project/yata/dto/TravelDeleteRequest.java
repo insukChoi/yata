@@ -5,12 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @NoArgsConstructor
 public class TravelDeleteRequest {
     private Long id;
     private boolean deleted;
 
-    @Builder
     public TravelDeleteRequest(Long id, boolean deleted)
     {
         this.id = id;

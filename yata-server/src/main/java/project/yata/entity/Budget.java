@@ -23,7 +23,6 @@ public class Budget extends BaseEntity implements Serializable {
     @Column(name = "exchange_info") // 환전 정보
     private String exchangeInfo;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "budget", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<BudgetItem> budgetItems;
 

@@ -6,7 +6,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import project.yata.config.security.JwtProvider;
 import project.yata.dto.ApiResponse;
 import project.yata.dto.TravelDeleteRequest;
@@ -15,7 +14,6 @@ import project.yata.dto.TravelUpdateRequest;
 import project.yata.entity.Travel;
 import project.yata.service.TravelService;
 
-import java.net.URI;
 import java.util.List;
 
 @Slf4j
@@ -28,7 +26,7 @@ public class TravelController {
 
     @PostMapping("/travel")
     public ResponseEntity<ApiResponse> travel(@RequestBody TravelRequest travelRequest) {
-        final Travel saveTravel = travelService.travel(jwtProvider.getAccountId(), travelRequest);
+        final Travel saveTravel = travelService.saveTravel(jwtProvider.getAccountId(), travelRequest);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -43,13 +41,13 @@ public class TravelController {
     @GetMapping("/travels")
     public ResponseEntity<List<Travel>> travelInfos(@RequestParam("offset") int offset,
                                                     @RequestParam("count") int count) {
-        return new ResponseEntity<>(travelService.travelInfos(jwtProvider.getAccountId(), offset, count), HttpStatus.OK);
+        return new ResponseEntity<>(travelService.getTravelList(jwtProvider.getAccountId(), offset, count), HttpStatus.OK);
     }
 
 
     @GetMapping("/travel")
     public ResponseEntity<Travel> travelInfos(@RequestParam("travelId") Long travelId) {
-        return new ResponseEntity<>(travelService.travelInfo(jwtProvider.getAccountId(), travelId), HttpStatus.OK);
+        return new ResponseEntity<>(travelService.getTravel(jwtProvider.getAccountId(), travelId), HttpStatus.OK);
     }
 
     @PutMapping("/travel")

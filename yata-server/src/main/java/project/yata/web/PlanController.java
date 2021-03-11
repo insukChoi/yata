@@ -22,7 +22,7 @@ public class PlanController {
 
     @PostMapping("/plan")
     public ResponseEntity<ApiResponse> plan(@RequestBody PlanRequest planRequest) {
-        final Plan savePlan = planService.plan(jwtProvider.getAccountId(),planRequest);
+        final Plan savePlan = planService.savePlan(jwtProvider.getAccountId(), planRequest);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -36,7 +36,7 @@ public class PlanController {
 
     @GetMapping("/plan")
     public ResponseEntity<Set<Plan>> planLists(@RequestParam("travelId") Long travelId) {
-        return new ResponseEntity<>(planService.planLists(jwtProvider.getAccountId(), travelId), HttpStatus.OK);
+        return new ResponseEntity<>(planService.getPlanList(jwtProvider.getAccountId(), travelId), HttpStatus.OK);
     }
 
     @PutMapping("/plan")

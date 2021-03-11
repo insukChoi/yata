@@ -8,11 +8,11 @@ import project.yata.dto.BudgetUpdateRequest;
 import project.yata.entity.Budget;
 
 public interface BudgetService {
-    Budget budget(BudgetRequest budgetRequest);
+    Budget saveBudget(BudgetRequest budgetRequest);
 
     BudgetResponse getBudgetResponse(Budget budget);
 
-    BudgetResponse budgetInfo(Long travelId);
+    BudgetResponse getBudget(Long travelId);
 
     BudgetResponse updateBudget(BudgetUpdateRequest budgetUpdateRequest);
 

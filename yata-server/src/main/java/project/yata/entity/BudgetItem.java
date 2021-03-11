@@ -21,7 +21,7 @@ public class BudgetItem extends BaseEntity
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BUDGET_ID")
+    @JoinColumn(name = "budget_id")
     private Budget budget;
 
 //    @Column(name = "budget_id", nullable = false)

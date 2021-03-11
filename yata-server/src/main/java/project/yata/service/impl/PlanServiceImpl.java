@@ -43,7 +43,7 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     @Transactional
-    public Plan plan(Long accountId, PlanRequest planRequest) {
+    public Plan savePlan(Long accountId, PlanRequest planRequest) {
         Plan plan = Plan.builder()
                 .linkTo(planRequest.getLinkTo())
                 .memo(planRequest.getMemo())
@@ -68,7 +68,7 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     @Transactional(readOnly = true)
-    public Set<Plan> planLists(Long accountId, Long travelId) {
+    public Set<Plan> getPlanList(Long accountId, Long travelId) {
         Travel travel = findTravel(accountId, travelId);
         if(travel == null)
             throw new EmptyInfoException("There is no plan");

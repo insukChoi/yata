@@ -13,8 +13,6 @@ import project.yata.persistence.PlanRepository;
 import project.yata.persistence.TravelRepository;
 import project.yata.service.TravelService;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -46,7 +44,7 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public Travel travel(Long accountId, TravelRequest travelRequest) {
+    public Travel saveTravel(Long accountId, TravelRequest travelRequest) {
         Travel travel = Travel.builder()
                 .accountId(accountId)
                 .title(travelRequest.getTitle())
@@ -61,7 +59,7 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public Travel travelInfo(Long accountId, Long travelId) {
+    public Travel getTravel(Long accountId, Long travelId) {
         Optional<Travel> travel = Optional.ofNullable(
                 travelRepository.findByAccountIdAndId(accountId, travelId));
         return travel.orElseThrow(()
@@ -69,7 +67,7 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public List<Travel> travelInfos(Long accountId, int offset, int count) {
+    public List<Travel> getTravelList(Long accountId, int offset, int count) {
         int cnt = travelRepository.countByAccountId(accountId);
         if (cnt == 0)
             throw new EmptyInfoException("There is no travel plan.");
@@ -82,14 +80,14 @@ public class TravelServiceImpl implements TravelService {
 
     @Override
     public Travel updateTravel(Long accountId, TravelUpdateRequest travelUpdateRequest) {
-        Travel travel = travelInfo(accountId, travelUpdateRequest.getId());
+        Travel travel = getTravel(accountId, travelUpdateRequest.getId());
         travel.travelUpdate(travelUpdateRequest);
         return travelRepository.save(travel);
     }
 
     @Override
     public Travel deleteTravel(Long accountId, TravelDeleteRequest travelDeleteRequest) {
-        Travel travel = travelInfo(accountId, travelDeleteRequest.getId());
+        Travel travel = getTravel(accountId, travelDeleteRequest.getId());
         travel.updateDelete(travelDeleteRequest.isDeleted());
 
 

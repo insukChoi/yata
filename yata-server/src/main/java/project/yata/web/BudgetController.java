@@ -21,7 +21,7 @@ public class BudgetController {
     // budget은 travel마다 하나만 생성가능
     @PostMapping("/budget")
     public ResponseEntity<ApiResponse> budget(@RequestBody BudgetRequest budgetRequest) {
-        final Budget saveBudget = budgetService.budget(budgetRequest);
+        final Budget saveBudget = budgetService.saveBudget(budgetRequest);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -35,7 +35,7 @@ public class BudgetController {
 
     @GetMapping("/budget")
     public ResponseEntity<BudgetResponse> budgetItemList(@RequestParam("travelId") Long travelId) {
-        return new ResponseEntity<>(budgetService.budgetInfo(travelId), HttpStatus.OK);
+        return new ResponseEntity<>(budgetService.getBudget(travelId), HttpStatus.OK);
     }
 
     @PutMapping("/budget")

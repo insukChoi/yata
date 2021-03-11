@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Getter
+@Builder
 @NoArgsConstructor
 public class BudgetRequest {
     private Long travelId;
     private String exchangeInfo;
 
-    @Builder
     public BudgetRequest(Long travelId, String exchangeInfo) {
         this.travelId = travelId;
         this.exchangeInfo = exchangeInfo;

@@ -14,11 +14,11 @@ public interface TravelService {
 
     TravelResponse getTravelResponse(Travel travel);
 
-    Travel travel(Long accountId, TravelRequest travelRequest);
+    Travel saveTravel(Long accountId, TravelRequest travelRequest);
 
-    Travel travelInfo(Long accountId, Long travelId);
+    Travel getTravel(Long accountId, Long travelId);
 
-    List<Travel> travelInfos(Long accountId, int offset, int count);
+    List<Travel> getTravelList(Long accountId, int offset, int count);
 
     Travel updateTravel(Long accountId, TravelUpdateRequest travelUpdateRequest);
 
