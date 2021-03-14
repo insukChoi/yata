@@ -11,7 +11,6 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class PlanUpdateRequest {
     private Long id;
-    private Long accountId;
     private Long travelId;
     private String linkTo;
     private LocalTime time;

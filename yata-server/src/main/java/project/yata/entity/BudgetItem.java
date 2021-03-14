@@ -16,12 +16,9 @@ import java.time.LocalDateTime;
 @Getter
 public class BudgetItem extends BaseEntity
         implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "budget_id", nullable = false)
-    private Long budgetId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "budget_id")
+    private Budget budget;
 
     @Column(name = "is_on_Travel", nullable = false)
     private boolean isOnTravel;
@@ -39,11 +36,11 @@ public class BudgetItem extends BaseEntity
     private String memo;
 
     @Builder
-    public BudgetItem(Long budgetId, boolean isOnTravel, LocalDateTime date,
+    public BudgetItem(boolean isOnTravel, LocalDateTime date,
                       String detail, String price, String memo) {
-        Assert.notNull(budgetId, "Budget ID must be not null from BudgetItem class");
+//        Assert.notNull(budgetId, "Budget ID must be not null from BudgetItem class");
 
-        this.budgetId = budgetId;
+//        this.budgetId = budgetId;
         this.isOnTravel = isOnTravel;
         this.date = date;
         this.detail = detail;

@@ -5,15 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
 @NoArgsConstructor
-public class TravelDeleteRequest {
-    private Long id;
+@Builder
+public class BudgetDeleteRequest {
+    private Long travelId;
     private boolean deleted;
 
-    public TravelDeleteRequest(Long id, boolean deleted)
+    public BudgetDeleteRequest(Long travelId, boolean deleted)
     {
-        this.id = id;
+        this.travelId = travelId;
         this.deleted = deleted;
     }
 }

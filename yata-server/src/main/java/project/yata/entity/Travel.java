@@ -1,5 +1,6 @@
 package project.yata.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.jsonwebtoken.lang.Assert;
 import lombok.*;
@@ -17,10 +18,7 @@ import java.util.Set;
 @Getter
 public class Travel extends BaseEntity
         implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "travel", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Plan> plans;
 
@@ -39,7 +37,9 @@ public class Travel extends BaseEntity
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss+HH:mm", timezone = "Asia/Seoul")
     @Column(name = "time_difference")
+    //ZonedDateTime
     private ZonedDateTime timeDiff; // 나라는 입력하면, 한국 시간이랑, 그 나라의 시간이 보이도록?!
 
     @Column(name = "memo")

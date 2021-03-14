@@ -2,6 +2,7 @@ package project.yata.service;
 
 import project.yata.dto.TravelDeleteRequest;
 import project.yata.dto.TravelRequest;
+import project.yata.dto.TravelResponse;
 import project.yata.dto.TravelUpdateRequest;
 import project.yata.entity.Account;
 import project.yata.entity.Travel;
@@ -11,13 +12,15 @@ import java.util.List;
 public interface TravelService {
     List<Account> getAccountList();
 
-    Travel travel(TravelRequest travelRequest);
+    TravelResponse getTravelResponse(Travel travel);
 
-    Travel travelInfo(Long accountId, Long travelId);
+    Travel saveTravel(Long accountId, TravelRequest travelRequest);
 
-    List<Travel> travelInfos(Long accountId, int offset, int count);
+    Travel getTravel(Long accountId, Long travelId);
 
-    Travel updateTravel(TravelUpdateRequest travelUpdateRequest);
+    List<Travel> getTravelList(Long accountId, int offset, int count);
 
-    Travel deleteTravel(TravelDeleteRequest travelDeleteRequest);
+    Travel updateTravel(Long accountId, TravelUpdateRequest travelUpdateRequest);
+
+    Travel deleteTravel(Long accountId, TravelDeleteRequest travelDeleteRequest);
 }

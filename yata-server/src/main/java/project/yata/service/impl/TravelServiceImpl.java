@@ -32,9 +32,21 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public Travel travel(TravelRequest travelRequest) {
+    public TravelResponse getTravelResponse(Travel travel) {
+        return TravelResponse.builder()
+                .title(travel.getTitle())
+                .endDate(travel.getEndDate())
+                .memo(travel.getMemo())
+                .place(travel.getPlace())
+                .startDate(travel.getStartDate())
+                .timeDiff(travel.getTimeDiff())
+                .build();
+    }
+
+    @Override
+    public Travel saveTravel(Long accountId, TravelRequest travelRequest) {
         Travel travel = Travel.builder()
-                .accountId(travelRequest.getAccountId())
+                .accountId(accountId)
                 .title(travelRequest.getTitle())
                 .memo(travelRequest.getMemo())
                 .place(travelRequest.getPlace())
@@ -47,7 +59,7 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public Travel travelInfo(Long accountId, Long travelId) {
+    public Travel getTravel(Long accountId, Long travelId) {
         Optional<Travel> travel = Optional.ofNullable(
                 travelRepository.findByAccountIdAndId(accountId, travelId));
         return travel.orElseThrow(()
@@ -55,7 +67,7 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public List<Travel> travelInfos(Long accountId, int offset, int count) {
+    public List<Travel> getTravelList(Long accountId, int offset, int count) {
         int cnt = travelRepository.countByAccountId(accountId);
         if (cnt == 0)
             throw new EmptyInfoException("There is no travel plan.");
@@ -67,32 +79,29 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public Travel updateTravel(TravelUpdateRequest travelUpdateRequest) {
-        Travel travel = travelInfo(travelUpdateRequest.getAccountId(), travelUpdateRequest.getId());
+    public Travel updateTravel(Long accountId, TravelUpdateRequest travelUpdateRequest) {
+        Travel travel = getTravel(accountId, travelUpdateRequest.getId());
         travel.travelUpdate(travelUpdateRequest);
         return travelRepository.save(travel);
     }
 
     @Override
-    public Travel deleteTravel(TravelDeleteRequest travelDeleteRequest) {
-        Travel travel = travelInfo(travelDeleteRequest.getAccountId(), travelDeleteRequest.getId());
+    public Travel deleteTravel(Long accountId, TravelDeleteRequest travelDeleteRequest) {
+        Travel travel = getTravel(accountId, travelDeleteRequest.getId());
         travel.updateDelete(travelDeleteRequest.isDeleted());
 
 
-        updateChildPlans(travelDeleteRequest, travel);
+        updateChildPlans(accountId, travelDeleteRequest, travel);
 
         return travelRepository.save(travel);
     }
 
-    private void updateChildPlans(TravelDeleteRequest travelDeleteRequest, Travel travel)
+    private void updateChildPlans(Long accountId, TravelDeleteRequest travelDeleteRequest, Travel travel)
     {
         Set<Plan> plans = planRepository.findAllByTravel(travel);
 
         for(Plan p : plans) {
-            planService.deletePlan(new PlanDeleteRequest(p.getId(),
-                    travelDeleteRequest.getAccountId(),
-                    travelDeleteRequest.getId(),
-                    travelDeleteRequest.isDeleted()));
+            planService.deletePlan(accountId, new PlanDeleteRequest(p.getId(), travelDeleteRequest.getId(), travelDeleteRequest.isDeleted()));
         }
     }
 }

@@ -2,17 +2,18 @@ package project.yata.web;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import project.yata.config.security.JwtProvider;
+import project.yata.dto.ApiResponse;
 import project.yata.dto.TravelDeleteRequest;
 import project.yata.dto.TravelRequest;
 import project.yata.dto.TravelUpdateRequest;
 import project.yata.entity.Travel;
 import project.yata.service.TravelService;
 
-import java.net.URI;
 import java.util.List;
 
 @Slf4j
@@ -21,38 +22,41 @@ import java.util.List;
 public class TravelController {
 
     private final TravelService travelService;
+    private final JwtProvider jwtProvider;
 
     @PostMapping("/travel")
-    public ResponseEntity<Travel> travel(@RequestBody TravelRequest travelRequest) {
-        final Travel saveTravel = travelService.travel(travelRequest);
-        final URI location = MvcUriComponentsBuilder
-                .fromController(getClass()).path("/travel/{id}/{id}")
-                .buildAndExpand(saveTravel.getAccountId(), saveTravel.getId()).toUri();
+    public ResponseEntity<ApiResponse> travel(@RequestBody TravelRequest travelRequest) {
+        final Travel saveTravel = travelService.saveTravel(jwtProvider.getAccountId(), travelRequest);
 
-        return ResponseEntity.created(location).body(saveTravel);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .header(HttpHeaders.LOCATION, "/travel/" + saveTravel.getId())
+                .body(
+                        ApiResponse.success(
+                                travelService.getTravelResponse(saveTravel)
+                        )
+                );
     }
 
     @GetMapping("/travels")
-    public ResponseEntity<List<Travel>> travelInfos(@RequestParam("accountId") Long accountId,
-                                                    @RequestParam("offset") int offset,
+    public ResponseEntity<List<Travel>> travelInfos(@RequestParam("offset") int offset,
                                                     @RequestParam("count") int count) {
-        return new ResponseEntity<>(travelService.travelInfos(accountId, offset, count), HttpStatus.OK);
+        return new ResponseEntity<>(travelService.getTravelList(jwtProvider.getAccountId(), offset, count), HttpStatus.OK);
     }
 
 
     @GetMapping("/travel")
-    public ResponseEntity<Travel> travelInfos(@RequestParam("accountId") Long accountId,
-                                              @RequestParam("travelId") Long travelId) {
-        return new ResponseEntity<>(travelService.travelInfo(accountId, travelId), HttpStatus.OK);
+    public ResponseEntity<Travel> travelInfos(@RequestParam("travelId") Long travelId) {
+        return new ResponseEntity<>(travelService.getTravel(jwtProvider.getAccountId(), travelId), HttpStatus.OK);
     }
 
     @PutMapping("/travel")
     public ResponseEntity<Travel> updateTravel(@RequestBody TravelUpdateRequest travelUpdateRequest) {
-        return new ResponseEntity<>(travelService.updateTravel(travelUpdateRequest), HttpStatus.OK);
+        return new ResponseEntity<>(travelService.updateTravel(jwtProvider.getAccountId(), travelUpdateRequest), HttpStatus.OK);
     }
 
     @DeleteMapping("/travel")
     public ResponseEntity<Travel> updateTravel(@RequestBody TravelDeleteRequest travelDeleteRequest) {
-        return new ResponseEntity<>(travelService.deleteTravel(travelDeleteRequest), HttpStatus.OK);
+        return new ResponseEntity<>(travelService.deleteTravel(jwtProvider.getAccountId(), travelDeleteRequest), HttpStatus.OK);
     }
 }

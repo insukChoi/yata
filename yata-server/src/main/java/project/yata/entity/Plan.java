@@ -13,14 +13,8 @@ import java.time.LocalTime;
 @Getter
 public class Plan extends BaseEntity
         implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TRAVEL_ID")
-//    @JsonBackReference
-//    @EqualsAndHashCode.Exclude
+    @JoinColumn(name = "travel_id")
     private Travel travel;
 
     @Column(name = "time", nullable = false)
