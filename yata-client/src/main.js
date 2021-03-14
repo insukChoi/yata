@@ -20,6 +20,7 @@ import vuetify from './plugins/vuetify'
 import axios from 'axios'
 import Toast, { POSITION } from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import { store } from "./store";
 
 import PaperDashboard from "./plugins/paperDashboard";
 
@@ -33,5 +34,6 @@ Vue.use(Toast, {
 new Vue({
   vuetify,
   router,
+  store: store,
   render: h => h(App)
 }).$mount("#app");

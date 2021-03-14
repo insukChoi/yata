@@ -24,7 +24,17 @@ export default {
     EditProfileForm,
     Maps,
     PlanTimeLine
-  }
+  },
+  created () {
+    this.initialize()
+  },
+
+  methods: {
+    initialize () {
+      this.$store.commit('changeViewDetail', true)
+    }
+
+  },
 };
 </script>
 <style>
