@@ -25,20 +25,28 @@ public class PlanServiceImpl implements PlanService {
     private final PlanRepository planRepository;
     private final TravelRepository travelRepository;
 
-    private Travel findTravel(Long accountId, Long travelId)
-    {
+    private Travel findTravel(Long accountId, Long travelId) {
         Travel findTravel = travelRepository.findByAccountIdAndId(accountId, travelId);
 
-        if(findTravel == null)
+        if (findTravel == null)
             throw new EmptyInfoException("There is not suitable Travel information");
         return findTravel;
     }
 
-    private Plan planInfo(Long id, Travel travel){
+    private Plan planInfo(Long id, Travel travel) {
         Plan plan = planRepository.findPlanByIdAndTravel(id, travel);
-        if(plan == null)
+        if (plan == null)
             throw new EmptyInfoException("There is no suitable information in plans");
         return plan;
+    }
+
+    private PlanResponse getPlanResponse(Plan plan) {
+        return PlanResponse.builder()
+                .id(plan.getId())
+                .linkTo(plan.getLinkTo())
+                .time(plan.getTime())
+                .memo(plan.getMemo())
+                .build();
     }
 
     @Override
@@ -55,24 +63,12 @@ public class PlanServiceImpl implements PlanService {
         return planRepository.save(plan);
     }
 
-    @Override
-    public PlanResponse getPlanResponse(Plan plan)
-    {
-        return PlanResponse.builder()
-                .id(plan.getId())
-                .linkTo(plan.getLinkTo())
-                .time(plan.getTime())
-                .memo(plan.getMemo())
-                .build();
-    }
 
     @Override
     @Transactional(readOnly = true)
     public Set<Plan> getPlanList(Long accountId, Long travelId) {
         Travel travel = findTravel(accountId, travelId);
-        if(travel == null)
-            throw new EmptyInfoException("There is no plan");
-         return planRepository.findAllByTravel(travel);
+        return planRepository.findAllByTravel(travel);
     }
 
     @Override

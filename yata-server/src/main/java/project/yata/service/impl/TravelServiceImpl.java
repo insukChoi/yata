@@ -26,13 +26,7 @@ public class TravelServiceImpl implements TravelService {
     private final PlanRepository planRepository;
     private final PlanServiceImpl planService;
 
-    @Override
-    public List<Account> getAccountList() {
-        return accountRepository.findAll();
-    }
-
-    @Override
-    public TravelResponse getTravelResponse(Travel travel) {
+    private TravelResponse getTravelResponse(Travel travel) {
         return TravelResponse.builder()
                 .title(travel.getTitle())
                 .endDate(travel.getEndDate())
@@ -41,6 +35,11 @@ public class TravelServiceImpl implements TravelService {
                 .startDate(travel.getStartDate())
                 .timeDiff(travel.getTimeDiff())
                 .build();
+    }
+
+    @Override
+    public List<Account> getAccountList() {
+        return accountRepository.findAll();
     }
 
     @Override
@@ -73,7 +72,7 @@ public class TravelServiceImpl implements TravelService {
             throw new EmptyInfoException("There is no travel plan.");
 
         List<Travel> travel = travelRepository.findByAccountId(accountId);
-        if(cnt < count)
+        if (cnt < count)
             return travel.subList(offset, cnt);
         return travel.subList(offset, count);
     }
@@ -90,17 +89,15 @@ public class TravelServiceImpl implements TravelService {
         Travel travel = getTravel(accountId, travelDeleteRequest.getId());
         travel.updateDelete(travelDeleteRequest.isDeleted());
 
-
         updateChildPlans(accountId, travelDeleteRequest, travel);
 
         return travelRepository.save(travel);
     }
 
-    private void updateChildPlans(Long accountId, TravelDeleteRequest travelDeleteRequest, Travel travel)
-    {
+    private void updateChildPlans(Long accountId, TravelDeleteRequest travelDeleteRequest, Travel travel) {
         Set<Plan> plans = planRepository.findAllByTravel(travel);
 
-        for(Plan p : plans) {
+        for (Plan p : plans) {
             planService.deletePlan(accountId, new PlanDeleteRequest(p.getId(), travelDeleteRequest.getId(), travelDeleteRequest.isDeleted()));
         }
     }

@@ -33,7 +33,7 @@ public class TravelController {
                 .header(HttpHeaders.LOCATION, "/travel/" + saveTravel.getId())
                 .body(
                         ApiResponse.success(
-                                travelService.getTravelResponse(saveTravel)
+                                saveTravel
                         )
                 );
     }

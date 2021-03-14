@@ -13,27 +13,20 @@ import project.yata.entity.Budget;
 import project.yata.persistence.BudgetRepository;
 import project.yata.service.BudgetService;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class BudgetServiceImpl implements BudgetService {
     private final BudgetRepository budgetRepository;
-    @Override
-    public Budget saveBudget(BudgetRequest budgetRequest) {
-        Budget budget = Budget.builder()
-                .travelId(budgetRequest.getTravelId())
-                .exchangeInfo(budgetRequest.getExchangeInfo())
-                .build();
 
-        if(budgetRepository.findBudgetByTravelId(budgetRequest.getTravelId()) != null)
-            throw new EmptyInfoException("The budget is already created, you can create budget only one.");
-
-        return budgetRepository.save(budget);
+    private Budget findBudgetByTravelId(Long travelId) {
+        return budgetRepository.findBudgetByTravelId(travelId);
     }
 
-    @Override
-    public BudgetResponse getBudgetResponse(Budget budget) {
+    private BudgetResponse getBudgetResponse(Budget budget) {
         return BudgetResponse.builder()
                 .travelId(budget.getTravelId())
                 .exchangeInfo(budget.getExchangeInfo())
@@ -41,13 +34,26 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
+    public Budget saveBudget(BudgetRequest budgetRequest) {
+        Budget budget = Budget.builder()
+                .travelId(budgetRequest.getTravelId())
+                .exchangeInfo(budgetRequest.getExchangeInfo())
+                .build();
+
+        if(budgetRepository.getBudgetByTravelId(budget.getTravelId()).isPresent())
+            throw new EmptyInfoException("The budget is already created, you can create budget only one.");
+
+        return budgetRepository.save(budget);
+    }
+
+    @Override
     public BudgetResponse getBudget(Long travelId) {
-        return getBudgetResponse(budgetRepository.findBudgetByTravelId(travelId));
+        return getBudgetResponse(findBudgetByTravelId(travelId));
     }
 
     @Override
     public BudgetResponse updateBudget(BudgetUpdateRequest budgetUpdateRequest) {
-        Budget budget = budgetRepository.findBudgetByTravelId(budgetUpdateRequest.getTravelId());
+        Budget budget = findBudgetByTravelId(budgetUpdateRequest.getTravelId());
         budget.budgetUpdate(budgetUpdateRequest);
 
         budgetRepository.save(budget);
@@ -56,7 +62,7 @@ public class BudgetServiceImpl implements BudgetService {
 
     @Override
     public Budget deleteBudget(Long travelId, BudgetDeleteRequest budgetDeleteRequest) {
-        Budget budget = budgetRepository.findBudgetByTravelId(travelId);
+        Budget budget = findBudgetByTravelId(travelId);
         budget.updateDelete(budgetDeleteRequest.isDeleted());
 
         return budgetRepository.save(budget);
