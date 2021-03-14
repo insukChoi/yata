@@ -29,7 +29,7 @@ public class PlanController {
                 .header(HttpHeaders.LOCATION, "/plan/" + savePlan.getId())
                 .body(
                         ApiResponse.success(
-                                planService.getPlanResponse(savePlan)
+                                savePlan
                         )
                 );
     }

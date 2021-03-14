@@ -11,8 +11,6 @@ import java.util.Set;
 public interface PlanService {
      Plan savePlan(Long accountId, PlanRequest planRequest);
 
-     PlanResponse getPlanResponse(Plan plan);
-
      Set<Plan> getPlanList(Long accountId, Long travelId);
 
      Plan updatePlan(Long accountId, PlanUpdateRequest planUpdateRequest);

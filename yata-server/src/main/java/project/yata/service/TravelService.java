@@ -12,8 +12,6 @@ import java.util.List;
 public interface TravelService {
     List<Account> getAccountList();
 
-    TravelResponse getTravelResponse(Travel travel);
-
     Travel saveTravel(Long accountId, TravelRequest travelRequest);
 
     Travel getTravel(Long accountId, Long travelId);

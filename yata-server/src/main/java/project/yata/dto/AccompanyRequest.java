@@ -8,14 +8,14 @@ import java.awt.*;
 
 @Getter
 @NoArgsConstructor
-public class AccompanyDto {
+public class AccompanyRequest {
 
     private Long travelId;
     private List accompanies;
 
 
     @Builder
-    public AccompanyDto(Long travelId, List accompanies) {
+    public AccompanyRequest(Long travelId, List accompanies) {
         this.travelId = travelId;
         this.accompanies = accompanies;
     }

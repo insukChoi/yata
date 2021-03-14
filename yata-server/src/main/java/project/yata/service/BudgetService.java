@@ -10,8 +10,6 @@ import project.yata.entity.Budget;
 public interface BudgetService {
     Budget saveBudget(BudgetRequest budgetRequest);
 
-    BudgetResponse getBudgetResponse(Budget budget);
-
     BudgetResponse getBudget(Long travelId);
 
     BudgetResponse updateBudget(BudgetUpdateRequest budgetUpdateRequest);

@@ -28,7 +28,7 @@ public class BudgetController {
                 .header(HttpHeaders.LOCATION, "/budget/" + saveBudget.getId())
                 .body(
                         ApiResponse.success(
-                                budgetService.getBudgetResponse(saveBudget)
+                                saveBudget
                         )
                 );
     }
