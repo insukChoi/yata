@@ -18,10 +18,7 @@ import java.util.Set;
 @Getter
 public class Travel extends BaseEntity
         implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "travel", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Plan> plans;
 

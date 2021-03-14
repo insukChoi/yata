@@ -16,16 +16,9 @@ import java.time.LocalDateTime;
 @Getter
 public class BudgetItem extends BaseEntity
         implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "budget_id")
     private Budget budget;
-
-//    @Column(name = "budget_id", nullable = false)
-//    private Long budgetId;
 
     @Column(name = "is_on_Travel", nullable = false)
     private boolean isOnTravel;

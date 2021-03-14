@@ -24,6 +24,7 @@ public class Budget extends BaseEntity implements Serializable {
     private String exchangeInfo;
 
     @OneToMany(mappedBy = "budget", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<BudgetItem> budgetItems;
 
     @Builder
