@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import project.yata.dto.AccountRequest;
 import project.yata.dto.AccountResponse;
-import project.yata.service.AuthService;
+import project.yata.service.impl.AuthServiceImpl;
 import project.yata.web.AuthController;
 import project.yata.config.security.UserDetailServiceImpl;
 import project.yata.config.security.JwtProvider;
@@ -41,7 +41,7 @@ public class AuthControllerTest {
     @MockBean
     private JwtProvider jwtProvider;
     @MockBean
-    private AuthService authService;
+    private AuthServiceImpl authServiceImpl;
 
     @Test
     @DisplayName("회원가입 성공")
@@ -97,6 +97,6 @@ public class AuthControllerTest {
         joinRequest = AccountRequest.builder().email(ACCOUNT_EMAIL).name(ACCOUNT_NAME).password(ACCOUNT_PASSWORD).build();
         joinResponse = AccountResponse.builder().email(joinRequest.getEmail()).name(joinRequest.getName()).build();
 
-        given(authService.join(Mockito.any(AccountRequest.class))).willReturn(joinResponse);
+        given(authServiceImpl.join(Mockito.any(AccountRequest.class))).willReturn(joinResponse);
     }
 }

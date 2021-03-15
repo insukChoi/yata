@@ -8,12 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import project.yata.dto.AccountRequest;
 import project.yata.dto.AccountResponse;
 import project.yata.dto.LoginResponse;
+import project.yata.service.impl.AuthServiceImpl;
 
 @SpringBootTest
-class AuthServiceTest {
+class AuthServiceImplTest {
 
     @Autowired
-    AuthService authService;
+    AuthServiceImpl authServiceImpl;
 
     @DisplayName("회원가입 성공")
     @Test
@@ -27,7 +28,7 @@ class AuthServiceTest {
         AccountRequest joinRequest = AccountRequest.builder().email(email).name(name).password(password).build();
 
         // when
-        final AccountResponse joinResponse = authService.join(joinRequest);
+        final AccountResponse joinResponse = authServiceImpl.join(joinRequest);
 
         // then
         Assertions.assertEquals(joinResponse.getEmail(), joinRequest.getEmail());
@@ -49,10 +50,10 @@ class AuthServiceTest {
                 .password(password)
                 .build();
 
-        authService.join(joinRequest);
+        authServiceImpl.join(joinRequest);
 
         // when
-        LoginResponse loginResponse = authService.login(email, password);
+        LoginResponse loginResponse = authServiceImpl.login(email, password);
 
         // then
         Assertions.assertNotNull(loginResponse);// 수정
