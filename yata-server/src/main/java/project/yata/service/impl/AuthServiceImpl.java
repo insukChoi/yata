@@ -18,13 +18,6 @@ import project.yata.entity.Address;
 import project.yata.persistence.AccountRepository;
 import project.yata.service.AuthService;
 
-/**
- * 회원인증 서비스
- *
- * @author JisuNa
- * @version 1.0
- * @since 2020.08.25
- */
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -33,11 +26,6 @@ public class AuthServiceImpl implements AuthService {
     private final JwtProvider jwtProvider;
     private final AuthenticationManager authenticationManager;
 
-    /**
-     * 이메일 중복체크
-     *
-     * @param email 이메일 주소
-     */
     @Override
     public void checkDuplicateEmail(String email) {
         accountRepository.findByEmail(email).ifPresent(value -> {
@@ -45,12 +33,6 @@ public class AuthServiceImpl implements AuthService {
         });
     }
 
-    /**
-     * 회원가입
-     *
-     * @param joinRequest 회원가입 정보
-     * @return {@link AccountResponse}
-     */
     @Override
     public AccountResponse join(AccountRequest joinRequest) {
 
@@ -70,13 +52,6 @@ public class AuthServiceImpl implements AuthService {
         );
     }
 
-    /**
-     * 로그인
-     *
-     * @param email    이메일 주소
-     * @param password 비밀번호
-     * @return JWT
-     */
     @Override
     public LoginResponse login(String email, String password) {
 

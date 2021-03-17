@@ -8,25 +8,12 @@ import project.yata.entity.Account;
 import project.yata.persistence.AccountRepository;
 import project.yata.service.AccountService;
 
-/**
- * 회원관리 서비스
- *
- * @author JisuNa
- * @version 1.0
- * @since 20.10.18
- */
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
 
-    /**
-     * 회원 조회
-     *
-     * @param email 조회 키워드
-     * @return AccountResponse
-     */
     @Override
     public AccountResponse getAccount(String email) {
         Account account = accountRepository.findByEmail(email).orElseThrow(() ->

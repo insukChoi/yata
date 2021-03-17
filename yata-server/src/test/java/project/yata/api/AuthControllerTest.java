@@ -10,12 +10,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import project.yata.config.security.JwtProvider;
+import project.yata.config.security.UserDetailServiceImpl;
 import project.yata.dto.AccountRequest;
 import project.yata.dto.AccountResponse;
-import project.yata.service.impl.AuthServiceImpl;
+import project.yata.service.AuthService;
 import project.yata.web.AuthController;
-import project.yata.config.security.UserDetailServiceImpl;
-import project.yata.config.security.JwtProvider;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -41,7 +41,7 @@ public class AuthControllerTest {
     @MockBean
     private JwtProvider jwtProvider;
     @MockBean
-    private AuthServiceImpl authServiceImpl;
+    private AuthService authService;
 
     @Test
     @DisplayName("회원가입 성공")
@@ -97,6 +97,6 @@ public class AuthControllerTest {
         joinRequest = AccountRequest.builder().email(ACCOUNT_EMAIL).name(ACCOUNT_NAME).password(ACCOUNT_PASSWORD).build();
         joinResponse = AccountResponse.builder().email(joinRequest.getEmail()).name(joinRequest.getName()).build();
 
-        given(authServiceImpl.join(Mockito.any(AccountRequest.class))).willReturn(joinResponse);
+        given(authService.join(Mockito.any(AccountRequest.class))).willReturn(joinResponse);
     }
 }
