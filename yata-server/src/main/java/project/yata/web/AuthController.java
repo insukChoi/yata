@@ -28,23 +28,15 @@ public class AuthController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .header(HttpHeaders.LOCATION, "/api/v2/account?email=" + joinRequest.getEmail())
-                .body(
-                        ApiResponse.success(
-                                authService.join(joinRequest)
-                        )
-                );
+                .body(ApiResponse.success(authService.join(joinRequest)));
     }
 
     @GetMapping("/login")
     public ResponseEntity<ApiResponse> login(@RequestHeader("X-USER-EMAIL") String email,
-                                             @RequestHeader("X-USER-PASSWORD") String password) throws Exception {
+                                             @RequestHeader("X-USER-PASSWORD") String password) {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(
-                        ApiResponse.success(
-                                authService.login(email, password)
-                        )
-                );
+                .body(ApiResponse.success(authService.login(email, password)));
     }
 }

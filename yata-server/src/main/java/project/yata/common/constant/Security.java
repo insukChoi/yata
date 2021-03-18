@@ -1,11 +1,10 @@
 package project.yata.common.constant;
 
 import lombok.Getter;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 public enum Security {
     ACCESS("access"),
     REFRESH("refresh");

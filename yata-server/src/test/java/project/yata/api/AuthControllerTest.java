@@ -10,12 +10,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import project.yata.config.security.JwtProvider;
+import project.yata.config.security.UserDetailServiceImpl;
 import project.yata.dto.AccountRequest;
 import project.yata.dto.AccountResponse;
 import project.yata.service.AuthService;
 import project.yata.web.AuthController;
-import project.yata.config.security.UserDetailServiceImpl;
-import project.yata.config.security.JwtProvider;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
