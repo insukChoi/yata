@@ -1,5 +1,6 @@
 package project.yata.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,9 @@ public class TravelRequest {
     private Long accountId;
     private String title;
     private ZonedDateTime timeDiff;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'[HH]:[mm]:[ss]")
     private LocalDateTime startDate;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'[HH]:[mm]:[ss]")
     private LocalDateTime endDate;
     private String memo;
     private String place;

@@ -18,7 +18,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@RestController
+@RestController("/api")
 public class TravelController {
 
     private final TravelService travelService;
