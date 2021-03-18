@@ -51,14 +51,14 @@ public class AuthControllerTest {
 
         // when
         mockMvc.perform(post("/api/v2/auth/join")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(joinRequest)))
-                .andDo(print())
-                // then
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.code").value("0000"))
-                .andExpect(jsonPath("$.data.email").value(joinRequest.getEmail()));
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(mapper.writeValueAsString(joinRequest)))
+            .andDo(print())
+            // then
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.code").value("0000"))
+            .andExpect(jsonPath("$.data.email").value(joinRequest.getEmail()));
     }
 
     @Test
@@ -69,14 +69,14 @@ public class AuthControllerTest {
 
         // when
         mockMvc.perform(
-                get("/api/v2/auth/login")
-                        .header("X-USER-EMAIL", joinRequest.getEmail())
-                        .header("X-USER-PASSWORD", joinRequest.getPassword()))
-                // then
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.code").value("0000"));
+            get("/api/v2/auth/login")
+                .header("X-USER-EMAIL", joinRequest.getEmail())
+                .header("X-USER-PASSWORD", joinRequest.getPassword()))
+            // then
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.code").value("0000"));
     }
 
 //    @Test

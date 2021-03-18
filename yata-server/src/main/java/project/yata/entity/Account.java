@@ -53,5 +53,4 @@ public class Account extends BaseEntity implements Serializable {
         this.gender = gender;
         this.birthday = birthday;
     }
-
 }

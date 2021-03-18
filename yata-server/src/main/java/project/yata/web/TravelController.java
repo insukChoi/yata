@@ -29,13 +29,13 @@ public class TravelController {
         final Travel saveTravel = travelService.saveTravel(jwtProvider.getAccountId(), travelRequest);
 
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .header(HttpHeaders.LOCATION, "/travel/" + saveTravel.getId())
-                .body(
-                        ApiResponse.success(
-                                saveTravel
-                        )
-                );
+            .status(HttpStatus.CREATED)
+            .header(HttpHeaders.LOCATION, "/travel/" + saveTravel.getId())
+            .body(
+                ApiResponse.success(
+                    saveTravel
+                )
+            );
     }
 
     @GetMapping("/travels")

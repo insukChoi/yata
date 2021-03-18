@@ -19,7 +19,6 @@ class AuthServiceImplTest {
     @DisplayName("회원가입 성공")
     @Test
     void successJoin() throws Exception {
-
         // given
         final String email = "admin@yata.com";
         final String name = "queen";
@@ -38,17 +37,16 @@ class AuthServiceImplTest {
     @DisplayName("로그인 성공")
     @Test
     void successLogin() throws Exception {
-
         // given
         final String email = "admin@yata.com";
         final String name = "queen";
         final String password = "0011";
 
         AccountRequest joinRequest = AccountRequest.builder()
-                .email(email)
-                .name(name)
-                .password(password)
-                .build();
+            .email(email)
+            .name(name)
+            .password(password)
+            .build();
 
         authServiceImpl.join(joinRequest);
 
@@ -57,7 +55,5 @@ class AuthServiceImplTest {
 
         // then
         Assertions.assertNotNull(loginResponse);// 수정
-
     }
-
 }

@@ -16,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Accompany extends BaseEntity
-        implements Serializable {
+    implements Serializable {
     @Column(name = "account_id", nullable = false)
     private Long accountId;
 

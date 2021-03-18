@@ -2,7 +2,6 @@ package project.yata.service;
 
 import project.yata.dto.TravelDeleteRequest;
 import project.yata.dto.TravelRequest;
-import project.yata.dto.TravelResponse;
 import project.yata.dto.TravelUpdateRequest;
 import project.yata.entity.Account;
 import project.yata.entity.Travel;

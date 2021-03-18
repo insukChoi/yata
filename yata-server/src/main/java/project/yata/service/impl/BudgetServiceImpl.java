@@ -13,8 +13,6 @@ import project.yata.entity.Budget;
 import project.yata.persistence.BudgetRepository;
 import project.yata.service.BudgetService;
 
-import java.util.Optional;
-
 @Slf4j
 @Service
 @Transactional
@@ -28,19 +26,19 @@ public class BudgetServiceImpl implements BudgetService {
 
     private BudgetResponse getBudgetResponse(Budget budget) {
         return BudgetResponse.builder()
-                .travelId(budget.getTravelId())
-                .exchangeInfo(budget.getExchangeInfo())
-                .build();
+            .travelId(budget.getTravelId())
+            .exchangeInfo(budget.getExchangeInfo())
+            .build();
     }
 
     @Override
     public Budget saveBudget(BudgetRequest budgetRequest) {
         Budget budget = Budget.builder()
-                .travelId(budgetRequest.getTravelId())
-                .exchangeInfo(budgetRequest.getExchangeInfo())
-                .build();
+            .travelId(budgetRequest.getTravelId())
+            .exchangeInfo(budgetRequest.getExchangeInfo())
+            .build();
 
-        if(budgetRepository.getBudgetByTravelId(budget.getTravelId()).isPresent())
+        if (budgetRepository.getBudgetByTravelId(budget.getTravelId()).isPresent())
             throw new EmptyInfoException("The budget is already created, you can create budget only one.");
 
         return budgetRepository.save(budget);

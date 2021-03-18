@@ -18,27 +18,27 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
+            .addResourceLocations("classpath:/META-INF/resources/");
 
         registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+            .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
     @Bean
     public Docket swagger() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(swaggerInfo())
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant("/api/**"))
-                .build();
+            .apiInfo(swaggerInfo())
+            .select()
+            .apis(RequestHandlerSelectors.any())
+            .paths(PathSelectors.ant("/api/**"))
+            .build();
     }
 
     private ApiInfo swaggerInfo() {
         return new ApiInfoBuilder()
-                .title("Yata API")
-                .description("Yata API Document")
-                .version("1.0.0")
-                .build();
+            .title("Yata API")
+            .description("Yata API Document")
+            .version("1.0.0")
+            .build();
     }
 }

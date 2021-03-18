@@ -42,21 +42,21 @@ public class PlanServiceImpl implements PlanService {
 
     private PlanResponse getPlanResponse(Plan plan) {
         return PlanResponse.builder()
-                .id(plan.getId())
-                .linkTo(plan.getLinkTo())
-                .time(plan.getTime())
-                .memo(plan.getMemo())
-                .build();
+            .id(plan.getId())
+            .linkTo(plan.getLinkTo())
+            .time(plan.getTime())
+            .memo(plan.getMemo())
+            .build();
     }
 
     @Override
     @Transactional
     public Plan savePlan(Long accountId, PlanRequest planRequest) {
         Plan plan = Plan.builder()
-                .linkTo(planRequest.getLinkTo())
-                .memo(planRequest.getMemo())
-                .time(planRequest.getTime())
-                .build();
+            .linkTo(planRequest.getLinkTo())
+            .memo(planRequest.getMemo())
+            .time(planRequest.getTime())
+            .build();
 
         plan.setTravel(findTravel(accountId, planRequest.getTravelId()));
 
