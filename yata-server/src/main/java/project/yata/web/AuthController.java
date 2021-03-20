@@ -26,9 +26,9 @@ public class AuthController {
     public ResponseEntity<ApiResponse> join(@Valid @RequestBody AccountRequest joinRequest) {
 
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .header(HttpHeaders.LOCATION, "/api/v2/account?email=" + joinRequest.getEmail())
-                .body(ApiResponse.success(authService.join(joinRequest)));
+            .status(HttpStatus.CREATED)
+            .header(HttpHeaders.LOCATION, "/api/v2/account?email=" + joinRequest.getEmail())
+            .body(ApiResponse.success(authService.join(joinRequest)));
     }
 
     @GetMapping("/login")
@@ -36,7 +36,7 @@ public class AuthController {
                                              @RequestHeader("X-USER-PASSWORD") String password) {
 
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ApiResponse.success(authService.login(email, password)));
+            .status(HttpStatus.OK)
+            .body(ApiResponse.success(authService.login(email, password)));
     }
 }

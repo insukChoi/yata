@@ -15,7 +15,7 @@ create table TRAVEL
     account_id      bigint not null,
     title           varchar(255) not null,
     place           varchar(255) not null,
-    time_difference int          not null,
+    time_difference varchar(255) not null,
     memo            varchar(255) not null,
     start_date      varchar(255) not null,
     end_date        varchar(255) not null,

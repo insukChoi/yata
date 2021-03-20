@@ -24,13 +24,13 @@ public class BudgetController {
         final Budget saveBudget = budgetService.saveBudget(budgetRequest);
 
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .header(HttpHeaders.LOCATION, "/budget/" + saveBudget.getId())
-                .body(
-                        ApiResponse.success(
-                                saveBudget
-                        )
-                );
+            .status(HttpStatus.CREATED)
+            .header(HttpHeaders.LOCATION, "/budget/" + saveBudget.getId())
+            .body(
+                ApiResponse.success(
+                    saveBudget
+                )
+            );
     }
 
     @GetMapping("/budget")

@@ -41,14 +41,14 @@ public class AuthServiceImpl implements AuthService {
         Account joinedAccount = accountRepository.save(getAccountByJoinRequest(joinRequest));
 
         return new AccountResponse(
-                joinedAccount.getEmail(),
-                joinedAccount.getName(),
-                joinedAccount.getPhone(),
-                joinedAccount.getAddress().getZipCode(),
-                joinedAccount.getAddress().getAddress1(),
-                joinedAccount.getAddress().getAddress2(),
-                joinedAccount.getGender(),
-                String.valueOf(joinedAccount.getBirthday())
+            joinedAccount.getEmail(),
+            joinedAccount.getName(),
+            joinedAccount.getPhone(),
+            joinedAccount.getAddress().getZipCode(),
+            joinedAccount.getAddress().getAddress1(),
+            joinedAccount.getAddress().getAddress2(),
+            joinedAccount.getGender(),
+            String.valueOf(joinedAccount.getBirthday())
         );
     }
 
@@ -62,8 +62,8 @@ public class AuthServiceImpl implements AuthService {
         }
 
         return new LoginResponse().generateTokens(
-                jwtProvider.generateToken(email, Security.ACCESS.getType()),
-                jwtProvider.generateToken(email, Security.REFRESH.getType())
+            jwtProvider.generateToken(email, Security.ACCESS.getType()),
+            jwtProvider.generateToken(email, Security.REFRESH.getType())
         );
     }
 
@@ -72,20 +72,20 @@ public class AuthServiceImpl implements AuthService {
         // TODO JoinRequest validation check
 
         return Account.builder()
-                .email(joinRequest.getEmail())
-                .name(joinRequest.getName())
-                .password(passwordEncoder.encode(joinRequest.getPassword()))
-                .phone(joinRequest.getPhone())
-                .address(
-                        Address.builder()
-                                .zipCode(joinRequest.getZipCode())
-                                .address1(joinRequest.getAddress1())
-                                .address2(joinRequest.getAddress2())
-                                .build()
-                )
-                .gender(joinRequest.getGender())
-                .birthday(joinRequest.getBirthday())
-                .build();
+            .email(joinRequest.getEmail())
+            .name(joinRequest.getName())
+            .password(passwordEncoder.encode(joinRequest.getPassword()))
+            .phone(joinRequest.getPhone())
+            .address(
+                Address.builder()
+                    .zipCode(joinRequest.getZipCode())
+                    .address1(joinRequest.getAddress1())
+                    .address2(joinRequest.getAddress2())
+                    .build()
+            )
+            .gender(joinRequest.getGender())
+            .birthday(joinRequest.getBirthday())
+            .build();
     }
 
 }

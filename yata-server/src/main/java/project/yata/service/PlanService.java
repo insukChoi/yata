@@ -2,7 +2,6 @@ package project.yata.service;
 
 import project.yata.dto.PlanDeleteRequest;
 import project.yata.dto.PlanRequest;
-import project.yata.dto.PlanResponse;
 import project.yata.dto.PlanUpdateRequest;
 import project.yata.entity.Plan;
 

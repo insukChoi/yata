@@ -17,7 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Transport extends BaseEntity
-        implements Serializable {
+    implements Serializable {
     @Column(name = "travel_id", nullable = false)
     private Long travelId;
 

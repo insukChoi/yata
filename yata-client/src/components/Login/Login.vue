@@ -83,7 +83,9 @@
       source: String,
     },
     methods: {
-      checkLogin: function () {
+      axiosCommonAuthSetting: function (_this, res) {
+        _this.$Axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.accessToken}`;
+      }, checkLogin: function () {
         const _this = this;
         _this.$Axios.get('/api/v2/auth/login', {headers: {
             'X-USER-EMAIL' : _this.email,
@@ -91,7 +93,8 @@
           }}).then(res => {
             if (res.data.code === '0000') {
               _this.$toast.success("야타 로그인 성공 >.<");
-              localStorage.setItem('accessToken', res.data.accessToken);
+              localStorage.setItem('accessToken', res.data.data.accessToken);
+              this.axiosCommonAuthSetting(_this, res);
               _this.$router.push({name: 'dashboard'});
             }
         }).catch(function (error) {

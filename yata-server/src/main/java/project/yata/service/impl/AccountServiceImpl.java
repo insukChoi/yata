@@ -17,18 +17,18 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountResponse getAccount(String email) {
         Account account = accountRepository.findByEmail(email).orElseThrow(() ->
-                new EmptyInfoException("There is no " + email + "."));
+            new EmptyInfoException("There is no " + email + "."));
 
         return AccountResponse.builder()
-                .email(account.getEmail())
-                .name(account.getName())
-                .phone(account.getPhone())
-                .zipCode(account.getAddress().getZipCode())
-                .address1(account.getAddress().getAddress1())
-                .address2(account.getAddress().getAddress2())
-                .gender(account.getGender())
-                .birthday(String.valueOf(account.getBirthday()))
-                .build();
+            .email(account.getEmail())
+            .name(account.getName())
+            .phone(account.getPhone())
+            .zipCode(account.getAddress().getZipCode())
+            .address1(account.getAddress().getAddress1())
+            .address2(account.getAddress().getAddress2())
+            .gender(account.getGender())
+            .birthday(String.valueOf(account.getBirthday()))
+            .build();
     }
 
 }

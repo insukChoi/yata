@@ -28,13 +28,13 @@ public class TravelServiceImpl implements TravelService {
 
     private TravelResponse getTravelResponse(Travel travel) {
         return TravelResponse.builder()
-                .title(travel.getTitle())
-                .endDate(travel.getEndDate())
-                .memo(travel.getMemo())
-                .place(travel.getPlace())
-                .startDate(travel.getStartDate())
-                .timeDiff(travel.getTimeDiff())
-                .build();
+            .title(travel.getTitle())
+            .endDate(travel.getEndDate())
+            .memo(travel.getMemo())
+            .place(travel.getPlace())
+            .startDate(travel.getStartDate())
+            .timeDiff(travel.getTimeDiff())
+            .build();
     }
 
     @Override
@@ -45,14 +45,14 @@ public class TravelServiceImpl implements TravelService {
     @Override
     public Travel saveTravel(Long accountId, TravelRequest travelRequest) {
         Travel travel = Travel.builder()
-                .accountId(accountId)
-                .title(travelRequest.getTitle())
-                .memo(travelRequest.getMemo())
-                .place(travelRequest.getPlace())
-                .timeDiff(travelRequest.getTimeDiff())
-                .endDate(travelRequest.getEndDate())
-                .startDate(travelRequest.getStartDate())
-                .build();
+            .accountId(accountId)
+            .title(travelRequest.getTitle())
+            .memo(travelRequest.getMemo())
+            .place(travelRequest.getPlace())
+            .timeDiff(travelRequest.getTimeDiff())
+            .endDate(travelRequest.getEndDate())
+            .startDate(travelRequest.getStartDate())
+            .build();
 
         return travelRepository.save(travel);
     }
@@ -60,9 +60,9 @@ public class TravelServiceImpl implements TravelService {
     @Override
     public Travel getTravel(Long accountId, Long travelId) {
         Optional<Travel> travel = Optional.ofNullable(
-                travelRepository.findByAccountIdAndId(accountId, travelId));
+            travelRepository.findByAccountIdAndId(accountId, travelId));
         return travel.orElseThrow(()
-                -> new EmptyInfoException("There is no " + travelId + " travel plan."));
+            -> new EmptyInfoException("There is no " + travelId + " travel plan."));
     }
 
     @Override

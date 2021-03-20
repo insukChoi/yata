@@ -12,7 +12,7 @@ import java.time.LocalTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Plan extends BaseEntity
-        implements Serializable {
+    implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "travel_id")
     private Travel travel;
@@ -39,8 +39,7 @@ public class Plan extends BaseEntity
         this.linkTo = planUpdateRequest.getLinkTo();
     }
 
-    public void setTravel(Travel travel)
-    {
+    public void setTravel(Travel travel) {
         this.travel = travel;
         if(!travel.getPlans().contains(this))
         {

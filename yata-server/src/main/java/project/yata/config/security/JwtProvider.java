@@ -64,16 +64,16 @@ public class JwtProvider {
 
     private String createToken(Map<String, Object> claims, String subject, String tokenType) {
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
-                .setIssuedAt(DateUtil.asDate(LocalDate.now()))
-                .setExpiration(
-                        DateUtil.asDate(LocalDateTime.now().plusMinutes(
-                                StringUtils.equals(Security.ACCESS.getType(), tokenType) ? accessTokenValid : refreshTokenValid)
-                        )
+            .setClaims(claims)
+            .setSubject(subject)
+            .setIssuedAt(DateUtil.asDate(LocalDate.now()))
+            .setExpiration(
+                DateUtil.asDate(LocalDateTime.now().plusMinutes(
+                    StringUtils.equals(Security.ACCESS.getType(), tokenType) ? accessTokenValid : refreshTokenValid)
                 )
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
+            )
+            .signWith(SignatureAlgorithm.HS256, secretKey)
+            .compact();
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
