@@ -17,7 +17,7 @@ import javax.validation.Valid;
 @Api(tags = {"1. Authentication"})
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v2/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
     private final AuthService authService;

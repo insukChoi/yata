@@ -68,9 +68,6 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private Account getAccountByJoinRequest(AccountRequest joinRequest) {
-
-        // TODO JoinRequest validation check
-
         return Account.builder()
                 .email(joinRequest.getEmail())
                 .name(joinRequest.getName())
@@ -87,6 +84,5 @@ public class AuthServiceImpl implements AuthService {
                 .birthday(joinRequest.getBirthday())
                 .build();
     }
-
 }
 

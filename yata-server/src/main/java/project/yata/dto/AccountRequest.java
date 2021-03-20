@@ -25,5 +25,4 @@ public class AccountRequest {
     private String zipCode;
     private String address1;
     private String address2;
-
 }

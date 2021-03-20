@@ -14,7 +14,7 @@ import project.yata.service.AccountService;
 @Api(tags = {"2. Account"})
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v2/account")
+@RequestMapping("/account")
 public class AccountController {
 
     private final AccountService accountService;
