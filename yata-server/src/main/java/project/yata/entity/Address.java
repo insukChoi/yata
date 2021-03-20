@@ -10,7 +10,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 @Getter
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Address {
     @Column(name = "zip_code")
     private String zipCode;
