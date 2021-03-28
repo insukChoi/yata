@@ -26,6 +26,7 @@ public class PlanServiceImpl implements PlanService {
     private final TravelRepository travelRepository;
 
     private Travel findTravel(Long accountId, Long travelId) {
+        System.out.println("kyuli ======== findTravel");
         Travel findTravel = travelRepository.findByAccountIdAndId(accountId, travelId);
 
         if (findTravel == null)
