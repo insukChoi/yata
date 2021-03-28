@@ -3,6 +3,7 @@ package project.yata.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.yata.common.error.exception.EmptyInfoException;
 import project.yata.dto.*;
 import project.yata.entity.Account;
@@ -58,6 +59,7 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
+    @Transactional
     public Travel getTravel(Long accountId, Long travelId) {
         Optional<Travel> travel = Optional.ofNullable(
             travelRepository.findByAccountIdAndId(accountId, travelId));
@@ -66,6 +68,7 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
+    @Transactional
     public List<Travel> getTravelList(Long accountId, int offset, int count) {
         int cnt = travelRepository.countByAccountId(accountId);
         if (cnt == 0)
@@ -78,6 +81,7 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
+    @Transactional
     public Travel updateTravel(Long accountId, TravelUpdateRequest travelUpdateRequest) {
         Travel travel = getTravel(accountId, travelUpdateRequest.getId());
         travel.travelUpdate(travelUpdateRequest);
@@ -85,6 +89,7 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
+    @Transactional
     public Travel deleteTravel(Long accountId, TravelDeleteRequest travelDeleteRequest) {
         Travel travel = getTravel(accountId, travelDeleteRequest.getId());
         travel.updateDelete(travelDeleteRequest.isDeleted());
