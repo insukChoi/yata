@@ -14,6 +14,6 @@ public interface PlanRepository extends JpaRepository<Plan, Long> {
     Set<Plan> findAllByTravel(Travel travel);
 
 //    @Query("SELECT distinct value(t) from Travel t join fetch t.plans p on p.id = :id and p.travel = :travel")
-    @Query("select distinct p from Plan p left join fetch p.travel where p.id = :id and p.travel = :travel")
+    @Query("select distinct p from Plan p where p.id = :id and p.travel = :travel")
     Plan findPlanByIdAndTravel(Long id, Travel travel);
 }

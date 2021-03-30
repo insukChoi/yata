@@ -25,8 +25,8 @@ public class PlanServiceImpl implements PlanService {
     private final PlanRepository planRepository;
     private final TravelRepository travelRepository;
 
-//    @Transactional
-    private Travel findTravel(Long accountId, Long travelId) {
+    @Transactional
+    protected Travel findTravel(Long accountId, Long travelId) {
         System.out.println("kyuli ======== findTravel");
         Travel findTravel = travelRepository.findByAccountIdAndId(accountId, travelId);
 
@@ -35,8 +35,8 @@ public class PlanServiceImpl implements PlanService {
         return findTravel;
     }
 
-//    @Transactional
-    private Plan planInfo(Long id, Travel travel) {
+    @Transactional
+    protected Plan planInfo(Long id, Travel travel) {
         Plan plan = planRepository.findPlanByIdAndTravel(id, travel);
         if (plan == null)
             throw new EmptyInfoException("There is no suitable information in plans");

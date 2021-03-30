@@ -99,7 +99,8 @@ public class TravelServiceImpl implements TravelService {
         return travelRepository.save(travel);
     }
 
-    private void updateChildPlans(Long accountId, TravelDeleteRequest travelDeleteRequest, Travel travel) {
+    @Transactional
+    protected void updateChildPlans(Long accountId, TravelDeleteRequest travelDeleteRequest, Travel travel) {
         Set<Plan> plans = planRepository.findAllByTravel(travel);
 
         for (Plan p : plans) {
