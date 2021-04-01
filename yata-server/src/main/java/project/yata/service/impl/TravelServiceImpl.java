@@ -29,12 +29,15 @@ public class TravelServiceImpl implements TravelService {
 
     private TravelResponse getTravelResponse(Travel travel) {
         return TravelResponse.builder()
+            .id(travel.getId())
             .title(travel.getTitle())
             .endDate(travel.getEndDate())
             .memo(travel.getMemo())
             .place(travel.getPlace())
             .startDate(travel.getStartDate())
             .timeDiff(travel.getTimeDiff())
+            .isDeleted(travel.isDeleted())
+            .plans(travel.getPlans())
             .build();
     }
 
@@ -52,7 +55,7 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public Travel saveTravel(Long accountId, TravelRequest travelRequest) {
+    public TravelResponse saveTravel(Long accountId, TravelRequest travelRequest) {
         Travel travel = Travel.builder()
             .accountId(accountId)
             .title(travelRequest.getTitle())
@@ -63,7 +66,8 @@ public class TravelServiceImpl implements TravelService {
             .startDate(travelRequest.getStartDate())
             .build();
 
-        return travelRepository.save(travel);
+        travelRepository.save(travel);
+        return getTravelResponse(travel);
     }
 
     @Override
@@ -90,20 +94,22 @@ public class TravelServiceImpl implements TravelService {
 
     @Override
     @Transactional
-    public Travel updateTravel(Long accountId, TravelUpdateRequest travelUpdateRequest) {
+    public TravelResponse updateTravel(Long accountId, TravelUpdateRequest travelUpdateRequest) {
         Travel travel = getTravel(accountId, travelUpdateRequest.getId());
         travel.travelUpdate(travelUpdateRequest);
-        return travelRepository.save(travel);
+        travelRepository.save(travel);
+        return getTravelResponse(travel);
     }
 
     @Override
     @Transactional
-    public Travel deleteTravel(Long accountId, TravelDeleteRequest travelDeleteRequest) {
+    public TravelResponse deleteTravel(Long accountId, TravelDeleteRequest travelDeleteRequest) {
         Travel travel = getTravel(accountId, travelDeleteRequest.getId());
         travel.updateDelete(travelDeleteRequest.isDeleted());
 
         updateChildPlans(accountId, travelDeleteRequest, travel);
 
-        return travelRepository.save(travel);
+        travelRepository.save(travel);
+        return getTravelResponse(travel);
     }
 }

@@ -15,5 +15,5 @@ public interface PlanService {
 
      PlanResponse updatePlan(Long accountId, PlanUpdateRequest planUpdateRequest);
 
-     Plan deletePlan(Long accountId, PlanDeleteRequest planDeleteRequest);
+     PlanResponse deletePlan(Long accountId, PlanDeleteRequest planDeleteRequest);
 }

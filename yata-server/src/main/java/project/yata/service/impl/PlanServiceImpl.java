@@ -46,6 +46,7 @@ public class PlanServiceImpl implements PlanService {
             .linkTo(plan.getLinkTo())
             .time(plan.getTime())
             .memo(plan.getMemo())
+            .isDeleted(plan.isDeleted())
             .build();
     }
 
@@ -84,10 +85,11 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     @Transactional
-    public Plan deletePlan(Long accountId, PlanDeleteRequest planDeleteRequest) {
+    public PlanResponse deletePlan(Long accountId, PlanDeleteRequest planDeleteRequest) {
         Travel travel = findTravel(accountId, planDeleteRequest.getTravelId());
         Plan plan = planInfo(planDeleteRequest.getId(), travel);
         plan.updateDelete(planDeleteRequest.isDeleted());
-        return planRepository.save(plan);
+        planRepository.save(plan);
+        return getPlanResponse(plan);
     }
 }

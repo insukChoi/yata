@@ -45,7 +45,7 @@ public class PlanController {
     }
 
     @DeleteMapping("/plan")
-    public ResponseEntity<Plan> updatePlan(@RequestBody PlanDeleteRequest planDeleteRequest) {
+    public ResponseEntity<PlanResponse> updatePlan(@RequestBody PlanDeleteRequest planDeleteRequest) {
         return new ResponseEntity<>(planService.deletePlan(jwtProvider.getAccountId(), planDeleteRequest), HttpStatus.OK);
     }
 }
