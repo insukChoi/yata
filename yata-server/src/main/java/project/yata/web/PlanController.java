@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.yata.config.security.JwtProvider;
-import project.yata.dto.ApiResponse;
-import project.yata.dto.PlanDeleteRequest;
-import project.yata.dto.PlanRequest;
-import project.yata.dto.PlanUpdateRequest;
+import project.yata.dto.*;
 import project.yata.entity.Plan;
 import project.yata.service.PlanService;
 
@@ -25,7 +22,7 @@ public class PlanController {
 
     @PostMapping("/plan")
     public ResponseEntity<ApiResponse> plan(@RequestBody PlanRequest planRequest) {
-        final Plan savePlan = planService.savePlan(jwtProvider.getAccountId(), planRequest);
+        final PlanResponse savePlan = planService.savePlan(jwtProvider.getAccountId(), planRequest);
 
         return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -43,7 +40,7 @@ public class PlanController {
     }
 
     @PutMapping("/plan")
-    public ResponseEntity<Plan> updatePlan(@RequestBody PlanUpdateRequest planUpdateRequest) {
+    public ResponseEntity<PlanResponse> updatePlan(@RequestBody PlanUpdateRequest planUpdateRequest) {
         return new ResponseEntity<>(planService.updatePlan(jwtProvider.getAccountId(), planUpdateRequest), HttpStatus.OK);
     }
 

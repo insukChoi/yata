@@ -25,9 +25,7 @@ public class PlanServiceImpl implements PlanService {
     private final PlanRepository planRepository;
     private final TravelRepository travelRepository;
 
-    @Transactional
-    protected Travel findTravel(Long accountId, Long travelId) {
-        System.out.println("kyuli ======== findTravel");
+    private Travel findTravel(Long accountId, Long travelId) {
         Travel findTravel = travelRepository.findByAccountIdAndId(accountId, travelId);
 
         if (findTravel == null)
@@ -35,8 +33,7 @@ public class PlanServiceImpl implements PlanService {
         return findTravel;
     }
 
-    @Transactional
-    protected Plan planInfo(Long id, Travel travel) {
+    private Plan planInfo(Long id, Travel travel) {
         Plan plan = planRepository.findPlanByIdAndTravel(id, travel);
         if (plan == null)
             throw new EmptyInfoException("There is no suitable information in plans");
@@ -54,7 +51,7 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     @Transactional
-    public Plan savePlan(Long accountId, PlanRequest planRequest) {
+    public PlanResponse savePlan(Long accountId, PlanRequest planRequest) {
         Plan plan = Plan.builder()
             .linkTo(planRequest.getLinkTo())
             .memo(planRequest.getMemo())
@@ -63,7 +60,8 @@ public class PlanServiceImpl implements PlanService {
 
         plan.setTravel(findTravel(accountId, planRequest.getTravelId()));
 
-        return planRepository.save(plan);
+        planRepository.save(plan);
+        return getPlanResponse(plan);
     }
 
 
@@ -76,11 +74,12 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     @Transactional
-    public Plan updatePlan(Long accountId, PlanUpdateRequest planUpdateRequest) {
+    public PlanResponse updatePlan(Long accountId, PlanUpdateRequest planUpdateRequest) {
         Travel travel = findTravel(accountId, planUpdateRequest.getTravelId());
         Plan plan = planInfo(planUpdateRequest.getId(), travel);
         plan.planUpdate(planUpdateRequest);
-        return planRepository.save(plan);
+        planRepository.save(plan);
+        return getPlanResponse(plan);
     }
 
     @Override

@@ -38,6 +38,14 @@ public class TravelServiceImpl implements TravelService {
             .build();
     }
 
+    private void updateChildPlans(Long accountId, TravelDeleteRequest travelDeleteRequest, Travel travel) {
+        Set<Plan> plans = planRepository.findAllByTravel(travel);
+
+        for (Plan p : plans) {
+            planService.deletePlan(accountId, new PlanDeleteRequest(p.getId(), travelDeleteRequest.getId(), travelDeleteRequest.isDeleted()));
+        }
+    }
+
     @Override
     public List<Account> getAccountList() {
         return accountRepository.findAll();
@@ -97,14 +105,5 @@ public class TravelServiceImpl implements TravelService {
         updateChildPlans(accountId, travelDeleteRequest, travel);
 
         return travelRepository.save(travel);
-    }
-
-    @Transactional
-    protected void updateChildPlans(Long accountId, TravelDeleteRequest travelDeleteRequest, Travel travel) {
-        Set<Plan> plans = planRepository.findAllByTravel(travel);
-
-        for (Plan p : plans) {
-            planService.deletePlan(accountId, new PlanDeleteRequest(p.getId(), travelDeleteRequest.getId(), travelDeleteRequest.isDeleted()));
-        }
     }
 }
