@@ -8,14 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.yata.config.security.JwtProvider;
 import project.yata.dto.*;
-import project.yata.entity.Travel;
 import project.yata.service.TravelService;
 
 import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-@RestController("/api")
+@RestController
+@RequestMapping("/api")
 public class TravelController {
 
     private final TravelService travelService;
@@ -26,24 +26,24 @@ public class TravelController {
         final TravelResponse saveTravel = travelService.saveTravel(jwtProvider.getAccountId(), travelRequest);
 
         return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .header(HttpHeaders.LOCATION, "/travel/" + saveTravel.getId())
-            .body(
-                ApiResponse.success(
-                    saveTravel
-                )
-            );
+                .status(HttpStatus.CREATED)
+                .header(HttpHeaders.LOCATION, "/travel/" + saveTravel.getId())
+                .body(
+                        ApiResponse.success(
+                                saveTravel
+                        )
+                );
     }
 
     @GetMapping("/travels")
-    public ResponseEntity<List<Travel>> travelInfos(@RequestParam("offset") int offset,
-                                                    @RequestParam("count") int count) {
-        return new ResponseEntity<>(travelService.getTravelList(jwtProvider.getAccountId(), offset, count), HttpStatus.OK);
+    public ResponseEntity<List<TravelDto>> getTravels(@RequestParam("pageSize") int pageSize,
+                                                      @RequestParam("pageNumber") int pageNumber) {
+        return new ResponseEntity<>(travelService.getTravels(jwtProvider.getAccountId(), pageSize, pageNumber), HttpStatus.OK);
     }
 
 
     @GetMapping("/travel")
-    public ResponseEntity<Travel> travelInfos(@RequestParam("travelId") Long travelId) {
+    public ResponseEntity<TravelDto> travelInfos(@RequestParam("travelId") Long travelId) {
         return new ResponseEntity<>(travelService.getTravel(jwtProvider.getAccountId(), travelId), HttpStatus.OK);
     }
 

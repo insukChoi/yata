@@ -1,22 +1,15 @@
 package project.yata.service;
 
-import project.yata.dto.TravelDeleteRequest;
-import project.yata.dto.TravelRequest;
-import project.yata.dto.TravelResponse;
-import project.yata.dto.TravelUpdateRequest;
-import project.yata.entity.Account;
-import project.yata.entity.Travel;
+import project.yata.dto.*;
 
 import java.util.List;
 
 public interface TravelService {
-    List<Account> getAccountList();
-
     TravelResponse saveTravel(Long accountId, TravelRequest travelRequest);
 
-    Travel getTravel(Long accountId, Long travelId);
+    TravelDto getTravel(Long accountId, Long travelId);
 
-    List<Travel> getTravelList(Long accountId, int offset, int count);
+    List<TravelDto> getTravels(Long accountId, int pageSize, int pageNumber);
 
     TravelResponse updateTravel(Long accountId, TravelUpdateRequest travelUpdateRequest);
 

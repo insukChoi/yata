@@ -26,11 +26,9 @@ public class PlanServiceImpl implements PlanService {
     private final TravelRepository travelRepository;
 
     private Travel findTravel(Long accountId, Long travelId) {
-        Travel findTravel = travelRepository.findByAccountIdAndId(accountId, travelId);
-
-        if (findTravel == null)
-            throw new EmptyInfoException("There is not suitable Travel information");
-        return findTravel;
+        return travelRepository.findTravelAndPlanByAccountIdAndId(accountId, travelId).orElseThrow(
+                () -> new EmptyInfoException("There is not suitable Travel information")
+        );
     }
 
     private Plan planInfo(Long id, Travel travel) {
@@ -42,22 +40,22 @@ public class PlanServiceImpl implements PlanService {
 
     private PlanResponse getPlanResponse(Plan plan) {
         return PlanResponse.builder()
-            .id(plan.getId())
-            .linkTo(plan.getLinkTo())
-            .time(plan.getTime())
-            .memo(plan.getMemo())
-            .isDeleted(plan.isDeleted())
-            .build();
+                .id(plan.getId())
+                .linkTo(plan.getLinkTo())
+                .time(plan.getTime())
+                .memo(plan.getMemo())
+                .isDeleted(plan.isDeleted())
+                .build();
     }
 
     @Override
     @Transactional
     public PlanResponse savePlan(Long accountId, PlanRequest planRequest) {
         Plan plan = Plan.builder()
-            .linkTo(planRequest.getLinkTo())
-            .memo(planRequest.getMemo())
-            .time(planRequest.getTime())
-            .build();
+                .linkTo(planRequest.getLinkTo())
+                .memo(planRequest.getMemo())
+                .time(planRequest.getTime())
+                .build();
 
         plan.setTravel(findTravel(accountId, planRequest.getTravelId()));
 
