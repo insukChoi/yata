@@ -6,12 +6,13 @@ import project.yata.dto.PlanResponse;
 import project.yata.dto.PlanUpdateRequest;
 import project.yata.entity.Plan;
 
+import java.util.List;
 import java.util.Set;
 
 public interface PlanService {
      PlanResponse savePlan(Long accountId, PlanRequest planRequest);
 
-     Set<Plan> getPlanList(Long accountId, Long travelId);
+     List<PlanResponse> getPlanList(Long accountId, Long travelId);
 
      PlanResponse updatePlan(Long accountId, PlanUpdateRequest planUpdateRequest);
 

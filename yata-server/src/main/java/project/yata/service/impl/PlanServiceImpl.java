@@ -15,6 +15,9 @@ import project.yata.persistence.PlanRepository;
 import project.yata.persistence.TravelRepository;
 import project.yata.service.PlanService;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -50,6 +53,25 @@ public class PlanServiceImpl implements PlanService {
             .build();
     }
 
+    private List<PlanResponse> convertPlanToPlanResponse(List<Plan> planList)
+    {
+        List<PlanResponse> planResponses = new ArrayList<>();
+
+        for(Plan plan : planList)
+        {
+            planResponses.add(
+                    PlanResponse.builder()
+                            .id(plan.getId())
+                            .linkTo(plan.getLinkTo())
+                            .time(plan.getTime())
+                            .memo(plan.getMemo())
+                            .isDeleted(plan.isDeleted())
+                            .build()
+            );
+        }
+        return planResponses;
+    }
+
     @Override
     @Transactional
     public PlanResponse savePlan(Long accountId, PlanRequest planRequest) {
@@ -68,9 +90,9 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     @Transactional(readOnly = true)
-    public Set<Plan> getPlanList(Long accountId, Long travelId) {
+    public List<PlanResponse> getPlanList(Long accountId, Long travelId) {
         Travel travel = findTravel(accountId, travelId);
-        return planRepository.findAllByTravel(travel);
+        return convertPlanToPlanResponse(planRepository.findAllByTravel(travel));
     }
 
     @Override

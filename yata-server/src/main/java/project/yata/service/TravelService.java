@@ -14,9 +14,9 @@ public interface TravelService {
 
     TravelResponse saveTravel(Long accountId, TravelRequest travelRequest);
 
-    Travel getTravel(Long accountId, Long travelId);
+    TravelResponse getTravel(Long accountId, Long travelId);
 
-    List<Travel> getTravelList(Long accountId, int offset, int count);
+    List<TravelResponse> getTravelList(Long accountId, int offset, int count);
 
     TravelResponse updateTravel(Long accountId, TravelUpdateRequest travelUpdateRequest);
 

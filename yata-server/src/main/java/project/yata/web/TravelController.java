@@ -36,14 +36,14 @@ public class TravelController {
     }
 
     @GetMapping("/travels")
-    public ResponseEntity<List<Travel>> travelInfos(@RequestParam("offset") int offset,
+    public ResponseEntity<List<TravelResponse>> travelInfos(@RequestParam("offset") int offset,
                                                     @RequestParam("count") int count) {
         return new ResponseEntity<>(travelService.getTravelList(jwtProvider.getAccountId(), offset, count), HttpStatus.OK);
     }
 
 
     @GetMapping("/travel")
-    public ResponseEntity<Travel> travelInfos(@RequestParam("travelId") Long travelId) {
+    public ResponseEntity<TravelResponse> travelInfos(@RequestParam("travelId") Long travelId) {
         return new ResponseEntity<>(travelService.getTravel(jwtProvider.getAccountId(), travelId), HttpStatus.OK);
     }
 

@@ -11,6 +11,7 @@ import project.yata.dto.*;
 import project.yata.entity.Plan;
 import project.yata.service.PlanService;
 
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -35,7 +36,7 @@ public class PlanController {
     }
 
     @GetMapping("/plan")
-    public ResponseEntity<Set<Plan>> planLists(@RequestParam("travelId") Long travelId) {
+    public ResponseEntity<List<PlanResponse>> planLists(@RequestParam("travelId") Long travelId) {
         return new ResponseEntity<>(planService.getPlanList(jwtProvider.getAccountId(), travelId), HttpStatus.OK);
     }
 

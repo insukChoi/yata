@@ -7,6 +7,7 @@ import project.yata.entity.Plan;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -20,6 +21,6 @@ public class TravelResponse {
     private LocalDateTime endDate;
     private String memo;
     private String place;
-    private Set<Plan> plans;
+    private List<Plan> plans;
     private boolean isDeleted;
 }

@@ -5,13 +5,14 @@ import org.springframework.data.jpa.repository.Query;
 import project.yata.entity.Plan;
 import project.yata.entity.Travel;
 
+import java.util.List;
 import java.util.Set;
 
 public interface PlanRepository extends JpaRepository<Plan, Long> {
     int countAllByTravel(Travel travel);
 
     @Query("select p from Plan p where p.travel = :travel")
-    Set<Plan> findAllByTravel(Travel travel);
+    List<Plan> findAllByTravel(Travel travel);
 
 //    @Query("SELECT distinct value(t) from Travel t join fetch t.plans p on p.id = :id and p.travel = :travel")
     @Query("select distinct p from Plan p where p.id = :id and p.travel = :travel")

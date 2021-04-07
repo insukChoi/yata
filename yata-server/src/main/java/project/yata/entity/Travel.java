@@ -9,7 +9,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Set;
+import java.util.List;
+
 
 @Entity
 @Table(name = "TRAVEL")
@@ -19,7 +20,7 @@ public class Travel extends BaseEntity
     implements Serializable {
 //    @JsonIgnore
     @OneToMany(mappedBy = "travel", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Plan> plans;
+    private List<Plan> plans;
 
     @Column(name = "account_id", nullable = false)
     private Long accountId;
