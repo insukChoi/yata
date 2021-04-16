@@ -10,7 +10,6 @@ import project.yata.entity.Travel;
 import java.util.List;
 
 public interface TravelService {
-    List<Account> getAccountList();
 
     TravelResponse saveTravel(Long accountId, TravelRequest travelRequest);
 

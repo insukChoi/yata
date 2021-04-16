@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.yata.config.security.JwtProvider;
 import project.yata.dto.*;
-import project.yata.entity.Travel;
 import project.yata.service.TravelService;
 
 import java.util.List;
@@ -26,18 +25,18 @@ public class TravelController {
         final TravelResponse saveTravel = travelService.saveTravel(jwtProvider.getAccountId(), travelRequest);
 
         return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .header(HttpHeaders.LOCATION, "/travel/" + saveTravel.getId())
-            .body(
-                ApiResponse.success(
-                    saveTravel
-                )
-            );
+                .status(HttpStatus.CREATED)
+                .header(HttpHeaders.LOCATION, "/travel/" + saveTravel.getId())
+                .body(
+                        ApiResponse.success(
+                                saveTravel
+                        )
+                );
     }
 
     @GetMapping("/travels")
     public ResponseEntity<List<TravelResponse>> travelInfos(@RequestParam("offset") int offset,
-                                                    @RequestParam("count") int count) {
+                                                            @RequestParam("count") int count) {
         return new ResponseEntity<>(travelService.getTravelList(jwtProvider.getAccountId(), offset, count), HttpStatus.OK);
     }
 

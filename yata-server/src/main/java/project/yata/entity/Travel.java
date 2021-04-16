@@ -3,7 +3,9 @@ package project.yata.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.jsonwebtoken.lang.Assert;
 import lombok.*;
+import project.yata.dto.TravelResponse;
 import project.yata.dto.TravelUpdateRequest;
+import project.yata.persistence.TravelRepository;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -69,5 +71,20 @@ public class Travel extends BaseEntity
         this.memo = travelUpdateRequest.getMemo();
         this.startDate = travelUpdateRequest.getStartDate();
         this.endDate = travelUpdateRequest.getEndDate();
+    }
+
+    public TravelResponse toTravelResponse() {
+        return TravelResponse.builder()
+                .id(getId())
+                .accountId(accountId)
+                .title(title)
+                .place(place)
+                .memo(memo)
+                .timeDiff(timeDiff)
+                .startDate(startDate)
+                .endDate(endDate)
+                .isDeleted(isDeleted())
+                .plans(plans)
+                .build();
     }
 }
