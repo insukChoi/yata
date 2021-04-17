@@ -29,8 +29,29 @@ public class TravelServiceImpl implements TravelService {
     private final PlanRepository planRepository;
     private final PlanServiceImpl planService;
 
+    private List<PlanResponse> convertPlanToPlanResponse(List<Plan> planList)
+    {
+        if(planList == null)
+            return null;
+
+        List<PlanResponse> planResponses = new ArrayList<>();
+
+        for(Plan plan : planList)
+        {
+            planResponses.add(
+                    PlanResponse.builder()
+                            .id(plan.getId())
+                            .linkTo(plan.getLinkTo())
+                            .time(plan.getTime())
+                            .memo(plan.getMemo())
+                            .isDeleted(plan.isDeleted())
+                            .build()
+            );
+        }
+        return planResponses;
+    }
+
     private TravelResponse getTravelResponse(Travel travel) {
-        System.out.println("kyuli====================0");
         return TravelResponse.builder()
                 .id(travel.getId())
                 .accountId(travel.getAccountId())
@@ -41,7 +62,7 @@ public class TravelServiceImpl implements TravelService {
                 .startDate(travel.getStartDate())
                 .timeDiff(travel.getTimeDiff())
                 .isDeleted(travel.isDeleted())
-                .plans(travel.getPlans())
+                .plans(convertPlanToPlanResponse(travel.getPlans()))
                 .build();
     }
 
@@ -97,18 +118,7 @@ public class TravelServiceImpl implements TravelService {
         travel.travelUpdate(travelUpdateRequest);
         travelRepository.save(travel);
 
-        return TravelResponse.builder()
-                .id(travel.getId())
-                .accountId(travel.getAccountId())
-                .title(travel.getTitle())
-                .endDate(travel.getEndDate())
-                .memo(travel.getMemo())
-                .place(travel.getPlace())
-                .startDate(travel.getStartDate())
-                .timeDiff(travel.getTimeDiff())
-                .isDeleted(travel.isDeleted())
-                .plans(travel.getPlans())
-                .build();
+        return getTravelResponse(travel);
     }
 
     @Override

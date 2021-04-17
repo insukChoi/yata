@@ -3,6 +3,7 @@ package project.yata.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.jsonwebtoken.lang.Assert;
 import lombok.*;
+import project.yata.dto.PlanResponse;
 import project.yata.dto.TravelResponse;
 import project.yata.dto.TravelUpdateRequest;
 import project.yata.persistence.TravelRepository;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -73,6 +75,24 @@ public class Travel extends BaseEntity
         this.endDate = travelUpdateRequest.getEndDate();
     }
 
+    private List<PlanResponse> convertPlanToPlanResponse(List<Plan> planList)
+    {
+        List<PlanResponse> planResponses = new ArrayList<>();
+
+        for(Plan plan : planList)
+        {
+            planResponses.add(
+                    PlanResponse.builder()
+                            .id(plan.getId())
+                            .linkTo(plan.getLinkTo())
+                            .time(plan.getTime())
+                            .memo(plan.getMemo())
+                            .isDeleted(plan.isDeleted())
+                            .build()
+            );
+        }
+        return planResponses;
+    }
     public TravelResponse toTravelResponse() {
         return TravelResponse.builder()
                 .id(getId())
@@ -84,7 +104,7 @@ public class Travel extends BaseEntity
                 .startDate(startDate)
                 .endDate(endDate)
                 .isDeleted(isDeleted())
-                .plans(plans)
+                .plans(convertPlanToPlanResponse(plans))
                 .build();
     }
 }

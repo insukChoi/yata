@@ -29,7 +29,7 @@ public class PlanServiceImpl implements PlanService {
     private final TravelRepository travelRepository;
 
     private Travel findTravel(Long accountId, Long travelId) {
-        return travelRepository.findTravelAndPlanByAccountIdAndId(accountId, travelId).orElseThrow(
+        return travelRepository.findByAccountIdAndId(accountId, travelId).orElseThrow(
                 () -> new EmptyInfoException("There is no suitable Travel information.")
         );
     }

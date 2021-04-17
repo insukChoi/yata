@@ -29,6 +29,7 @@ public interface TravelRepository extends JpaRepository<Travel, Long> {
     @Query("FROM Travel t JOIN FETCH t.plans WHERE t.accountId = :accountId AND t.id = :travelId")
     Optional<Travel> findTravelAndPlanByAccountIdAndId(Long accountId, Long travelId);
 
+
     @Query("SELECT distinct t from Travel t where :accountId = t.accountId and :travelId = t.id")
     Optional<Travel> findByAccountIdAndId(Long accountId, Long travelId);
 

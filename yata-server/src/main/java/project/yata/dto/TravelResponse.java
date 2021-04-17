@@ -21,6 +21,6 @@ public class TravelResponse {
     private LocalDateTime endDate;
     private String memo;
     private String place;
-    private List<Plan> plans;
+    private List<PlanResponse> plans;
     private boolean isDeleted;
 }
