@@ -3,13 +3,18 @@ package project.yata.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.jsonwebtoken.lang.Assert;
 import lombok.*;
+import project.yata.dto.PlanResponse;
+import project.yata.dto.TravelResponse;
 import project.yata.dto.TravelUpdateRequest;
+import project.yata.persistence.TravelRepository;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "TRAVEL")
@@ -17,9 +22,9 @@ import java.util.Set;
 @Getter
 public class Travel extends BaseEntity
     implements Serializable {
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "travel", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Plan> plans;
+    private List<Plan> plans;
 
     @Column(name = "account_id", nullable = false)
     private Long accountId;
@@ -68,5 +73,38 @@ public class Travel extends BaseEntity
         this.memo = travelUpdateRequest.getMemo();
         this.startDate = travelUpdateRequest.getStartDate();
         this.endDate = travelUpdateRequest.getEndDate();
+    }
+
+    private List<PlanResponse> convertPlanToPlanResponse(List<Plan> planList)
+    {
+        List<PlanResponse> planResponses = new ArrayList<>();
+
+        for(Plan plan : planList)
+        {
+            planResponses.add(
+                    PlanResponse.builder()
+                            .id(plan.getId())
+                            .linkTo(plan.getLinkTo())
+                            .time(plan.getTime())
+                            .memo(plan.getMemo())
+                            .isDeleted(plan.isDeleted())
+                            .build()
+            );
+        }
+        return planResponses;
+    }
+    public TravelResponse toTravelResponse() {
+        return TravelResponse.builder()
+                .id(getId())
+                .accountId(accountId)
+                .title(title)
+                .place(place)
+                .memo(memo)
+                .timeDiff(timeDiff)
+                .startDate(startDate)
+                .endDate(endDate)
+                .isDeleted(isDeleted())
+                .plans(convertPlanToPlanResponse(plans))
+                .build();
     }
 }

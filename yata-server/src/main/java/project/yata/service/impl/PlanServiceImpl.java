@@ -15,6 +15,9 @@ import project.yata.persistence.PlanRepository;
 import project.yata.persistence.TravelRepository;
 import project.yata.service.PlanService;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -26,11 +29,9 @@ public class PlanServiceImpl implements PlanService {
     private final TravelRepository travelRepository;
 
     private Travel findTravel(Long accountId, Long travelId) {
-        Travel findTravel = travelRepository.findByAccountIdAndId(accountId, travelId);
-
-        if (findTravel == null)
-            throw new EmptyInfoException("There is not suitable Travel information");
-        return findTravel;
+        return travelRepository.findByAccountIdAndId(accountId, travelId).orElseThrow(
+                () -> new EmptyInfoException("There is no suitable Travel information.")
+        );
     }
 
     private Plan planInfo(Long id, Travel travel) {
@@ -46,12 +47,32 @@ public class PlanServiceImpl implements PlanService {
             .linkTo(plan.getLinkTo())
             .time(plan.getTime())
             .memo(plan.getMemo())
+            .isDeleted(plan.isDeleted())
             .build();
+    }
+
+    private List<PlanResponse> convertPlanToPlanResponse(List<Plan> planList)
+    {
+        List<PlanResponse> planResponses = new ArrayList<>();
+
+        for(Plan plan : planList)
+        {
+            planResponses.add(
+                    PlanResponse.builder()
+                            .id(plan.getId())
+                            .linkTo(plan.getLinkTo())
+                            .time(plan.getTime())
+                            .memo(plan.getMemo())
+                            .isDeleted(plan.isDeleted())
+                            .build()
+            );
+        }
+        return planResponses;
     }
 
     @Override
     @Transactional
-    public Plan savePlan(Long accountId, PlanRequest planRequest) {
+    public PlanResponse savePlan(Long accountId, PlanRequest planRequest) {
         Plan plan = Plan.builder()
             .linkTo(planRequest.getLinkTo())
             .memo(planRequest.getMemo())
@@ -60,32 +81,35 @@ public class PlanServiceImpl implements PlanService {
 
         plan.setTravel(findTravel(accountId, planRequest.getTravelId()));
 
-        return planRepository.save(plan);
+        planRepository.save(plan);
+        return getPlanResponse(plan);
     }
 
 
     @Override
     @Transactional(readOnly = true)
-    public Set<Plan> getPlanList(Long accountId, Long travelId) {
+    public List<PlanResponse> getPlanList(Long accountId, Long travelId) {
         Travel travel = findTravel(accountId, travelId);
-        return planRepository.findAllByTravel(travel);
+        return convertPlanToPlanResponse(planRepository.findAllByTravel(travel));
     }
 
     @Override
     @Transactional
-    public Plan updatePlan(Long accountId, PlanUpdateRequest planUpdateRequest) {
+    public PlanResponse updatePlan(Long accountId, PlanUpdateRequest planUpdateRequest) {
         Travel travel = findTravel(accountId, planUpdateRequest.getTravelId());
         Plan plan = planInfo(planUpdateRequest.getId(), travel);
         plan.planUpdate(planUpdateRequest);
-        return planRepository.save(plan);
+        planRepository.save(plan);
+        return getPlanResponse(plan);
     }
 
     @Override
     @Transactional
-    public Plan deletePlan(Long accountId, PlanDeleteRequest planDeleteRequest) {
+    public PlanResponse deletePlan(Long accountId, PlanDeleteRequest planDeleteRequest) {
         Travel travel = findTravel(accountId, planDeleteRequest.getTravelId());
         Plan plan = planInfo(planDeleteRequest.getId(), travel);
         plan.updateDelete(planDeleteRequest.isDeleted());
-        return planRepository.save(plan);
+        planRepository.save(plan);
+        return getPlanResponse(plan);
     }
 }

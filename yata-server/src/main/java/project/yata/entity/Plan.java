@@ -13,6 +13,7 @@ import java.time.LocalTime;
 @Getter
 public class Plan extends BaseEntity
     implements Serializable {
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "travel_id")
     private Travel travel;

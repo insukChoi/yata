@@ -15,4 +15,5 @@ public class PlanResponse {
     private String linkTo;
     private LocalTime time;
     private String memo;
+    private boolean isDeleted;
 }
